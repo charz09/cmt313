@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{ url_for('static',filename='style.css') }}">
+    <title>AAT System</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li style="float: right"><a href="#">Register</a></li>
+        </ul>
+    </nav>
+    <div class="header">
+        <h1>Automated Assessment Tool</h1>
+    </div>
+
+    <div class="login-form">
+        <form>
+            <label for="email">Username</label><br>
+            <input type="text" id="email" name="email" class="input-field"><br>
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" class="input-field"><br><br>
+            <input type="submit" value="Log In" class="login-button">
+        </form>
+        <div class="or-container">
+            <hr class="or-line">
+            <span class="or-text">OR</span>
+        </div>
+        <button class="create-account-button">Create New Account</button>
+    </div>
+
+
+
+</body>
+
+</html>
