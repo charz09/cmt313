@@ -1,4 +1,4 @@
-from system.data.database import db
+from src import db
 
 
 class Role(db.Model):
