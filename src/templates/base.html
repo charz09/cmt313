@@ -15,23 +15,9 @@
             <li><a href="#">Contact</a></li>
             <li style="float: right"><a href="#">Register</a></li>
         </ul>
-        <!-- {% if g.user %}
-          <li><span>{{ g.user['username'] }}</span>
-          <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-        {% else %}
-          <li><a href="{{ url_for('auth.register') }}">Register</a>
-          <li><a href="{{ url_for('auth.login') }}">Log In</a>
-        {% endif %} -->
     </nav>
     <section class="content">
-      <!-- <header>
-        {% block header %}{% endblock %}
-      </header>
-      {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
-      {% endfor %}  -->
       {% block content %}{% endblock %}
-    
     </section>
 </body>
 </html>
