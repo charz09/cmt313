@@ -18,7 +18,16 @@ def init_app():
         from src.models.user import User
         db.create_all()
 
-        from src.routes import bp as users_bp
-        app.register_blueprint(users_bp)
+        # from src.student.student import student_bp
+        # app.register_blueprint(student_bp)
+
+        from src.auth import auth
+        app.register_blueprint(auth.bp)
+
+        from src.teacher import teacher
+        app.register_blueprint(teacher.bp)
+
+        from src.student import student
+        app.register_blueprint(student.bp)
 
     return app

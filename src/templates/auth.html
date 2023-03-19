@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+<div class="login-form">
+    <form>
+        <label for="email">Username</label><br>
+        <input type="text" id="email" name="email" class="input-field"><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password" class="input-field"><br><br>
+        <input type="submit" value="Log In" class="login-button">
+    </form>
+    <div class="or-container">
+        <hr class="or-line">
+        <span class="or-text">OR</span>
+    </div>
+    <button class="create-account-button">Create New Account</button>
+</div>
+
+{% endblock %}
