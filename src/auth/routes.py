@@ -1,8 +1,8 @@
+from . import auth
 from flask import render_template, session, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, RadioField
 from wtforms.validators import DataRequired
-from . import auth
 
 
 class LoginForm(FlaskForm):
