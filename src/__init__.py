@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 # Create the database
 db = SQLAlchemy()
@@ -16,10 +17,19 @@ def init_app():  # Factory function for creating app instance
     # initialise the database using the app instance
     db.init_app(app)
 
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+
     with app.app_context():
         # this import allows us to create the table if it does not exist
-        # from src.models.user import User
-        # db.create_all()
+        from src.models.user import User
+        db.create_all()
+
+        login_manager.init_app(app)
+
+        @login_manager.user_loader
+        def load_user(user_id):
+            return User.query.get(int(user_id))
 
         from .auth import auth
         app.register_blueprint(auth)

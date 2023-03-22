@@ -1,8 +1,11 @@
+from flask_login import logout_user, login_required
 from . import auth
+from ..models.user import User
 from flask import render_template, session, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, RadioField
 from wtforms.validators import DataRequired
+from src import db
 
 
 class LoginForm(FlaskForm):
@@ -25,24 +28,26 @@ class RegisterForm(FlaskForm):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        session['username'] = form.username.data
-        session['password'] = form.password.data
-        return redirect(url_for('students.index'))
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            return redirect(url_for('students.index'))
+
     return render_template('auth/login.html', form=form, username=session.get('username'), password=session.get('password'))
 
 
-@auth.route('/register')
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        session['username'] = form.username.data
-        session['password'] = form.password.data
-        session['confirm_password'] = form.confirm_password.data
-        session['role'] = form.role.data
-        return redirect(url_for('students.index'))
+        user = User(username=form.username.data, password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
 
-# @auth.route('/logout')
-# def logout():
-#     return render_template('auth/index.html')
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
