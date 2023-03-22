@@ -2,13 +2,18 @@
 
 {% block content %}
 
+<div class="page-header">
+    <h1>Hello, {% if username %}{{ username }}{% else %} New user {% endif %}!</h1>
+</div>
+
 <div class="login-form">
-    <form>
-        <label for="email">Username</label><br>
-        <input type="text" id="email" name="email" class="input-field"><br>
-        <label for="password">Password</label><br>
-        <input type="password" id="password" name="password" class="input-field"><br><br>
-        <input type="submit" value="Log In" class="login-button">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }} 
+        {{ form.username(class='input-field') }}
+        {{ form.password.label }} 
+        {{ form.password(class='input-field') }}
+        {{ form.submit(class='signup-button') }}
     </form>
 </div>
 
