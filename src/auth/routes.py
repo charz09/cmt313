@@ -1,6 +1,7 @@
-from flask_login import logout_user, login_required
-from . import auth
+from flask_login import logout_user, login_required, login_user
+from . import auth  # auth is the current blueprint
 from ..models.user import User
+from ..models.role import Role
 from flask import render_template, session, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, RadioField
@@ -20,7 +21,7 @@ class RegisterForm(FlaskForm):
     confirm_password = PasswordField(
         'Confirm Password', validators=[DataRequired()])
     role = RadioField('Role', validators=[DataRequired()], choices=[
-                      ('student', 'Student'), ('teacher', 'Teacher')])
+                      ('Student', 'Student'), ('Teacher', 'Teacher')])
     submit = SubmitField('Sign Up')
 
 
@@ -30,6 +31,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(form.password.data):
+            login_user(user)
             return redirect(url_for('students.index'))
 
     return render_template('auth/login.html', form=form, username=session.get('username'), password=session.get('password'))
@@ -39,10 +41,18 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        # TODO: check if username is unique
         user = User(username=form.username.data, password=form.password.data)
+        user.role_id = Role.query.filter_by(
+            name=form.role.data).first().id
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('auth.login'))
+        login_user(user)
+        if user.role.name == "Student":
+            return redirect(url_for('students.index'))
+        else:
+            return redirect(url_for('teachers.index'))
+
     return render_template('auth/register.html', form=form)
 
 

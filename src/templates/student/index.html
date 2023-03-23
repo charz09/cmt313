@@ -4,6 +4,11 @@
 
 <div class="login-form">
     <h1>Student Home Page</h1>
+    <h3>
+    {% if current_user.is_authenticated %}
+        Hi {{ current_user.username }}!
+    {% endif %}
+    </h3>
 </div>
 
 {% endblock %}
