@@ -32,7 +32,10 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            return redirect(url_for('students.index'))
+            if user.role.name == "Student":
+                return redirect(url_for('students.index'))
+            else:
+                return redirect(url_for('teachers.index'))
 
     return render_template('auth/login.html', form=form, username=session.get('username'), password=session.get('password'))
 
@@ -41,17 +44,18 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        # TODO: check if username is unique
-        user = User(username=form.username.data, password=form.password.data)
-        user.role_id = Role.query.filter_by(
-            name=form.role.data).first().id
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        if user.role.name == "Student":
-            return redirect(url_for('students.index'))
-        else:
-            return redirect(url_for('teachers.index'))
+        if User.query.filter_by(username=form.username.data).first() == None:
+            user = User(username=form.username.data,
+                        password=form.password.data)
+            user.role_id = Role.query.filter_by(
+                name=form.role.data).first().id
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            if user.role.name == "Student":
+                return redirect(url_for('students.index'))
+            else:
+                return redirect(url_for('teachers.index'))
 
     return render_template('auth/register.html', form=form)
 

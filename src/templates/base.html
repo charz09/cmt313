@@ -14,7 +14,11 @@
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li style="float: right"><a href={{ url_for('auth.register') }}>Register</a></li>
+            {% if current_user.is_authenticated %}
             <li style="float: right"><a href={{ url_for('auth.logout') }}>Logout</a></li>
+            {% else %}
+            <li style="float: right"><a href={{ url_for('auth.login') }}>Login</a></li>
+            {% endif %}
         </ul>
     </nav>
     <section class="content">
