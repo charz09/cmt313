@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 from . import teacher
 from ..models.assessment import Assessment
 from src import db
+from flask_login import login_required
 
 
 class NewAssessmentForm(FlaskForm):
@@ -17,12 +18,29 @@ class NewAssessmentForm(FlaskForm):
 
 
 # View All Assessments
-@teacher.route('/', methods=['GET', 'POST'])
-@teacher.route('/assessments', methods=['GET', 'POST'])
+@teacher.route('/', methods=['GET'])
+@teacher.route('/assessments', methods=['GET'])
+@login_required
 def index():
-    form = NewAssessmentForm()
     assessments = Assessment.query.all()
+    return render_template('teacher/assessments/index.html', assessments=assessments)
 
+# Show Assessment
+
+
+@teacher.route('/assessments/<int:id>', methods=['GET'])
+def show(id):
+    assessment = Assessment.query.filter_by(id=id).first()
+    return render_template('teacher/assessments/show.html', assessment=assessment)
+
+# New Assessment
+
+
+@teacher.route('/assessments/new', methods=['GET', 'POST'])
+@login_required
+def new():
+    form = NewAssessmentForm()
+    form.number_of_questions.data = 10
     if request.method == 'POST':
         if form.validate_on_submit():
             assessment = Assessment(name=form.name.data,
@@ -33,20 +51,7 @@ def index():
             db.session.add(assessment)
             db.session.commit()
             return redirect(url_for('teachers.index'))
-
-    return render_template('teacher/assessments/index.html', form=form, assessments=assessments)
-
-# # Show Assessment
-# @teacher.route('/assessments/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-# def show(id):
-#     return render_template('teacher/assessments/show.html')
-
-# # New Assessment
-# @teacher.route('/assessments/new', methods=['GET'])
-# def new():
-#     form = NewAssessmentForm()
-#     form.number_of_questions.data = 10
-#     return render_template('teacher/assessments/new.html', form=form)
+    return render_template('teacher/assessments/new.html', form=form)
 
 # # Create Assessment
 # @teacher.route('/assessments', methods=['POST'])

@@ -30,6 +30,7 @@ class Assessment(db.Model):
         self.description = description
         self.module = module
         self.number_of_questions = number_of_questions
+        # self.user_id = current_user
 
 #     @staticmethod
 #     def create(name):  # create new user
