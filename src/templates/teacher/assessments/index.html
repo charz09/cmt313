@@ -11,6 +11,11 @@
         </h1>
         <h4>{{ assessment.module}}</h4>
         <p>{{assessment.description}}</p>
+        <a href={{ url_for('teachers.edit', id=assessment.id) }}>Edit {{ assessment.name }}</a>
+
+        <form action={{ url_for('teachers.show', id=assessment.id) }} method="POST">
+            <button type="submit">Delete</button>
+        </form>
     </div>
 {% endfor %}
 

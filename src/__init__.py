@@ -13,6 +13,7 @@ def init_app():  # Factory function for creating app instance
 
     # configure app using the Config class defined in src/config.py
     app.config.from_object('src.config.Config')
+    # print("App Config: ", app.config, "\n #####################################")
 
     # initialise the database using the app instance
     db.init_app(app)

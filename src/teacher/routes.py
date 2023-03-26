@@ -17,6 +17,15 @@ class NewAssessmentForm(FlaskForm):
     submit = SubmitField('Log In')
 
 
+class EditAssessmentForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    visible = BooleanField('Visible')
+    description = TextAreaField('Description')
+    module = StringField('Module')
+    number_of_questions = IntegerField('Number of questions')
+    submit = SubmitField('Save Changes')
+
+
 # View All Assessments
 @teacher.route('/', methods=['GET'])
 @teacher.route('/assessments', methods=['GET'])
@@ -25,17 +34,24 @@ def index():
     assessments = Assessment.query.all()
     return render_template('teacher/assessments/index.html', assessments=assessments)
 
-# Show Assessment
+# Show an Assessment
 
 
-@teacher.route('/assessments/<int:id>', methods=['GET'])
+@teacher.route('/assessments/<int:id>', methods=['GET', 'POST'])
+@login_required
 def show(id):
+    print("method", request.method)
+    if request.method == 'POST':
+        assessment = Assessment.query.filter_by(id=id).first()
+        db.session.delete(assessment)
+        db.session.commit()
+        return redirect(url_for('teachers.index'))
+
     assessment = Assessment.query.filter_by(id=id).first()
     return render_template('teacher/assessments/show.html', assessment=assessment)
 
-# New Assessment
 
-
+# New Assessment form
 @teacher.route('/assessments/new', methods=['GET', 'POST'])
 @login_required
 def new():
@@ -53,26 +69,31 @@ def new():
             return redirect(url_for('teachers.index'))
     return render_template('teacher/assessments/new.html', form=form)
 
-# # Create Assessment
-# @teacher.route('/assessments', methods=['POST'])
-# def create():
-#     if form.validate_on_submit():
-#         assessment = Assessment(name=form.name.data, visible=form.visible.data, description=form.description.data)
-#     return render_template('teacher/assessments/index.html')
 
-# # Edit Assessment
-# @teacher.route('/assessments/<int:id>/edit', methods=['GET'])
-# def edit(id):
-#     return render_template('teacher/assessments/edit.html')
+# Edit Assessment
+@teacher.route('/assessments/<int:id>/edit', methods=['GET', 'POST'])
+def edit(id):
+    form = EditAssessmentForm()
+    assessment = Assessment.query.filter_by(id=id).first()
+    if request.method == 'POST':
+        print("route is a patch")
+        if form.validate_on_submit():
+            print("route is valid")
+            assessment.name = form.name.data
+            assessment.visible = form.visible.data
+            print("a:", assessment.description)
+            print("f:", form.description.data)
+            assessment.description = form.description.data
+            assessment.module = form.module.data
+            assessment.number_of_questions = form.number_of_questions.data
+            db.session.add(assessment)
+            db.session.commit()
+            return redirect(url_for('teachers.index'))
+    print(assessment.name)
+    form.name.data = assessment.name
+    form.visible.data = assessment.visible
+    form.description.data = assessment.description
+    form.module.data = assessment.module
+    form.number_of_questions.data = assessment.number_of_questions
 
-# # Update assessment
-# @teacher.route('/assessments/<int:id>/', methods=['PATCH'])
-# def update(id):
-#     # Update the assessment with id=id
-#     return render_template('teacher/assessments/index.html')
-
-# # Delete Assessment
-# @teacher.route('/assessments/<int:id>/', methods=['DELETE'])
-# def destroy(id):
-#     # Delete post with id=id
-#     return render_template('teacher/assessments/index.html')
+    return render_template('teacher/assessments/edit.html', form=form)
