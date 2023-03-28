@@ -2,27 +2,29 @@
 
 {% block content %}
 
-<div class="login-form">
-    <form method="POST">
-        {{ form.hidden_tag() }}
-
-        {{ form.name.label }} 
-        {{ form.name(class='input-field') }}
-
-        {{ form.module.label }} 
-        {{ form.module(class='input-field') }}
-
-        {{ form.number_of_questions.label }} 
-        {{ form.number_of_questions(class='input-field') }}
-
-        {{ form.description.label }} 
-        {{ form.description(class='input-field') }}
-
-        {{ form.visible.label }}
-        {{ form.visible }}
-
-        {{ form.submit(class='signup-button') }}
-    </form>
-</div>
+<section>
+    <div class="login-form">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+    
+            {{ form.name.label }} 
+            {{ form.name(class='input-field') }}
+    
+            {{ form.module.label }} 
+            {{ form.module(class='input-field') }}
+    
+            {{ form.number_of_questions.label }} 
+            {{ form.number_of_questions(class='input-field') }}
+    
+            {{ form.description.label }} 
+            {{ form.description(class='input-field') }}
+    
+            {{ form.visible.label }}
+            {{ form.visible }}
+    
+            {{ form.submit(class='signup-button') }}
+        </form>
+    </div>
+</section>
 
 {% endblock %}

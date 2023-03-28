@@ -2,21 +2,31 @@
 
 {% block content %}
 
-<a href="{{ url_for('teachers.new') }}">Create Assessment</a>
+<section class="assessments-section " >
+    <form action="{{ url_for('teachers.new') }}" method="get">
+        <button type="submit" class="primary-button">Create Assessment</button>
+    </form>
+    
+    {% for assessment in assessments %}
+        <div class="card">
+            <h2 class="card-title">
+                <a href={{ url_for('teachers.show', id=assessment.id) }}>{{ assessment.name}}</a>
+            </h2>
+            <h5>{{ assessment.module}}</h5>
+            <p>{{assessment.description}}</p>
 
-{% for assessment in assessments %}
-    <div class="assessment-container">
-        <h1>
-            <a href={{ url_for('teachers.show', id=assessment.id) }}>{{ assessment.name}}</a>
-        </h1>
-        <h4>{{ assessment.module}}</h4>
-        <p>{{assessment.description}}</p>
-        <a href={{ url_for('teachers.edit', id=assessment.id) }}>Edit {{ assessment.name }}</a>
+            <div class="buttons-container">
+                <form action={{ url_for('teachers.edit', id=assessment.id) }} method="POST">
+                    <button type="submit" class="secondary-button">Edit</button>
+                </form>
+                <form action={{ url_for('teachers.show', id=assessment.id) }} method="POST">
+                    <button type="submit" class="secondary-button">Delete</button>
+                </form>
+            </div>
+    
+        </div>
+    {% endfor %}
 
-        <form action={{ url_for('teachers.show', id=assessment.id) }} method="POST">
-            <button type="submit">Delete</button>
-        </form>
-    </div>
-{% endfor %}
+</section>
 
 {% endblock %}

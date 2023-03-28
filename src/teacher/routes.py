@@ -1,11 +1,11 @@
 from flask import render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
+from flask_login import login_required
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, IntegerField
 from wtforms.validators import DataRequired
-from . import teacher
-from ..models.assessment import Assessment
 from src import db
-from flask_login import login_required
+from ..models.assessment import Assessment
+from . import teacher
 
 
 class NewAssessmentForm(FlaskForm):
@@ -14,7 +14,7 @@ class NewAssessmentForm(FlaskForm):
     description = TextAreaField('Description')
     module = StringField('Module')
     number_of_questions = IntegerField('Number of questions')
-    submit = SubmitField('Log In')
+    submit = SubmitField('Create Assessment')
 
 
 class EditAssessmentForm(FlaskForm):
@@ -26,7 +26,7 @@ class EditAssessmentForm(FlaskForm):
     submit = SubmitField('Save Changes')
 
 
-# View All Assessments
+# VIEW ASSESSMENTS
 @teacher.route('/', methods=['GET'])
 @teacher.route('/assessments', methods=['GET'])
 @login_required
@@ -34,9 +34,7 @@ def index():
     assessments = Assessment.query.all()
     return render_template('teacher/assessments/index.html', assessments=assessments)
 
-# Show an Assessment
-
-
+# SHOW + DELETE
 @teacher.route('/assessments/<int:id>', methods=['GET', 'POST'])
 @login_required
 def show(id):
@@ -51,7 +49,7 @@ def show(id):
     return render_template('teacher/assessments/show.html', assessment=assessment)
 
 
-# New Assessment form
+# NEW ASSESSMENT
 @teacher.route('/assessments/new', methods=['GET', 'POST'])
 @login_required
 def new():
@@ -70,7 +68,7 @@ def new():
     return render_template('teacher/assessments/new.html', form=form)
 
 
-# Edit Assessment
+# EDIT ASSESSMENT
 @teacher.route('/assessments/<int:id>/edit', methods=['GET', 'POST'])
 def edit(id):
     form = EditAssessmentForm()

@@ -6,8 +6,8 @@
     <h1>Hello, {% if username %}{{ username }}{% else %} New user {% endif %}!</h1>
 </div> -->
 
-<div class="login-form">
-    <form method="POST">
+<div class="login-form-container">
+    <form method="POST" class="login-form">
         {{ form.hidden_tag() }}
         {{ form.username.label }} 
         {{ form.username(class='input-field') }}
@@ -16,8 +16,8 @@
         {{ form.confirm_password.label }} 
         {{ form.confirm_password(class='input-field') }}
         {{ form.role.label }}
-        {{ form.role }}
-        {{ form.submit(class='signup-button') }}
+        {{ form.role(class="radio-botton") }}
+        {{ form.submit(class='primary-button') }}
     </form>
 </div>
 
