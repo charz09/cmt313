@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
-    questions = db.relationship('Question', backref='user', lazy='dynamic')
+    # questions = db.relationship('Question', backref='user', lazy='dynamic')
 
     @property
     def password(self):

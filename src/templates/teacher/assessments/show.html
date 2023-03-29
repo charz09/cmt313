@@ -5,10 +5,21 @@
 <div class="login-form">
     <div class="assessment-container">
         <h1>
-            <a href={{ url_for('teachers.show_assessment', id=assessment.id) }}>{{ assessment.name}}</a>
+            {{ assessment.name}}
         </h1>
         <h4>{{ assessment.module}}</h4>
         <p>{{assessment.description}}</p>
+
+        <form action={{ url_for('teachers.new_question', id=assessment.id) }} method="get">
+            <button type="submit" class="primary-button">Add a Question</button>
+        </form>
+
+        {% for question in assessment.questions %}
+        <div class="question">
+            <p>{{question.title}}</p>
+            <p>{{question.content}}</p>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

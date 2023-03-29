@@ -27,7 +27,22 @@ class EditAssessmentForm(FlaskForm):
     submit = SubmitField('Save Changes')
 
 
+class NewQuestionForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content')
+    number_of_answers = IntegerField('Number of answers')
+    submit = SubmitField('Create Question')
+
+
+class EditQuestionForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content')
+    number_of_answers = IntegerField('Number of answers')
+    submit = SubmitField('Save Changes')
+
 # VIEW ASSESSMENTS
+
+
 @teacher.route('/', methods=['GET'])
 @teacher.route('/assessments', methods=['GET'])
 @login_required
@@ -44,6 +59,7 @@ def show_assessment(id):
     print("method", request.method)
     if request.method == 'POST':
         assessment = Assessment.query.filter_by(id=id).first()
+        # assessment.questions
         db.session.delete(assessment)
         db.session.commit()
         return redirect(url_for('teachers.assessments_index'))
@@ -70,8 +86,25 @@ def new_assessment():
             return redirect(url_for('teachers.assessments_index'))
     return render_template('teacher/assessments/new.html', form=form)
 
+# NEW QUESTI
 
-# EDIT ASSESSMENT
+
+@teacher.route('/assessments/<int:id>/new', methods=['GET', 'POST'])
+@login_required
+def new_question(id):
+    form = NewQuestionForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            question = Question(title=form.title.data,
+                                content=form.content.data,
+                                number_of_answers=form.number_of_answers.data,
+                                assessment_id=id)
+            db.session.add(question)
+            db.session.commit()
+            return redirect(url_for('teachers.show_assessment', id=id))
+    return render_template('teacher/questions/new.html', form=form)
+
+# # EDIT ASSESSMENT
 @teacher.route('/assessments/<int:id>/edit', methods=['GET', 'POST'])
 def edit_assessment(id):
     form = EditAssessmentForm()
@@ -96,59 +129,7 @@ def edit_assessment(id):
     return render_template('teacher/assessments/edit.html', form=form)
 
 
-# VIEW QUESTIONS
-@teacher.route('/questions', methods=['GET'])
-@login_required
-def questions_index():
-    questions = Question.query.all()
-    return render_template('teacher/questions/index.html', questions=questions)
-
-
-# SHOW + DELETE QUESTION
-@teacher.route('/questions/<int:id>', methods=['GET', 'POST'])
-@login_required
-def show_question(id):
-    if request.method == 'POST':
-        question = Question.query.filter_by(id=id).first()
-        db.session.delete(question)
-        db.session.commit()
-        return redirect(url_for('teachers.questions_index'))
-
-    question = question.query.filter_by(id=id).first()
-    return render_template('teacher/questions/show.html', question=question)
-
-
-class NewQuestionForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content')
-    number_of_answers = IntegerField('Number of answers')
-    submit = SubmitField('Create Question')
-
-
-class EditQuestionForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content')
-    number_of_answers = IntegerField('Number of answers')
-    submit = SubmitField('Save Changes')
-
-# NEW QUESTION
-@teacher.route('/questions/new', methods=['GET', 'POST'])
-@login_required
-def new_question():
-    form = NewQuestionForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            question = Question(title=form.title.data,
-                                content=form.content.data,
-                                number_of_answers=form.number_of_answers.data)
-            db.session.add(question)
-            db.session.commit()
-            return redirect(url_for('teachers.questions_index'))
-    return render_template('teacher/questions/new.html', form=form)
-
-# EDIT ASSESSMENT
-
-
+# # EDIT ASSESSMENT
 @teacher.route('/questions/<int:id>/edit', methods=['GET', 'POST'])
 def edit_question(id):
     form = EditQuestionForm()

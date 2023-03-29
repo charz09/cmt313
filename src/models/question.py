@@ -1,5 +1,6 @@
 from src import db
 import datetime
+from flask_login import current_user
 
 
 class Question(db.Model):
@@ -8,7 +9,8 @@ class Question(db.Model):
     title = db.Column(db.String(64), unique=True, index=True)
     content = db.Column(db.Text)
     number_of_answers = db.Column(db.Integer, default=10)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
 #     # @property
@@ -22,11 +24,12 @@ class Question(db.Model):
 #     # def verify_password(self, password):
 #     #     return check_password_hash(self.password_hash, password)
 
-    def __init__(self, title: str, content: str, number_of_answers: int):
+    def __init__(self, title: str, content: str, number_of_answers: int, assessment_id: int):
         self.title = title
         self.content = content
         self.number_of_answers = number_of_answers
-        # self.user_id = current_user
+        self.assessment_id = assessment_id
+        # self.created_by = current_user.id
 
 #     @staticmethod
 #     def create(name):  # create new user

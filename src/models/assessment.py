@@ -11,6 +11,8 @@ class Assessment(db.Model):
     module = db.Column(db.String(64), index=True)
     number_of_questions = db.Column(db.Integer, default=10)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    questions = db.relationship(
+        'Question', backref='assessment', lazy='dynamic')
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
 #     # @property
