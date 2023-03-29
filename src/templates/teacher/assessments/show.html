@@ -5,7 +5,7 @@
 <div class="login-form">
     <div class="assessment-container">
         <h1>
-            <a href={{ url_for('teachers.show', id=assessment.id) }}>{{ assessment.name}}</a>
+            <a href={{ url_for('teachers.show_assessment', id=assessment.id) }}>{{ assessment.name}}</a>
         </h1>
         <h4>{{ assessment.module}}</h4>
         <p>{{assessment.description}}</p>

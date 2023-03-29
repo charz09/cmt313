@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+    <div class="login-form">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+    
+            {{ form.title.label }} 
+            {{ form.title(class='input-field') }}
+    
+            {{ form.content.label }} 
+            {{ form.content(class='input-field') }}
+    
+            {{ form.number_of_answers.label }} 
+            {{ form.number_of_answers(class='input-field') }}
+    
+            {{ form.submit(class='signup-button') }}
+        </form>
+    </div>
+</section>
+
+{% endblock %}

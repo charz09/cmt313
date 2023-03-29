@@ -139,7 +139,11 @@ form {
   cursor: pointer;
 }
 
+.secondary-button:hover {
+  background-color: var(--primary-hover);
+}
+
 .assessments-section {
-  width: clamp(40rem, 80%, 90rem);
+  width: clamp(20rem, 80%, 90rem);
   margin: auto;
 }

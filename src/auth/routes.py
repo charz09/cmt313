@@ -33,9 +33,9 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             if user.role.name == "Student":
-                return redirect(url_for('students.index'))
+                return redirect(url_for('students.assessments_index'))
             else:
-                return redirect(url_for('teachers.index'))
+                return redirect(url_for('teachers.assessments_index'))
 
     return render_template('auth/login.html', form=form, username=session.get('username'), password=session.get('password'))
 
@@ -55,7 +55,7 @@ def register():
             if user.role.name == "Student":
                 return redirect(url_for('students.index'))
             else:
-                return redirect(url_for('teachers.index'))
+                return redirect(url_for('teachers.assessments_index'))
 
     return render_template('auth/register.html', form=form)
 

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="login-form">
+    <div class="assessment-container">
+        <h1>
+            <a href={{ url_for('teachers.show_question', id=assessment.id) }}>{{ question.name}}</a>
+        </h1>
+        <h4>{{ question.module}}</h4>
+        <p>{{question.description}}</p>
+    </div>
+</div>
+
+{% endblock %}

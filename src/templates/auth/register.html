@@ -5,20 +5,21 @@
 <!-- <div class="page-header">
     <h1>Hello, {% if username %}{{ username }}{% else %} New user {% endif %}!</h1>
 </div> -->
-
-<div class="login-form-container">
-    <form method="POST" class="login-form">
-        {{ form.hidden_tag() }}
-        {{ form.username.label }} 
-        {{ form.username(class='input-field') }}
-        {{ form.password.label }} 
-        {{ form.password(class='input-field') }}
-        {{ form.confirm_password.label }} 
-        {{ form.confirm_password(class='input-field') }}
-        {{ form.role.label }}
-        {{ form.role(class="radio-botton") }}
-        {{ form.submit(class='primary-button') }}
-    </form>
-</div>
+<section class="center-child">
+    <div class="login-form-container">
+        <form method="POST" class="login-form">
+            {{ form.hidden_tag() }}
+            {{ form.username.label }} 
+            {{ form.username(class='input-field') }}
+            {{ form.password.label }} 
+            {{ form.password(class='input-field') }}
+            {{ form.confirm_password.label }} 
+            {{ form.confirm_password(class='input-field') }}
+            {{ form.role.label }}
+            {{ form.role(class="radio-botton") }}
+            {{ form.submit(class='primary-button') }}
+        </form>
+    </div>
+</section>
 
 {% endblock %}

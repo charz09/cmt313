@@ -2,14 +2,12 @@ from src import db
 import datetime
 
 
-class Assessment(db.Model):
-    __tablename__ = 'assessments'
+class Question(db.Model):
+    __tablename__ = 'questions'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True, index=True)
-    visible = db.Column(db.Boolean, default=True)
-    description = db.Column(db.Text)
-    module = db.Column(db.String(64), index=True)
-    number_of_questions = db.Column(db.Integer, default=10)
+    title = db.Column(db.String(64), unique=True, index=True)
+    content = db.Column(db.Text)
+    number_of_answers = db.Column(db.Integer, default=10)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
@@ -24,12 +22,10 @@ class Assessment(db.Model):
 #     # def verify_password(self, password):
 #     #     return check_password_hash(self.password_hash, password)
 
-    def __init__(self, name: str, visible: bool, description: str, module: str, number_of_questions: int):
-        self.name = name
-        self.visible = visible
-        self.description = description
-        self.module = module
-        self.number_of_questions = number_of_questions
+    def __init__(self, title: str, content: str, number_of_answers: int):
+        self.title = title
+        self.content = content
+        self.number_of_answers = number_of_answers
         # self.user_id = current_user
 
 #     @staticmethod
