@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from src import app
+from flask import current_app
 from flask_login import login_required
 
 student = Blueprint('student', __name__)
