@@ -37,3 +37,11 @@
     background-color: rgb(130, 232, 98);
     color: black;
   }
+
+  .alert-unsuccessful {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(225, 100, 96);
+    color: black;
+  }
