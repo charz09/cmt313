@@ -1,5 +1,5 @@
 from src import db
-
+from src.models.user import User
 
 class Assessment(db.Model):
     __tablename__ = 'assessments'
