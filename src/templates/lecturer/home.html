@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Welcome to the lecturer page.</h2>
+<!--button linking to create assessment-->
+<a href="{{ url_for('lecturer.create_assessment') }}">Create Assessment</a>
+{% endblock content %}

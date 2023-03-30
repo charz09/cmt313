@@ -27,7 +27,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('student.home'))
         else:
             flash('Login Unsuccessful. Please check your username and password.', 'unsuccessful')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('entry/login.html', title='Login', form=form)
 
 
 @entry.route("/register", methods=['GET', 'POST'])
@@ -51,7 +51,7 @@ def register():
         db.session.commit()
         flash(f'Your account has been created, you are now able to login', 'success')
         return redirect(url_for('entry.login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('entry/register.html', title='Register', form=form)
 
 
 @entry.route("/logout")

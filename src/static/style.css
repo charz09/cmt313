@@ -27,7 +27,7 @@
   }
 
   .form-button {
-    width: 4vw;
+    max-width: fit-content;
   }
 
   .alert-success {
