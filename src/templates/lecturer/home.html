@@ -1,6 +1,15 @@
 {% extends "layout.html" %}
+
 {% block content %}
-<h2>Welcome to the lecturer page.</h2>
-<!--button linking to create assessment-->
-<a href="{{ url_for('lecturer.create_assessment') }}">Create Assessment</a>
+  <h2>Welcome to the lecturer page.</h2>
+
+  <!-- link to create assessment -->
+  <a href="{{ url_for('lecturer.create_assessment') }}">Create Assessment</a>
+
+  <h3>Assessments:</h3>
+  <ul>
+    {% for assessment in assessments %}
+      <li>{{ assessment.title }}</li>
+    {% endfor %}
+  </ul>
 {% endblock content %}
