@@ -21,7 +21,6 @@ def create_assessment():
     form = CreateAssessmentForm()
     if form.validate_on_submit():
         assessment = Assessment(title=form.title.data, description=form.description.data, user_id=current_user.id)
-        question = Question(text=form.text.data, content=form.content.data, assessment_id=assessment.id)
         db.session.add(assessment)
         db.session.commit()
         flash('Assessment created successfully!')

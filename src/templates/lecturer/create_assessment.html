@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="position">
-<div class="content-section">
+<div class="assessment-section">
   <form method="POST" action="">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
@@ -16,7 +16,7 @@
       </div>
     </fieldset>
     <div class="form-group">
-        {{ form.submit (class='form-button') }}
+        {{ form.submit (class='assessment-button') }}
     </div>
   </form>
 </div>

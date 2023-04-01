@@ -7,4 +7,4 @@ student = Blueprint('student', __name__)
 @student.route("/student")
 @login_required
 def home():
-    return render_template('student.html')
+    return render_template('student/home.html')

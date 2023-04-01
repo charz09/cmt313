@@ -1,15 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <h2>Welcome to the lecturer page.</h2>
 
-  <!-- link to create assessment -->
-  <a href="{{ url_for('lecturer.create_assessment') }}">Create Assessment</a>
-
-  <h3>Assessments:</h3>
-  <ul>
+  <!-- list of assessments -->
+  <div class="lecturer-content">
+    <div class="assessment-box">
+    <div class="lecturer-assessment">
+  <h1>Assessments</h3>
     {% for assessment in assessments %}
-      <li>{{ assessment.title }}</li>
+    <div class="assessment-list">
+    <h2>{{ assessment.title }}</h2>
+    <p>{{ assessment.description }}</p>
+    </div>
     {% endfor %}
-  </ul>
+    <div class="button-position">
+    <a href="{{ url_for('lecturer.create_assessment') }}" class="button-large">Create Assessment</a>
+      </div>
+  </div>
+    </div>
+  </div>
 {% endblock content %}

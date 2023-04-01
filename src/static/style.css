@@ -3,6 +3,30 @@
     color: #333333;
   }
 
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    padding: 20px;
+  }
+
+  a {
+    text-decoration: none;
+    list-style-type: none;
+    color: #333333;
+  }
+
+  .nav-right {
+    margin: 0 20px;
+  }
+
+  .nav-left {
+    margin-right: 55%;
+  }
+  
   .content-section {
     background: #ffffff;
     padding: 10px 20px;
@@ -17,6 +41,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 30px;
   }
 
   .form-group {
@@ -24,10 +49,28 @@
     flex-direction: column;
     justify-content: center;
     margin-bottom: 10px;
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
   }
 
   .form-button {
     max-width: fit-content;
+    background-color: #444040;
+    border: none;
+    color: white;
+    padding: 5px 16px;
+    margin-top: 5px;
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 0.8em;
+    font-weight: 400;
+  }
+
+  .form-button:hover {
+    background-color: #ffffff;
+    border: 1px solid #444040;
+    color: #444040;
+    cursor: pointer;
   }
 
   .alert-success {
@@ -44,4 +87,94 @@
     justify-content: center;
     background-color: rgb(225, 100, 96);
     color: black;
+  }
+
+  .lecturer-content {
+    /*align the content centrally*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+  }
+
+  .assessment-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #9baec74e;
+    padding: 10px 20px;
+    height: 75vh;
+  }
+
+  .assessment-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    width: 40vw;
+  }
+
+  .assessment-button {
+    max-width: fit-content;
+    background-color: #444040;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    margin-top: 5px;
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 0.8em;
+    font-weight: 400;
+  }
+
+  .assessment-button:hover {
+    background-color: #ffffff;
+    border: 1px solid #444040;
+    color: #444040;
+    cursor: pointer;
+  }
+
+  .lecturer-assessment {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .lecturer-assessment h1 {
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 1.3em;
+    font-weight: 400;
+  }
+
+  .assessment-list {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #444040;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    width: 60vw;
+  }
+
+  .assessment-list h2 {
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 1.3em;
+    font-weight: 400;
+  }
+
+  .button-large {
+    background-color: #444040;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    margin-top: 5px;
+  }
+
+  .button-large:hover {
+    background-color: #ffffff;
+    border: 1px solid #444040;
+    color: #444040;
+  }
+
+  .button-position {
+    padding-top: 10px;
   }
