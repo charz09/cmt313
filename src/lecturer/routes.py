@@ -12,7 +12,7 @@ lecturer = Blueprint('lecturer', __name__)
 @login_required
 def home():
     assessments = Assessment.query.filter_by(user_id=current_user.id).all()
-    return render_template('lecturer/home.html', assessments = assessments)
+    return render_template('lecturer/assessment/index.html', assessments = assessments)
 
 #create assessments
 @lecturer.route('/lecturer/create_assessment', methods=['GET', 'POST'])
@@ -25,10 +25,19 @@ def create_assessment():
         db.session.commit()
         flash('Assessment created successfully!')
         return redirect(url_for('lecturer.home'))
-    return render_template('lecturer/create_assessment.html', form=form)
+    return render_template('lecturer/assessment/create.html', form=form)
+
+#view assessment
+
+@lecturer.route('/lecturer/assessment/<int:assessment_id>', methods=['GET', 'POST'])
+@login_required
+def view_assessment(assessment_id):
+    assessment = Assessment.query.get_or_404(assessment_id)
+    questions = Question.query.filter_by(assessment_id=assessment.id).all()
+    return render_template('lecturer/assessment/view.html', assessment=assessment, questions=questions)
 
 #create questions
-@lecturer.route('/assessment/<int:assessment_id>/create_question', methods=['GET', 'POST'])
+@lecturer.route('/lecturer/assessment/<int:assessment_id>/create_question', methods=['GET', 'POST'])
 @login_required
 def create_question(assessment_id):
     assessment = Assessment.query.get_or_404(assessment_id)
@@ -40,4 +49,4 @@ def create_question(assessment_id):
         
         flash('Question created successfully!')
         return redirect(url_for('lecturer.home', assessment_id=assessment.id))
-    return render_template('lecturer/create_question.html', form=form, assessment=assessment)
+    return render_template('lecturer/question/create.html', form=form, assessment=assessment)

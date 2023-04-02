@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+ <div class="position">
+    <main class="lecturer-assessment">
+    <article class="assessment-list">
+    <h2>{{ assessment.title }}</h2>
+    <p>{{ assessment.description }}</p>
+    {% for question in questions %}
+    <p>{{ question.text }}</p>
+    <p>{{ question.content }}</p>
+    {% endfor %}
+    </article>
+  </main>
+  </div>
+  
+{% endblock content %}
