@@ -8,13 +8,13 @@
   <h1>Assessments</h3>
     {% for assessment in assessments %}
     {% set view_url = url_for('lecturer.view_assessment', assessment_id=assessment.id) %}
-    <article class="assessment-list" onclick="location.href='{{ view_url }}';" style="cursor: pointer;">
+    <article class="view-assessment" onclick="location.href='{{ view_url }}';" style="cursor: pointer;">
     <h2>{{ assessment.title }}</h2>
     <p>{{ assessment.description }}</p>
     </article>
     {% endfor %}
-    <div class="create-button-position">
-    <a href="{{ url_for('lecturer.create_assessment') }}" class="create-assessment-button">Create Assessment</a>
+    <div class="assessment-button-position">
+    <a href="{{ url_for('lecturer.create_assessment') }}" class="assessment-button">Create Assessment</a>
       </div>
     </main>
   </div>

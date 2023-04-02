@@ -4,9 +4,18 @@
 
  <div class="position">
     <main class="lecturer-assessment">
-    <article class="assessment-list">
+    <article class="view-assessment">
     <h2>{{ assessment.title }}</h2>
     <p>{{ assessment.description }}</p>
+    <div class="assessment-button-position">
+      <a href="{{ url_for('lecturer.edit_assessment', assessment_id=assessment.id) }}" class="edit-assessment-button"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+      <a href="{{ url_for('lecturer.delete_assessment', assessment_id=assessment.id) }}" class="edit-assessment-button"><i class="fa-solid fa-delete-left fa-lg"></i></a>
+        </div>
+    </article>
+    <div class="assessment-button-position" style="padding-bottom: 30px;">
+      <a href="{{ url_for('lecturer.create_question', assessment_id=assessment.id) }}" class="assessment-button">Add Question</a>
+        </div>
+    <article class="view-questions">
     {% for question in questions %}
     <p>{{ question.text }}</p>
     <p>{{ question.content }}</p>

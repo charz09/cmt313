@@ -2,6 +2,7 @@
     background: #9baec732;
     color: #667992;
     margin: 0;
+    height: 100vh;
   }
 
   .navbar {
@@ -134,22 +135,33 @@
     font-weight: 400;
   }
 
-  .assessment-list {
+  .view-assessment {
     background-color: #ffffff;
     padding: 10px 20px;
     border: 1px solid #667992;
     border-radius: 3px;
     margin-bottom: 20px;
     width: 60vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  .assessment-list h2 {
+  .view-questions {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    width: 60vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .view-assessment h2 {
     font-family: 'Tiro Devanagari Marathi', sans-serif;
     font-size: 1.3em;
     font-weight: 400;
   }
 
-  .create-assessment-button {
+  .assessment-button {
     background-color: #667992;
     border: none;
     color: white;
@@ -157,12 +169,17 @@
     margin-top: 5px;
   }
 
-  .create-assessment-button:hover {
+  .assessment-button:hover {
     background-color: #ffffff;
     border: 1px solid #667992;
     color: #667992;
   }
 
-  .create-button-position {
+  .edit-assessment-button {
+    color: #667992;
+    padding: 5px 16px;
+    margin-top: 0px;
+  }
+  .assessment-button-position {
     padding-top: 10px;
   }

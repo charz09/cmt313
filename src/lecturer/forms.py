@@ -8,6 +8,11 @@ class CreateAssessmentForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     submit = SubmitField('Create Assessment')
 
+class EditAssessmentForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    submit = SubmitField('Update Assessment')
+    
 class CreateQuestionForm(FlaskForm):
     text = StringField('Question Text', validators=[DataRequired(), Length(min=5, max=100)])
     content = TextAreaField('Content', validators=[DataRequired()])
