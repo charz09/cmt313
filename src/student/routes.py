@@ -9,9 +9,9 @@ student = Blueprint('student', __name__)
 def home():
     return render_template('student/home.html')
 
-@student.route("/view_assessments")
+@student.route("/take_formative_assessment")
 @login_required
 def take_formative_assessment():
     assessments = Assessment.query.all()
-    return render_template('student/view_assessments.html', assessments=assessments)
-
+    return render_template('student/take_formative_assessment.html', assessments=assessments)
+    
