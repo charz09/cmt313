@@ -31,7 +31,7 @@
   .nav-left {
     margin-right: 55%;
   }
-  
+
   .content-section {
     background: #ffffff;
     padding: 10px 20px;
@@ -180,6 +180,54 @@
     padding: 5px 16px;
     margin-top: 0px;
   }
+
   .assessment-button-position {
     padding-top: 10px;
   }
+
+
+  /* ***********************************MOHAMED ELMI ******************* */
+
+  .options {
+    padding-left: 40%;
+  }
+
+  .option-button {
+    background-color: rgb(14, 14, 238);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 200px;
+    width: 200px;
+  }
+
+
+  .assessment-box {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    background-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.assessment-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.attempt-button {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 20%;
+    text-align: center;
+}
