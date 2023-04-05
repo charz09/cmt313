@@ -1,21 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
-    TextAreaField
+    TextAreaField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, \
     Length
-from app.models import User
+from src.models import User
 
 class LoginForm(FlaskForm):
-    username = StringField('Student ID', validators=[DataRequired()])
+    username = StringField('ID', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign in')
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Student ID', validators=[DataRequired()])
+    username = StringField('ID', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
+    role = SelectField('Role', choices=[('Student', 'Student'), ('Lecturer', 'Lecturer')], validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
@@ -46,19 +47,15 @@ class ResetPasswordForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
+    lastname = StringField('Last Name', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    role = SelectField('Role', choices=[('Student', 'Student'), ('Lecturer', 'Lecturer')], validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def __init__(self, original_username, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
 
-    def validate_username(self, username):
-        if username.data != self.original_username:
-            user = User.query.filter_by(username=self.username.data).first()
-            if user is not None:
-                raise ValidationError('Please use a different username.')
-            
 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
