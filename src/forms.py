@@ -6,13 +6,13 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, \
 from src.models import User
 
 class LoginForm(FlaskForm):
-    username = StringField('ID', validators=[DataRequired()])
+    username = StringField('ID', validators=[DataRequired()], Length(min=7, max=7))
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign in')
 
 class RegistrationForm(FlaskForm):
-    username = StringField('ID', validators=[DataRequired()])
+    username = StringField('ID', validators=[DataRequired(), Length(min=7, max=7)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
