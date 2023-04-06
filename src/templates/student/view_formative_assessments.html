@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2 style="text-align: center;">Formative Assessments</h2>
+    {% for assessment in assessments %}
+        {% if assessment.assessment_type == 'formative' %}
+            <div class="assessment-box">
+                <h3 class="assessment-title">{{ assessment.title }}</h3>
+                <p>{{ assessment.description }}</p>
+                <a href="" class="attempt-button">Attempt Assessment</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
