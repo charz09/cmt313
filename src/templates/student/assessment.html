@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="assessment-container">
+        <h2 class="assessment-title">{{ assessment.title }}</h2>
+        <p class="assessment-description">{{ assessment.description }}</p>
+        
+        <form>
+            {% for question in questions %}
+                <div class="question-box">
+                    <p class="question-text">{{ question.text }}</p>
+                    {% if question.question_type == 'multiple_choice' %}
+                        <div class="choice-container">
+                            {% for choice in question.choices %}
+                                <label class="choice-label">
+                                    <input type="radio" name="{{ question.id }}" value="{{ choice.id }}" class="choice-input">
+                                    <span class="choice-text">{{ choice.text }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="answer-container">
+                            {% if question.question_type == 'true_false' %}
+                                <label class="answer-label">
+                                    <input type="radio" name="{{ question.id }}" value="True" class="answer-input">
+                                    <span class="answer-text">True</span>
+                                </label>
+                                <label class="answer-label">
+                                    <input type="radio" name="{{ question.id }}" value="False" class="answer-input">
+                                    <span class="answer-text">False</span>
+                                </label>
+                            {% elif question.question_type == 'fill_in_the_blank' %}
+                                <input type="text" name="{{ question.id }}" class="answer-input" placeholder="Enter your answer...">
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="submit-button">Submit Assessment</button>
+        </form>
+    </div>
+{% endblock %}
+
+

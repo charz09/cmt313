@@ -1,24 +1,56 @@
 {% extends "layout.html" %}
+
 {% block content %}
 <div class="position">
-<div class="content-section">
-  <form method="POST" action="">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-      <legend>Create Question</legend>
+  <div class="content-section">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend>Create Question</legend>
+        <div class="form-group">
+          {{ form.question.label }}
+          {{ form.question(class="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.question_type.label }}
+          {{ form.question_type(class="form-control", placeholder="Select Question Type") }}
+        </div>
+        <div class="form-group">
+          {{ form.answer.label }}
+          {{ form.answer(class="form-control") }}
+        </div>
+        <div class="choices" style="display: none">
+          <div class="form-group">
+            {{ form.choice_1.label }}
+            {{ form.choice_1(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.choice_2.label }}
+            {{ form.choice_2(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.choice_3.label }}
+            {{ form.choice_3(class="form-control") }}
+          </div>
+        </div>
+      </fieldset>
       <div class="form-group">
-        {{ form.text.label }}
-        {{ form.text(class="form-control") }}
+          {{ form.submit (class='form-button') }}
       </div>
-      <div class="form-group">
-        {{ form.content.label }}
-        {{ form.content(class="form-control") }}
-      </div>
-    </fieldset>
-    <div class="form-group">
-        {{ form.submit (class='form-button') }}
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
-</div>
+
+<script>
+  var questionType = document.getElementById('question_type');
+  var choicesDiv = document.querySelector('.choices');
+
+  questionType.addEventListener('change', function() {
+    if (this.value == 'multiple_choice') {
+      choicesDiv.style.display = 'block';
+    } else {
+      choicesDiv.style.display = 'none';
+    }
+  });
+</script>
 {% endblock content %}

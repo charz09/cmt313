@@ -3,9 +3,30 @@
 {% block content %}
     <h2>Welcome to the student page.</h2>
     <div class="options">
-        <form action="{{ url_for('student.take_formative_assessment') }}">
+        <form action="{{ url_for('student.view_assessments') }}">
             <button type="submit" class="option-button">View Assessments</button>
         </form>
 
+        <form action="{{ url_for('student.view_formative_assessments') }}" >
+            <button type="submit" class="option-button">Attempt a Formative Assessment</button>
+        </form>
+
+        <form action="{{ url_for('student.submit_summative_assessment') }}">
+            <button type="submit" class="option-button">Submit Summative Assessment</button>
+        </form>
+
+        <form >
+            <button type="submit" class="option-button">Feedback</button>
+        </form>
     </div>
 {% endblock %}
+
+<!-- 
+action="{{ url_for('student.view_formative_assessments') }}"
+
+action="{{ url_for('student.submit_summative_assessment') }}"
+
+action="{{ url_for('student.view_feedback') }}" -->
+
+
+

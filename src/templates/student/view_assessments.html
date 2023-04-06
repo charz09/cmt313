@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2 style="text-align: center;">Assessments</h2>
+    {% for assessment in assessments %}
+    <div class="assessment-box">
+        <h3 class="assessment-title">{{ assessment.title }}</h3>
+        <p>{{ assessment.description }}</p>
+        <a href="{{ url_for('student.attempt_assessment', assessment_id=assessment.id) }}" class="attempt-button">Attempt Assessment</a>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+
+
+
+
