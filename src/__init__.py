@@ -20,6 +20,8 @@ def init_app():  # Factory function for creating app instance
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
+    # taken from other project
+    login_manager.login_message_category = 'unsuccessful'
 
     with app.app_context():
         # this import allows us to create the table if it does not exist

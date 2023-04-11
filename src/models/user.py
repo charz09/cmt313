@@ -1,9 +1,13 @@
 
 from src import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, login_manager
 from .role import Role
 from .assessment import Assessment
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class User(UserMixin, db.Model):
@@ -13,7 +17,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
-    # questions = db.relationship('Question', backref='user', lazy='dynamic')
+    questions = db.relationship('Question', backref='user', lazy='dynamic')
 
     @property
     def password(self):
