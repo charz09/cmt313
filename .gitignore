@@ -3,4 +3,5 @@ venv
 x*
 .DS_Store
 logs*
+.vscode
 
