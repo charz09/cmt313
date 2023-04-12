@@ -48,60 +48,61 @@ def new_assessment():
         return redirect(url_for('teachers.assessments_index'))
     return render_template('teacher/assessments/new.html', form=form)
 
-# NEW QUESTION
-@teacher.route('/assessments/<int:id>/new', methods=['GET', 'POST'])
-@login_required
-def new_question(id):
-    form = NewQuestionForm()
-    if form.validate_on_submit():
-        question = Question(title=form.title.data,
-                            content=form.content.data,
-                            number_of_answers=form.number_of_answers.data,
-                            assessment_id=id)
-        db.session.add(question)
-        db.session.commit()
-        return redirect(url_for('teachers.show_assessment', id=id))
-    return render_template('teacher/questions/new.html', form=form)
 
 # EDIT ASSESSMENT
 @teacher.route('/assessments/<int:id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit_assessment(id):
     form = EditAssessmentForm()
-    assessment = Assessment.query.filter_by(id=id).first()
+    assessment = Assessment.query.get_or_404(id)
     if form.validate_on_submit():
         assessment.name = form.name.data
         assessment.visible = form.visible.data
         assessment.description = form.description.data
         assessment.module = form.module.data
-        assessment.number_of_questions = form.number_of_questions.data
         db.session.add(assessment)
         db.session.commit()
         return redirect(url_for('teachers.assessments_index'))
-            
+
     form.name.data = assessment.name
     form.visible.data = assessment.visible
     form.description.data = assessment.description
     form.module.data = assessment.module
-    form.number_of_questions.data = assessment.number_of_questions
 
     return render_template('teacher/assessments/edit.html', form=form)
 
 
-# EDIT ASSESSMENT
-@teacher.route('/questions/<int:id>/edit', methods=['GET', 'POST'])
-def edit_question(id):
-    form = EditQuestionForm()
-    question = Question.query.filter_by(id=id).first()
-    if form.validate_on_submit():
-        question.title = form.title.data
-        question.content = form.content.data
-        question.number_of_answers = form.number_of_answers.data
-        db.session.add(question)
-        db.session.commit()
-        return redirect(url_for('teachers.questions_index'))
+# # NEW QUESTION
+# @teacher.route('/assessments/<int:id>/new_question', methods=['GET', 'POST'])
+# @login_required
+# def new_question(id):
+#     form = NewQuestionForm()
+#     if form.validate_on_submit():
+#         question = Question(title=form.title.data,
+#                             content=form.content.data,
+#                             number_of_answers=form.number_of_answers.data,
+#                             assessment_id=id)
+#         db.session.add(question)
+#         db.session.commit()
+#         flash('Question created successfully!')
+#         return redirect(url_for('teachers.show_assessment', id=id))
+#     return render_template('teacher/questions/new.html', form=form)
 
-    form.title.data = question.title
-    form.content.data = question.content
-    form.number_of_answers.data = question.number_of_answers
+# # EDIT QUESTION
+# @teacher.route('/questions/<int:id>/edit', methods=['GET', 'POST'])
+# def edit_question(id):
+#     form = EditQuestionForm()
+#     question = Question.query.filter_by(id=id).first()
+#     if form.validate_on_submit():
+#         question.title = form.title.data
+#         question.content = form.content.data
+#         question.number_of_answers = form.number_of_answers.data
+#         db.session.add(question)
+#         db.session.commit()
+#         return redirect(url_for('teachers.questions_index'))
 
-    return render_template('teacher/questions/edit.html', form=form)
+#     form.title.data = question.title
+#     form.content.data = question.content
+#     form.number_of_answers.data = question.number_of_answers
+
+#     return render_template('teacher/questions/edit.html', form=form)

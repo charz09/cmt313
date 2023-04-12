@@ -1,5 +1,6 @@
 from src import db
 
+
 class Assessment(db.Model):
     __tablename__ = 'assessments'
     id = db.Column(db.Integer, primary_key=True)
@@ -9,7 +10,7 @@ class Assessment(db.Model):
     visible = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text)
     module = db.Column(db.String(64), index=True)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     questions = db.relationship(
         'Question', backref='assessment', lazy='dynamic')
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -23,7 +24,8 @@ class Assessment(db.Model):
 
     @staticmethod
     def create(name, visible, description, module, assessment_type):  # create new user
-        new_assessment = Assessment(name=name, visible=visible, description=description, module=module, assessment_type=assessment_type)
+        new_assessment = Assessment(
+            name=name, visible=visible, description=description, module=module, assessment_type=assessment_type)
         db.session.add(new_assessment)
         db.session.commit()
 
