@@ -1,9 +1,9 @@
-from flask_login import logout_user, login_required, login_user, current_user, flash
+from flask_login import logout_user, login_required, login_user, current_user
 from . import auth  # auth is the current blueprint
 from ..models.user import User
 from ..models.role import Role
-from forms import LoginForm, RegisterForm
-from flask import render_template, session, redirect, url_for
+from .forms import LoginForm, RegisterForm
+from flask import render_template, session, redirect, url_for,  flash
 from src import db
 
 
@@ -14,15 +14,17 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-        
+
         if current_user.is_authenticated:
             if user.role.name == "Student":
                 return redirect(url_for('students.assessments_index'))
             else:
                 return redirect(url_for('teachers.assessments_index'))
-            flash(f'You have been logged in as a {current_user.role.name}!', 'success')
+            flash(
+                f'You have been logged in as a {current_user.role.name}!', 'success')
         else:
-            flash('Login Unsuccessful. Please check your username and password.', 'unsuccessful')
+            flash(
+                'Login Unsuccessful. Please check your username and password.', 'unsuccessful')
     return render_template('auth/login.html', form=form, username=session.get('username'), password=session.get('password'))
 
 

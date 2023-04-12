@@ -10,9 +10,8 @@ class Question(db.Model):
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
     # TODO change to a question type table
     question_type = db.Column(db.String(30), nullable=False)
-    # created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
 
     def __init__(self, content: str, assessment_id: int):
         self.content = content
@@ -20,7 +19,8 @@ class Question(db.Model):
 
     @staticmethod
     def create(content, assessment_id, question_type):  # create new user
-        new_question = Question(content=content, assessment_id=assessment_id, question_type=question_type)
+        new_question = Question(
+            content=content, assessment_id=assessment_id, question_type=question_type)
         db.session.add(new_question)
         db.session.commit()
 

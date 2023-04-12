@@ -10,7 +10,7 @@ class Assessment(db.Model):
     visible = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text)
     module = db.Column(db.String(64), index=True)
-    # created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     questions = db.relationship(
         'Question', backref='assessment', lazy='dynamic')
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
