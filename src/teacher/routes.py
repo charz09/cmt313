@@ -75,37 +75,37 @@ def edit_assessment(id):
     return render_template('teacher/assessments/edit.html', form=form)
 
 
-# # NEW QUESTION
-# @teacher.route('/assessments/<int:id>/new_question', methods=['GET', 'POST'])
-# @login_required
-# def new_question(id):
-#     form = NewQuestionForm()
-#     if form.validate_on_submit():
-#         question = Question(title=form.title.data,
-#                             content=form.content.data,
-#                             number_of_answers=form.number_of_answers.data,
-#                             assessment_id=id)
-#         db.session.add(question)
-#         db.session.commit()
-#         flash('Question created successfully!')
-#         return redirect(url_for('teachers.show_assessment', id=id))
-#     return render_template('teacher/questions/new.html', form=form)
+# NEW QUESTION
+@teacher.route('/assessments/<int:id>/new_question', methods=['GET', 'POST'])
+@login_required
+def new_question(id):
+    form = NewQuestionForm()
+    if form.validate_on_submit():
+        question = Question(
+            content=form.content.data,
+            question_type=form.question_type.data,
+            assessment_id=id)
+        db.session.add(question)
+        db.session.commit()
+        flash('Question created successfully!')
+        return redirect(url_for('teachers.show_assessment', id=id))
+    return render_template('teacher/questions/new.html', form=form)
 
-# # EDIT QUESTION
-# @teacher.route('/questions/<int:id>/edit', methods=['GET', 'POST'])
-# def edit_question(id):
-#     form = EditQuestionForm()
-#     question = Question.query.filter_by(id=id).first()
-#     if form.validate_on_submit():
-#         question.title = form.title.data
-#         question.content = form.content.data
-#         question.number_of_answers = form.number_of_answers.data
-#         db.session.add(question)
-#         db.session.commit()
-#         return redirect(url_for('teachers.questions_index'))
+# EDIT QUESTION
 
-#     form.title.data = question.title
-#     form.content.data = question.content
-#     form.number_of_answers.data = question.number_of_answers
 
-#     return render_template('teacher/questions/edit.html', form=form)
+@teacher.route('/questions/<int:id>/edit', methods=['GET', 'POST'])
+def edit_question(id):
+    form = EditQuestionForm()
+    question = Question.query.filter_by(id=id).first()
+    if form.validate_on_submit():
+        question.content = form.content.data
+        question.question_type = form.question_type.data
+        db.session.add(question)
+        db.session.commit()
+        return redirect(url_for('teachers.questions_index'))
+
+    form.content.data = question.content
+    form.question_type.data = question.question_type
+
+    return render_template('teacher/questions/edit.html', form=form)

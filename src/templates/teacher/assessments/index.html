@@ -11,10 +11,10 @@
         <div class="card">
             <p>{{assessment.assessment_type}}</p>
             <h2 class="card-title">
-                {{ assessment.name}}
+                <a href="{{url_for('teachers.show_assessment', id=assessment.id)}}">{{ assessment.name}}</a>
             </h2>
-            <h5>{{ assessment.module}}</h5>
-            <p>{{assessment.description}}</p>
+            <h5>{{ assessment.module }}</h5>
+            <p>{{ assessment.description }}</p>
 
             <div class="buttons-container">
                 <form action={{ url_for('teachers.edit_assessment', id=assessment.id) }} method="POST">

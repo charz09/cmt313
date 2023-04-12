@@ -7,18 +7,43 @@
         <form method="POST">
             {{ form.hidden_tag() }}
     
-            {{ form.title.label }} 
-            {{ form.title(class='input-field') }}
-    
             {{ form.content.label }} 
             {{ form.content(class='input-field') }}
-    
-            {{ form.number_of_answers.label }} 
-            {{ form.number_of_answers(class='input-field') }}
+
+            {{ form.question_type.label }} 
+            {{ form.question_type(class='input-field radio-inputs') }}
+
+            {{ form.correct_answer.label }} 
+            {{ form.correct_answer(class='input-field') }}
+
+            {{ form.incorrect_answer_1.label(class='incorrect-input')  }} 
+            {{ form.incorrect_answer_1(class='input-field incorrect-input') }}
+
+            {{ form.incorrect_answer_2.label(class='incorrect-input')  }} 
+            {{ form.incorrect_answer_2(class='input-field incorrect-input') }}
+
+            {{ form.incorrect_answer_3.label(class='incorrect-input') }} 
+            {{ form.incorrect_answer_3(class='input-field incorrect-input') }}
     
             {{ form.submit(class='signup-button') }}
         </form>
     </div>
 </section>
+
+<script>
+    const radioInputs = document.querySelectorAll('.radio-inputs');
+    const incorrectInputs = document.querySelectorAll('.incorrect-input');
+    radioInputs[0].addEventListener('change', (e)=>{
+        if(e.target.value === "Multiple Choice") {
+            [...incorrectInputs].forEach(input => {
+                input.style.display = "block"
+            })
+        } else {
+            [...incorrectInputs].forEach(input => {
+                input.style.display = "none"
+            })
+        }
+    })
+</script>
 
 {% endblock %}

@@ -24,14 +24,28 @@ class EditAssessmentForm(FlaskForm):
 
 
 class NewQuestionForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content')
-    number_of_answers = IntegerField('Number of answers')
+    question_type = RadioField('Question Type', validators=[DataRequired()], choices=[
+        ('Multiple Choice', 'Multiple Choice'), ('Single Answer', 'Single Answer')])
+    correct_answer = StringField('Correct Answer', validators=[DataRequired()])
+    incorrect_answer_1 = StringField(
+        'Incorrect Answer', validators=[DataRequired()])
+    incorrect_answer_2 = StringField(
+        'Incorrect Answer', validators=[DataRequired()])
+    incorrect_answer_3 = StringField(
+        'Incorrect Answer', validators=[DataRequired()])
     submit = SubmitField('Create Question')
 
 
 class EditQuestionForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content')
-    number_of_answers = IntegerField('Number of answers')
+    question_type = RadioField('Question Type', validators=[DataRequired()], choices=[
+        ('Multiple Choice', 'Multiple Choice'), ('Single Answer', 'Single Answer')])
+    correct_answer = StringField('Correct Answer', validators=[DataRequired()])
+    incorrect_answer_1 = StringField(
+        'Incorrect Answer', validators=[DataRequired()])
+    incorrect_answer_2 = StringField(
+        'Incorrect Answer', validators=[DataRequired()])
+    incorrect_answer_3 = StringField(
+        'Incorrect Answer', validators=[DataRequired()])
     submit = SubmitField('Save Changes')
