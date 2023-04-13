@@ -17,6 +17,9 @@
         {% for question in assessment.questions %}
         <div class="question">
             <p>{{question.content}}</p>
+            {% for answer in question.answers %}
+                <p>{{answer.content}}</p>
+            {% endfor %}
         </div>
         {% endfor %}
     </div>

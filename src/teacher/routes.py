@@ -3,6 +3,7 @@ from flask_login import login_required
 from src import db
 from ..models.assessment import Assessment
 from ..models.question import Question
+from ..models.answer import Answer
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
 
@@ -87,13 +88,18 @@ def new_question(id):
             assessment_id=id)
         db.session.add(question)
         db.session.commit()
+        Answer.create(form.correct_answer.data, True, question.id)
+        if question.question_type == 'Multiple Choice':
+            Answer.create(form.incorrect_answer_1.data, False, question.id)
+            Answer.create(form.incorrect_answer_2.data, False, question.id)
+            Answer.create(form.incorrect_answer_3.data, False, question.id)
+
         flash('Question created successfully!')
         return redirect(url_for('teachers.show_assessment', id=id))
     return render_template('teacher/questions/new.html', form=form)
 
+
 # EDIT QUESTION
-
-
 @teacher.route('/questions/<int:id>/edit', methods=['GET', 'POST'])
 def edit_question(id):
     form = EditQuestionForm()

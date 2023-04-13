@@ -11,6 +11,7 @@ class Question(db.Model):
     # TODO change to a question type table
     question_type = db.Column(db.String(30), nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    answers = db.relationship('Answer', backref='question', lazy='dynamic')
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __init__(self, content: str, assessment_id: int, question_type: str):
