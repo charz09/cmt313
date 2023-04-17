@@ -15,7 +15,6 @@ class EditAssessmentForm(FlaskForm):
     assessment_type = RadioField('Assessment Type', choices=[('formative', 'Formative Assessment'), ('summative', 'Summative Assessment')], default='')
     submit = SubmitField('Update Assessment')
 
-    
 class CreateQuestionForm(FlaskForm):
     question = StringField('Question Text', validators=[DataRequired(), Length(min=5, max=100)])
     question_type = SelectField('Question Type', choices=[('', 'Select Question Type'), ('multiple_choice', 'Multiple Choice'), ('fill_in_the_blank', 'Fill-in the Blank')], default='')

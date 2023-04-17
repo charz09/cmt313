@@ -5,31 +5,80 @@
     height: 100vh;
   }
 
-  .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+ nav {
     background-color: #9baec759;
-    font-family: 'Tiro Devanagari Marathi', sans-serif;
-    font-size: 1em;
-    font-weight: 400;
-    padding: 20px;
+    padding: 30px 10%;
     /*add navbar box shadow bottom only*/
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  a {
-    text-decoration: none;
-    list-style-type: none;
+  li, a, button {
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
     color: #52647b;
-  }
-
-  .nav-right {
+    text-decoration: none;
     margin: 0 20px;
   }
 
+  .nav_links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
   .nav-left {
-    margin-right: 55%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+.nav-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropbtn {
+    background-color: transparent;
+    border-width: 0;
+    font-family: 'Tiro Devanagari Marathi', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    color: #52647b;
+    line-height: inherit;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
   }
 
   .content-section {

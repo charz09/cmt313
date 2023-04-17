@@ -8,17 +8,37 @@
     <script src="https://kit.fontawesome.com/06e1971d77.js" crossorigin="anonymous" ></script>
     <title>Automated Assesment Tool</title>
 </head>
-
+<header>
+    <nav>
+        <ul class="nav_links">
+          <li class="nav-left">
+            {% if current_user.is_authenticated %}
+              {% if current_user.role.name == 'Student' %}
+                <a href="{{ url_for('student.home') }}">Home</a>
+              {% elif current_user.role.name == 'Lecturer' %}
+                <a href="{{ url_for('lecturer.home') }}">Home</a>
+              {% endif %}
+              <div class="dropdown">
+                <button class="dropbtn">Report</button>
+                <div class="dropdown-content">
+                  <a href="{{ url_for('lecturer.cohort_report') }}">Cohort Analysis</a>
+                  <a href="{{ url_for('lecturer.student_report') }}">Progress Tracker</a>
+                </div>
+              </div>
+            {% endif %}
+          </li>
+          <li class="nav-right">
+            {% if current_user.is_authenticated %}
+              <a href="{{ url_for('entry.logout') }}">Logout</a>
+            {% else %}
+              <a href="{{ url_for('entry.login') }}">Login</a>
+              <a href="{{ url_for('entry.register') }}">Register</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+</header>
 <body>
-    <nav class="navbar">
-        <a href="#" class="nav-left">Home</a>
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for('entry.logout') }}" class="nav-right">Logout</a>
-        {% else %}
-            <a href="{{ url_for('entry.login') }}" class="nav-right">Login</a>
-            <a href="{{ url_for('entry.register') }}" class="nav-right">Register</a>
-        {% endif %}
-    </nav>
     <div id="flash">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -33,5 +53,4 @@
     {% block content %}
     {% endblock %}
 </body>
-
 </html>
