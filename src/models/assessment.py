@@ -1,4 +1,5 @@
 from src import db
+from .attempt import Attempt
 
 
 class Assessment(db.Model):
@@ -13,6 +14,9 @@ class Assessment(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     questions = db.relationship(
         'Question', backref='assessment', lazy='dynamic')
+    attempts = db.relationship(
+        'Attempt', backref='assessment', lazy='dynamic')
+    # attempts = db.relationship('Attempt', backref='assessment', lazy='dynamic')
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __init__(self, name: str, visible: bool, description: str, module: str, assessment_type: str):
