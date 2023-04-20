@@ -4,6 +4,8 @@ from src import db
 class Attempt(db.Model):
     __tablename__ = 'attempts'
     id = db.Column(db.Integer, primary_key=True)
+    user_score = db.Column(db.Integer)
+    total_score = db.Column(db.Integer)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 

@@ -29,11 +29,11 @@ class NewQuestionForm(FlaskForm):
         ('Multiple Choice', 'Multiple Choice'), ('Single Answer', 'Single Answer')])
     correct_choice = StringField('Correct Answer', validators=[DataRequired()])
     incorrect_choice_1 = StringField(
-        'Incorrect Answer', validators=[DataRequired()])
+        'Incorrect Answer')
     incorrect_choice_2 = StringField(
-        'Incorrect Answer', validators=[DataRequired()])
+        'Incorrect Answer')
     incorrect_choice_3 = StringField(
-        'Incorrect Answer', validators=[DataRequired()])
+        'Incorrect Answer')
     submit = SubmitField('Create Question')
 
 
@@ -43,9 +43,9 @@ class EditQuestionForm(FlaskForm):
         ('Multiple Choice', 'Multiple Choice'), ('Single Answer', 'Single Answer')])
     correct_choice = StringField('Correct Answer', validators=[DataRequired()])
     incorrect_choice_1 = StringField(
-        'Incorrect Answer', validators=[DataRequired()])
+        'Incorrect Answer')
     incorrect_choice_2 = StringField(
-        'Incorrect Answer', validators=[DataRequired()])
+        'Incorrect Answer')
     incorrect_choice_3 = StringField(
-        'Incorrect Answer', validators=[DataRequired()])
+        'Incorrect Answer')
     submit = SubmitField('Save Changes')

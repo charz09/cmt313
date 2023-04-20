@@ -15,10 +15,10 @@ class Choice(db.Model):
 
     @staticmethod
     def create(content, is_correct, question_id):
-        new_Choice = Choice(
+        new_choice = Choice(
             content=content, is_correct=is_correct, question_id=question_id)
-        db.session.add(new_Choice)
+        db.session.add(new_choice)
         db.session.commit()
 
     def __repr__(self):
-        return '<Choice %r>' % self.name
+        return '<Choice %r>' % self.content

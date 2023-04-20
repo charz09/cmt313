@@ -27,4 +27,4 @@ class Question(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return '<Question %r>' % self.name
+        return '<Question %r>' % self.content

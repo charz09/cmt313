@@ -34,9 +34,8 @@ def new_assessment():
         return redirect(url_for('teachers.assessments_index'))
     return render_template('teacher/assessments/new.html', form=form)
 
+
 # SHOW + DELETE
-
-
 @teacher.route('/assessments/<int:id>', methods=['GET', 'POST'])
 @login_required
 def show_assessment(id):
@@ -88,11 +87,17 @@ def new_question(id):
             assessment_id=id)
         db.session.add(question)
         db.session.commit()
-        Choice.create(form.correct_choice.data, True, question.id)
-        if question.question_type == 'Multiple Choice':
-            Choice.create(form.incorrect_choice_1.data, False, question.id)
-            Choice.create(form.incorrect_choice_2.data, False, question.id)
-            Choice.create(form.incorrect_choice_3.data, False, question.id)
+        print(form.correct_choice.data, form.incorrect_choice_1.data,
+              form.incorrect_choice_2.data, form.incorrect_choice_3.data)
+        new_choice = Choice(content=form.correct_choice.data,
+                            is_correct=True, question_id=question.id)
+        db.session.add(new_choice)
+        print(new_choice)
+        db.session.commit()
+        # if question.question_type == 'Multiple Choice':
+        #     Choice.create(form.incorrect_choice_1.data, False, question.id)
+        #     Choice.create(form.incorrect_choice_2.data, False, question.id)
+        #     Choice.create(form.incorrect_choice_3.data, False, question.id)
 
         flash('Question created successfully!')
         return redirect(url_for('teachers.show_assessment', id=id))
