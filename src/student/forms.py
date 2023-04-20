@@ -3,8 +3,8 @@ from wtforms import StringField, SubmitField, TextAreaField, BooleanField, Integ
 from wtforms.validators import DataRequired
 
 
-class NewAssessmentForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
+class NewAttemptForm(FlaskForm):
+
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
     module = StringField('Module')

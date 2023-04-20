@@ -1,8 +1,8 @@
 from src import db
 
 
-class Answer(db.Model):
-    __tablename__ = 'answers'
+class Choice(db.Model):
+    __tablename__ = 'choices'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     is_correct = db.Column(db.Boolean, default=True)
@@ -15,10 +15,10 @@ class Answer(db.Model):
 
     @staticmethod
     def create(content, is_correct, question_id):
-        new_answer = Answer(
+        new_Choice = Choice(
             content=content, is_correct=is_correct, question_id=question_id)
-        db.session.add(new_answer)
+        db.session.add(new_Choice)
         db.session.commit()
 
     def __repr__(self):
-        return '<Answer %r>' % self.name
+        return '<Choice %r>' % self.name

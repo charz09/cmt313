@@ -3,7 +3,6 @@ from src import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_manager
 from .role import Role
-from .assessment import Assessment
 
 # Included in the other project but no idea what it does yet
 # @login_manager.user_loader
