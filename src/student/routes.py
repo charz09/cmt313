@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, request
 from . import student
 from ..models.assessment import Assessment
 from ..models.attempt import Attempt
@@ -19,8 +19,6 @@ def index():
     return render_template('student/attempts/index.html', assessments=assessments)
 
 # Create new Assessment attempt
-
-
 @student.route('/attempts/<int:id>/new', methods=['GET', 'POST'])
 @login_required
 def new_attempt(id):
@@ -40,15 +38,25 @@ def new_attempt(id):
 
     form = NewAttemptForm()
 
-    if form.validate_on_submit():
-        attempt = Attempt(assessment_id=assessment.id,
-                          created_by=current_user.id)
-        db.session.add(attempt)
-        db.session.commit()
+    if request.method == "POST":
+        print("Form Validated!!!")
+        attempt = Attempt.create(assessment.id,
+                                 current_user.id)
+
+        for i, question in enumerate(questions):
+            if question.correct_choice.content == getattr(form, f"question_{i}").data:
+                print("Correct:")
+                print(question.correct_choice.content)
+                print(getattr(form, f"question_{i}").data)
+                print("-------------")
+            else:
+                print("Incorrect:")
+                print(question.correct_choice.content)
+                print(getattr(form, f"question_{i}").data)
+                print("-------------")
 
         return redirect(url_for('students.index'))
-
-    return render_template('student/attempts/new.html', assessment=assessment, form=form)
+    return render_template('student/attempts/new.html', form=form)
 
 
 # View assessment attempt

@@ -8,7 +8,7 @@
         <div class="card">
             <p>{{assessment.assessment_type}}</p>
             <h2 class="card-title">
-                <a href="{{url_for('students.new_attempt', id=assessment.id)}}">{{ assessment.name}}</a>
+                <a href={{url_for('students.new_attempt', id=assessment.id)}}>{{ assessment.name}}</a>
                 <!-- {{ assessment.name}} -->
             </h2>
             <h5>{{ assessment.module }}</h5>

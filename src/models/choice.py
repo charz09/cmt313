@@ -6,7 +6,7 @@ class Choice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     is_correct = db.Column(db.Boolean, default=True)
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    # question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
 
     def __init__(self, content: str, is_correct: bool, question_id: int):
         self.content = content
