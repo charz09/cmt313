@@ -89,15 +89,11 @@ def new_question(id):
         db.session.commit()
         print(form.correct_choice.data, form.incorrect_choice_1.data,
               form.incorrect_choice_2.data, form.incorrect_choice_3.data)
-        new_choice = Choice(content=form.correct_choice.data,
-                            is_correct=True, question_id=question.id)
-        db.session.add(new_choice)
-        print(new_choice)
-        db.session.commit()
-        # if question.question_type == 'Multiple Choice':
-        #     Choice.create(form.incorrect_choice_1.data, False, question.id)
-        #     Choice.create(form.incorrect_choice_2.data, False, question.id)
-        #     Choice.create(form.incorrect_choice_3.data, False, question.id)
+        Choice.create(form.correct_choice.data, True, question.id)
+        if question.question_type == 'Multiple Choice':
+            Choice.create(form.incorrect_choice_1.data, False, question.id)
+            Choice.create(form.incorrect_choice_2.data, False, question.id)
+            Choice.create(form.incorrect_choice_3.data, False, question.id)
 
         flash('Question created successfully!')
         return redirect(url_for('teachers.show_assessment', id=id))

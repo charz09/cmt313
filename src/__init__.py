@@ -13,7 +13,7 @@ def init_app():  # Factory function for creating app instance
 
     # configure app using the Config class defined in src/config.py
     app.config.from_object('src.config.Config')
-    # print("App Config: ", app.config, "\n #####################################")
+    # print("App Config: ", app.config, "/n #####################################")
 
     # initialise the database using the app instance
     db.init_app(app)
@@ -30,13 +30,7 @@ def init_app():  # Factory function for creating app instance
 
         # from src.models.role import Role
         # if db
-        # student = Role()
-        # student.name = "Student"
-        # db.session.add(student)
-        # teacher = Role()
-        # teacher.name = "Teacher"
-        # db.session.add(teacher)
-        # db.session.commit()
+        # student = Role();student.name = "Student";db.session.add(student);teacher = Role();teacher.name = "Teacher";db.session.add(teacher);db.session.commit()
 
         login_manager.init_app(app)
 

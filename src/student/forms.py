@@ -11,3 +11,7 @@ class NewAttemptForm(FlaskForm):
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')])
     submit = SubmitField('Create Assessment')
+
+
+class NewAttemptForm(FlaskForm):
+    submit = SubmitField('Submit Attempt')
