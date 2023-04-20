@@ -47,6 +47,7 @@ def register():
         db.session.commit()
         login_user(user)
         flash(f'Your account has been created, you are now able to login', 'success')
+
         if user.role.name == "Student":
             return redirect(url_for('students.index'))
         else:

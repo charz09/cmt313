@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+    <div class="login-form">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            {% if form["question_1"] %}
+                {{ form.question_1.label }} 
+                {{ form.question_1(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_2"] %}
+                {{ form.question_2.label }} 
+                {{ form.question_2(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_3"] %}
+                {{ form.question_3.label }} 
+                {{ form.question_3(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_4"] %}
+                {{ form.question_4.label }} 
+                {{ form.question_4(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_5"] %}
+                {{ form.question_5.label }} 
+                {{ form.question_5(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_6"] %}
+                {{ form.question_6.label }} 
+                {{ form.question_6(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_6"] %}
+                {{ form.question_6.label }} 
+                {{ form.question_6(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_7"] %}
+                {{ form.question_7.label }} 
+                {{ form.question_7(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_8"] %}
+                {{ form.question_8.label }} 
+                {{ form.question_8(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_9"] %}
+                {{ form.question_9.label }} 
+                {{ form.question_9(class='input-field') }}
+            {% endif %}
+
+            {% if form["question_10"] %}
+                {{ form.question_10.label }} 
+                {{ form.question_10(class='input-field') }}
+            {% endif %}
+    
+            {{ form.submit(class='signup-button') }}
+        </form>
+    </div>
+</section>
+
+{% endblock %}

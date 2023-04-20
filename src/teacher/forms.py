@@ -27,7 +27,7 @@ class NewQuestionForm(FlaskForm):
     content = TextAreaField('Content')
     question_type = RadioField('Question Type', validators=[DataRequired()], choices=[
         ('Multiple Choice', 'Multiple Choice'), ('Single Answer', 'Single Answer')])
-    correct_choice = StringField('Correct Answer', validators=[DataRequired()])
+    correct_choice = StringField('Correct choice', validators=[DataRequired()])
     incorrect_choice_1 = StringField(
         'Incorrect Answer')
     incorrect_choice_2 = StringField(
