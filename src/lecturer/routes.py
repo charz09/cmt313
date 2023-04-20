@@ -95,14 +95,16 @@ def create_question(assessment_id):
         return redirect(url_for('lecturer.home', assessment_id=assessment.id))
     return render_template('lecturer/question/create.html', form=form, assessment=assessment)
 
+# create cohort reports
+@lecturer.route('/lecturer/assessment/<int:assessment_id>/cohort_report', methods=['GET', 'POST'])
+@login_required
+def cohort_report(assessment_id):
+    assessment = Assessment.query.get_or_404(assessment_id)
+    questions = Question.query.filter_by(assessment_id=assessment_id).all()
+    return render_template('lecturer/report/cohort.html')
+
 # create student reports
 @lecturer.route('/lecturer/student_report', methods=['GET', 'POST'])
 @login_required
 def student_report():
     return render_template('lecturer/report/student.html')
-
-# create cohort reports
-@lecturer.route('/lecturer/cohort_report', methods=['GET', 'POST'])
-@login_required
-def cohort_report():
-    return render_template('lecturer/report/cohort.html')

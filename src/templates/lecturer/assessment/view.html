@@ -10,6 +10,7 @@
     <div class="assessment-button-position">
       <a href="{{ url_for('lecturer.edit_assessment', assessment_id=assessment.id) }}" class="edit-assessment-button"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
       <a href="{{ url_for('lecturer.delete_assessment', assessment_id=assessment.id) }}" class="edit-assessment-button"><i class="fa-solid fa-delete-left fa-lg"></i></a>
+      <a href="{{ url_for('lecturer.cohort_report', assessment_id=assessment.id) }}" class="edit-assessment-button"><i class="fa-solid fa-chart-simple fa-lg"></i></a>
         </div>
     </article>
     <div class="assessment-button-position" style="padding-bottom: 30px;">
