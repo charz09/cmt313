@@ -17,7 +17,7 @@ def login():
 
         if current_user.is_authenticated:
             if user.role.name == "Student":
-                return redirect(url_for('students.assessments_index'))
+                return redirect(url_for('students.index'))
             else:
                 return redirect(url_for('teachers.assessments_index'))
             flash(

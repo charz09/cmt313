@@ -1,5 +1,6 @@
 from flask import render_template
 from . import student
+from ..models.assessment import Assessment
 from flask_login import login_required, current_user
 
 
@@ -7,9 +8,8 @@ from flask_login import login_required, current_user
 @student.route('/')
 @login_required
 def index():
-    print(current_user, current_user.username, current_user.is_authenticated)
-    return render_template('student/index.html')
-
+    assessments = Assessment.query.all()
+    return render_template('student/attempts/index.html', assessments=assessments)
 
 # Create new Assessment attempt
 

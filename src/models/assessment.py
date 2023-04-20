@@ -16,7 +16,7 @@ class Assessment(db.Model):
         'Question', backref='assessment', lazy='dynamic')
     attempts = db.relationship(
         'Attempt', backref='assessment', lazy='dynamic')
-    # attempts = db.relationship('Attempt', backref='assessment', lazy='dynamic')
+
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __init__(self, name: str, visible: bool, description: str, module: str, assessment_type: str):

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="assessments-section " >
+    <!-- <form action="{{ url_for('teachers.new_assessment') }}" method="get">
+        <button type="submit" class="primary-button">+ Create Assessment</button>
+    </form> -->
+    
+    {% for assessment in assessments %}
+        <div class="card">
+            <p>{{assessment.assessment_type}}</p>
+            <h2 class="card-title">
+                <!-- <a href="{{url_for('teachers.show_assessment', id=assessment.id)}}">{{ assessment.name}}</a> -->
+                {{ assessment.name}}
+            </h2>
+            <h5>{{ assessment.module }}</h5>
+            <p>{{ assessment.description }}</p>
+
+            <!-- <div class="buttons-container">
+                <form action={{ url_for('teachers.edit_assessment', id=assessment.id) }} method="POST">
+                    <button type="submit" class="secondary-button">Edit</button>
+                </form>
+                <form action={{ url_for('teachers.show_assessment', id=assessment.id) }} method="POST">
+                    <button type="submit" class="secondary-button">Delete</button>
+                </form>
+            </div> -->
+    
+        </div>
+    {% endfor %}
+
+</section>
+
+{% endblock %}
