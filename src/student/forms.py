@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired
 
 
 class NewAttemptForm(FlaskForm):
-
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
     module = StringField('Module')

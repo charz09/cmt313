@@ -13,9 +13,9 @@ class Assessment(db.Model):
     module = db.Column(db.String(64), index=True)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     questions = db.relationship(
-        'Question', backref='assessment', lazy='dynamic')
+        'Question', backref='assessment')
     attempts = db.relationship(
-        'Attempt', backref='assessment', lazy='dynamic')
+        'Attempt', backref='assessment')
 
     # created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 

@@ -30,7 +30,7 @@ def init_app():  # Factory function for creating app instance
 
         # from src.models.role import Role
         # if db
-        # student = Role();student.name = "Student";db.session.add(student);teacher = Role();teacher.name = "Teacher";db.session.add(teacher);db.session.commit()
+        # db.drop_all(); db.create_all();student = Role();student.name = "Student";db.session.add(student);teacher = Role();teacher.name = "Teacher";db.session.add(teacher);db.session.commit()
 
         login_manager.init_app(app)
 

@@ -7,11 +7,11 @@
         <form method="POST">
             {{ form.hidden_tag() }}
 
-            {% for i in range(1,11) %}
+            {% for i in range(0,10) %}
             
                 {# This weird syntax is how you do string lterals in jinja #}
                 {% if form["question_" ~ i ~ ""] %}
-                <h5>Question {{ i }}</h5>
+                <h5>Question {{ i + 1 }}</h5>
                         {{ form["question_" ~ i ~ ""].label }} 
                         {{ form["question_" ~ i ~ ""](class='input-field') }}
                     {% endif %}
@@ -23,6 +23,3 @@
 </section>
 
 {% endblock %}
-
-
-"Hello " ~ name ~ "!"
