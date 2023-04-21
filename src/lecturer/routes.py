@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask import current_app
 from flask_login import login_required, current_user
 from src.lecturer.forms import CreateAssessmentForm, EditAssessmentForm, CreateQuestionForm
+from src.models.user import User, Role
 from src.models.assessment import Assessment
 from src.models.question import Question,Choice
 from src import db
@@ -103,8 +104,9 @@ def cohort_report(assessment_id):
     questions = Question.query.filter_by(assessment_id=assessment_id).all()
     return render_template('lecturer/report/cohort.html')
 
-# create student reports
+# list of students
 @lecturer.route('/lecturer/student_report', methods=['GET', 'POST'])
 @login_required
 def student_report():
-    return render_template('lecturer/report/student.html')
+    students = User.query.filter_by(role_id=2).all()
+    return render_template('lecturer/report/student.html', students = students)
