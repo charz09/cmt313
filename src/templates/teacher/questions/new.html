@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+    <div class="login-form">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+    
+            {{ form.content.label }} 
+            {{ form.content(class='input-field') }}
+
+            {{ form.question_type.label }} 
+            {{ form.question_type(class='input-field radio-inputs') }}
+
+            {{ form.correct_choice.label }} 
+            {{ form.correct_choice(class='input-field') }}
+
+            {{ form.incorrect_choice_1.label(class='incorrect-input')  }} 
+            {{ form.incorrect_choice_1(class='input-field incorrect-input') }}
+
+            {{ form.incorrect_choice_2.label(class='incorrect-input')  }} 
+            {{ form.incorrect_choice_2(class='input-field incorrect-input') }}
+
+            {{ form.incorrect_choice_3.label(class='incorrect-input') }} 
+            {{ form.incorrect_choice_3(class='input-field incorrect-input') }}
+    
+            {{ form.submit(class='signup-button') }}
+        </form>
+    </div>
+</section>
+
+<script>
+    const radioInputs = document.querySelectorAll('.radio-inputs');
+    const incorrectInputs = document.querySelectorAll('.incorrect-input');
+    radioInputs[0].addEventListener('change', (e)=>{
+        if(e.target.value === "Multiple Choice") {
+            [...incorrectInputs].forEach(input => {
+                input.style.display = "block"
+            })
+        } else {
+            [...incorrectInputs].forEach(input => {
+                input.style.display = "none"
+            })
+        }
+    })
+</script>
+
+{% endblock %}
