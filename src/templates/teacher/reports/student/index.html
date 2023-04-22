@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!-- list of students -->
+  <section class="assessments-section " >
+  <h1>Students</h1>
+    {% for student in students %}
+    <div class="card">
+        <h2 class="card-title">
+            <a href="#">{{ student.username}}</a>
+        </h2>
+    
+        <div class="buttons-container">
+            <form action="{{ url_for('teachers.view_student_assessments', id=student.id) }}" method="POST">
+                <button type="submit" class="secondary-button">Report</button>
+            </form>
+        </div>
+    
+    </div>
+    {% endfor %}
+    </section>
+{% endblock content %}

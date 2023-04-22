@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="assessments-section " >
+    <h1>Assessments for student {{ student.username }}:</h1>
+    {% for assessment in assessments %}
+        <div class="card">
+            <p>{{assessment.assessment_type}}</p>
+            <h2 class="card-title">
+                <a href="#">{{ assessment.name}}</a>
+            </h2>
+            <h5>{{ assessment.module }}</h5>
+            <p>{{ assessment.description }}</p>
+            </div>
+    
+        </div>
+    {% endfor %}
+</section>
+{% endblock content %}

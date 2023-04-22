@@ -1,9 +1,12 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from src import db
+from ..models.user import User
 from ..models.assessment import Assessment
+from ..models.attempt import Attempt
 from ..models.question import Question
 from ..models.choice import Choice
+from ..models.answer import Answer
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
 
@@ -114,3 +117,64 @@ def edit_question(id):
     form.question_type.data = question.question_type
 
     return render_template('teacher/questions/edit.html', form=form)
+
+# create cohort reports
+@teacher.route('/assessments/<int:assessment_id>/report', methods=['GET', 'POST'])
+@login_required
+def cohort_report(assessment_id):
+    assessment = Assessment.query.get_or_404(assessment_id)
+    questions = Question.query.filter_by(assessment_id=assessment_id).all()
+    attempts = Attempt.query.filter_by(assessment_id=assessment_id).all()
+    answers = Answer.query.filter_by(assessment_id=assessment_id).all()
+    return render_template('teacher/reports/cohort/index.html', assessment=assessment, questions=questions, attempts=attempts, answers=answers)
+
+# list of students
+@teacher.route('/reports/', methods=['GET', 'POST'])
+@login_required
+def student_report():
+    students = User.query.filter_by(role_id=1).all()
+    return render_template('teacher/reports/student/index.html', students = students)
+
+#view student report
+@teacher.route('/reports/<int:student_id>', methods=['GET', 'POST'])
+@login_required
+def view_student_report(student_id):
+    student = User.query.filter_by(id=student_id, role_id=1).first()
+    if student is None:
+        flash('Invalid student ID', 'error')
+        return redirect(url_for('teachers.student_report'))
+    
+    attempts = Attempt.query.filter_by(created_by=student_id).all()
+    return render_template('teacher/reports/student/show.html', student=student, attempts=attempts)
+
+# view assessments that a student has taken
+@teacher.route('/reports/<int:student_id>/assessments', methods=['GET', 'POST'])
+@login_required
+def view_student_assessments(student_id):
+    student = User.query.filter_by(id=student_id, role_id=1).first()
+    if student is None:
+        flash('Invalid student ID', 'error')
+        return redirect(url_for('teachers.student_report'))
+    
+    assessments = (db.session.query(Assessment)
+                   .join(Attempt, Assessment.id == Attempt.assessment_id)
+                   .filter(Attempt.created_by == student.id)
+                   .distinct()
+                   .all())
+
+    return render_template('teacher/reports/student/list.html', student=student, assessments=assessments)
+
+# view a student's attempt at an assessment
+@teacher.route('/reports/<int:student_id>/assessments/<int:assessment_id>', methods=['GET', 'POST'])
+@login_required
+def view_student_assessment_report(student_id, assessment_id):
+    student = User.query.filter_by(id=student_id, role_id=1).first()
+    if student is None:
+        flash('Invalid student ID', 'error')
+        return redirect(url_for('teachers.student_report'))
+
+    assessment = Assessment.query.get_or_404(assessment_id)
+    questions = Question.query.filter_by(assessment_id=assessment_id).all()
+    attempt = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).all()
+    answers = Answer.query.filter_by(attempt_id=attempt.id).all()
+    return render_template('teacher/reports/student/report.html', student=student, assessment=assessment, questions=questions, attempt=attempt, answers=answers)
