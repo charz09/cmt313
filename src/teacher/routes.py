@@ -148,10 +148,10 @@ def view_student_report(student_id):
     return render_template('teacher/reports/student/show.html', student=student, attempts=attempts)
 
 # view assessments that a student has taken
-@teacher.route('/reports/<int:student_id>/assessments', methods=['GET', 'POST'])
+@teacher.route('/reports/<int:id>/assessments', methods=['GET', 'POST'])
 @login_required
-def view_student_assessments(student_id):
-    student = User.query.filter_by(id=student_id, role_id=1).first()
+def view_student_assessments(id):
+    student = User.query.filter_by(id=id, role_id=1).first()
     if student is None:
         flash('Invalid student ID', 'error')
         return redirect(url_for('teachers.student_report'))
