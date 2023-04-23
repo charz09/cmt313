@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="login-form">
+    <div class="assessment-container">
+        <h1>
+            {{ assessment.name}}
+        </h1>
+        <h4>{{ assessment.module}}</h4>
+        <p>{{assessment.description}}</p>
+
+        <form action={{ url_for('teachers.new_question', id=assessment.id) }} method="get">
+            <button type="submit" class="primary-button">Add a Question</button>
+        </form>
+
+        {% for question in assessment.questions %}
+        <div class="question">
+            <p>{{question.content}}</p>
+            {% for c in question.choices %}
+                <p>{{ c.content }}</p>
+            {% endfor %} 
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
