@@ -6,16 +6,28 @@ from ..models.answer import Answer
 from flask_login import login_required, current_user
 from .forms import NewAttemptForm
 from wtforms import StringField, RadioField
-# from src import db
-# from wtforms.validators import DataRequired
 
 
-# View all assessment attempts
 @student.route('/')
 @login_required
 def index():
-    assessments = Assessment.query.all()
-    return render_template('student/attempts/index.html', assessments=assessments)
+    return render_template('student/attempts/index.html')
+
+
+# View formative assessment
+@student.route('/formative')
+@login_required
+def view_formative():
+    assessments = Assessment.query.filter_by(assessment_type='Formative', visible=True).all()
+    return render_template('student/attempts/view_formative.html', assessments=assessments)
+
+
+# View summative assessment
+@student.route('/summative')
+@login_required
+def view_summative():
+    assessments = Assessment.query.filter_by(assessment_type='Summative', visible=True).all()
+    return render_template('student/attempts/view_summative.html', assessments=assessments)
 
 
 # Create new Assessment attempt
