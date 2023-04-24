@@ -143,11 +143,71 @@ def view_student_report(id):
     if student is None:
         flash('Invalid student ID', 'error')
         return redirect(url_for('teachers.student_report'))
-    
-    attempts = Attempt.query.filter_by(created_by=id).all()
-    return render_template('teacher/reports/student/show.html', student=student, attempts=attempts)
 
-# view assessments that a student has taken
+    attempts = Attempt.query.filter_by(created_by=id).all()
+    assessment_scores = {}
+    assessment_attempts = {}
+    assessment_passed = {}
+    for attempt in attempts:
+        assessment_id = attempt.assessment_id
+        if assessment_id not in assessment_scores:
+            assessment_scores[assessment_id] = []
+            assessment_attempts[assessment_id] = []
+            assessment_passed[assessment_id] = []
+        if attempt.total_score is not None:
+            user_score_percentage = attempt.user_score / attempt.total_score
+            if user_score_percentage >= 0.6:
+                assessment_passed[assessment_id].append(attempt)
+            assessment_scores[assessment_id].append(attempt.user_score)
+            assessment_attempts[assessment_id].append(attempt)
+
+    assessment_data = []
+    for assessment_id in assessment_scores.keys():
+        total_attempts = len(assessment_attempts[assessment_id])
+        total_passed = len(assessment_passed[assessment_id])
+        if total_attempts > 0:
+            avg_score = sum([score for score in assessment_scores[assessment_id] if score is not None]) / total_attempts
+            avg_attempts = total_attempts / len(set([attempt.assessment_id for attempt in assessment_attempts[assessment_id]]))
+            assessment_data.append({
+                'name': Assessment.query.filter_by(id=assessment_id).first().name,
+                'avg_score': avg_score,
+                'avg_attempts': avg_attempts,
+                'total_attempts': total_attempts,
+                'total_passed': total_passed,
+                'class_avg_score': get_class_avg_score(assessment_id, student),
+                'timeline': get_assessment_timeline(assessment_id, student)
+            })
+
+    return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data)
+
+
+def get_class_avg_score(assessment_id, student):
+    attempts = Attempt.query.filter_by(assessment_id=assessment_id).all()
+    total_scores = 0
+    total_students = 0
+    for attempt in attempts:
+        if attempt.created_by != student.id:
+            if attempt.user_score is not None:  # only include attempts with non-None user_score
+                total_scores += attempt.user_score
+                total_students += 1
+    if total_students > 0:
+        return total_scores / total_students
+    else:
+        return 0
+
+
+def get_assessment_timeline(assessment_id, student):
+    attempts = Attempt.query.filter_by(assessment_id=assessment_id, created_by=student.id).order_by(Attempt.created_on.asc()).all()
+    timeline = []
+    for attempt in attempts:
+        timeline.append({
+            'score': attempt.user_score,
+            'total_score': attempt.total_score,
+            'created_on': attempt.created_on
+        })
+    return timeline
+
+# view a list of assessments that a student has taken
 @teacher.route('/reports/<int:id>/assessments', methods=['GET', 'POST'])
 @login_required
 def view_student_assessments(id):

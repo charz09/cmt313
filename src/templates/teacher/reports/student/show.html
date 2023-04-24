@@ -2,9 +2,69 @@
 
 {% block content %}
 <section class="content-section" >
-<h1>Overall Report</h1>
+    <h1>{{ student.username }}'s Overall Report</h1>
+    {% if assessment_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Average Score</th>
+                    <th>Class Average Score</th>
+                    <th>Total Attempts</th>
+                    <th>Passed Attempts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% set avg_scores = [] %}
+                    {% set avg_attempts = [] %}
+                    {% set class_avg_scores = [] %}
+                    {% for assessment in assessment_data %}
+                        {% set _ = avg_scores.append(assessment.avg_score) %}
+                        {% set _ = avg_attempts.append(assessment.avg_attempts) %}
+                        {% set _ = class_avg_scores.append(assessment.class_avg_score) %}
+                    {% endfor %}
+                    <td>{{ "%.2f" % (avg_scores | sum / avg_scores | length) }}</td>
+                    <td>{{ "%.2f" % (class_avg_scores | sum / class_avg_scores | length) }}</td>
+                    <td>{{ assessment_data | map(attribute='total_attempts') | sum }}</td>
+                    <td>{{ assessment_data | map(attribute='total_passed') | sum }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No assessments found for this student.</p>
+    {% endif %}
 <form action="{{ url_for('teachers.view_student_assessments', id=student.id) }}" method="get">
     <button type="submit" class="primary-button">View All Assessments</button>
 </form>
 </section>
 {% endblock content %}
+
+<!--    <h1>{{ student.username }}'s Overall Report</h1>
+    {% if assessment_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Assessment Name</th>
+                    <th>Average Score</th>
+                    <th>Average Attempts</th>
+                    <th>Total Attempts</th>
+                    <th>Passed Attempts</th>
+                    <th>Class Average Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assessment in assessment_data %}
+                    <tr>
+                        <td>{{ assessment.name }}</td>
+                        <td>{{ "%.2f" % assessment.avg_score }}</td>
+                        <td>{{ "%.2f" % assessment.avg_attempts }}</td>
+                        <td>{{ assessment.total_attempts }}</td>
+                        <td>{{ assessment.total_passed }}</td>
+                        <td>{{ "%.2f" % assessment.class_avg_score }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No assessments found for this student.</p>
+    {% endif %}-->
