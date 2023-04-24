@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="assessment-container">
+  <h1 class="assessment-title">{{ assessment.title }}</h1>
+
+  <p class="assessment-description">{{ assessment.description }}</p>
+
+  <form method="post" action="{{ url_for('students.attempt_assessment', assessment_id=assessment.id) }}">
+
+    <p class="attempts-label">Select the number of attempts:</p>
+    <select name="attempts" class="attempts-select">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+
+    <p class="start-label">Click the button below to start the assessment:</p>
+    <button type="submit" class="start-button">Attempt Assessment</button>
+
+  </form>
+</div>
+
+{% endblock %}
+
+
+
+
