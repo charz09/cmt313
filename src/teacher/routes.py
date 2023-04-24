@@ -155,10 +155,10 @@ def view_student_report(id):
             assessment_attempts[assessment_id] = []
             assessment_passed[assessment_id] = []
         if attempt.total_score is not None:
-            user_score_percentage = attempt.user_score / attempt.total_score
-            if user_score_percentage >= 0.6:
+            user_score_percentage = (attempt.user_score / attempt.total_score) * 100
+            if user_score_percentage >= 60:
                 assessment_passed[assessment_id].append(attempt)
-            assessment_scores[assessment_id].append(attempt.user_score)
+            assessment_scores[assessment_id].append(user_score_percentage)
             assessment_attempts[assessment_id].append(attempt)
 
     assessment_data = []
@@ -168,6 +168,7 @@ def view_student_report(id):
         if total_attempts > 0:
             avg_score = sum([score for score in assessment_scores[assessment_id] if score is not None]) / total_attempts
             avg_attempts = total_attempts / len(set([attempt.assessment_id for attempt in assessment_attempts[assessment_id]]))
+            scores = [score for score in assessment_scores[assessment_id] if score is not None]
             assessment_data.append({
                 'name': Assessment.query.filter_by(id=assessment_id).first().name,
                 'avg_score': avg_score,
@@ -175,10 +176,12 @@ def view_student_report(id):
                 'total_attempts': total_attempts,
                 'total_passed': total_passed,
                 'class_avg_score': get_class_avg_score(assessment_id, student),
-                'timeline': get_assessment_timeline(assessment_id, student)
             })
+    assessment_avg_scores = {}
+    for assessment in assessment_data:
+        assessment_avg_scores[assessment['name']] = assessment['avg_score']
 
-    return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data)
+    return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores)
 
 
 def get_class_avg_score(assessment_id, student):
@@ -191,21 +194,10 @@ def get_class_avg_score(assessment_id, student):
                 total_scores += attempt.user_score
                 total_students += 1
     if total_students > 0:
-        return total_scores / total_students
+        avg_score = total_scores / total_students
+        return round(avg_score * 10, 2)
     else:
         return 0
-
-
-def get_assessment_timeline(assessment_id, student):
-    attempts = Attempt.query.filter_by(assessment_id=assessment_id, created_by=student.id).order_by(Attempt.created_on.asc()).all()
-    timeline = []
-    for attempt in attempts:
-        timeline.append({
-            'score': attempt.user_score,
-            'total_score': attempt.total_score,
-            'created_on': attempt.created_on
-        })
-    return timeline
 
 # view a list of assessments that a student has taken
 @teacher.route('/reports/<int:id>/assessments', methods=['GET', 'POST'])
@@ -224,17 +216,51 @@ def view_student_assessments(id):
 
     return render_template('teacher/reports/student/list.html', student=student, assessments=assessments)
 
-# view a student's attempt at an assessment
 @teacher.route('/reports/<int:student_id>/assessments/<int:assessment_id>', methods=['GET', 'POST'])
 @login_required
 def view_student_assessment_report(student_id, assessment_id):
+    # Query the student with the given ID and ensure that they have the role ID of 1 (i.e., they are a student)
     student = User.query.filter_by(id=student_id, role_id=1).first()
     if student is None:
+        # If the student cannot be found, flash an error message and redirect to the teacher's student report page
         flash('Invalid student ID', 'error')
         return redirect(url_for('teachers.student_report'))
 
+    # Query the assessment with the given ID and get all questions associated with it
     assessment = Assessment.query.get_or_404(assessment_id)
     questions = Question.query.filter_by(assessment_id=assessment_id).all()
+
+    # Get the attempt for this student on this assessment and all answers associated with it
     attempt = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).first()
     answers = Answer.query.filter_by(attempt_id=attempt.id).all()
-    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt, answers=answers)
+
+    # Get assessment data for the student
+    attempts = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).all()
+    assessment_scores = []
+    assessment_passed = []
+    for attempt in attempts:
+        if attempt.total_score is not None:
+            user_score_percentage = attempt.user_score / attempt.total_score
+            if user_score_percentage >= 0.6:
+                assessment_passed.append(attempt)
+            assessment_scores.append(attempt.user_score)
+
+    # Calculate the average score for this assessment for this student, as well as other relevant data
+    avg_score = (sum(assessment_scores) / len(assessment_scores)) * 10 if len(assessment_scores) > 0 else 0
+    avg_attempts = len(attempts) / len(set([attempt.created_by for attempt in attempts]))
+    total_attempts = len(attempts)
+    total_passed = len(assessment_passed)
+    class_avg_score = get_class_avg_score(assessment_id, student)
+
+    # Create a dictionary of assessment data to be passed to the template
+    assessment_data = {
+        'name': assessment.name,
+        'avg_score': avg_score,
+        'avg_attempts': avg_attempts,
+        'total_attempts': total_attempts,
+        'total_passed': total_passed,
+        'class_avg_score': class_avg_score,
+    }
+
+    # Render the template for the assessment report, passing in the relevant data
+    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt, answers=answers, assessment_data=[assessment_data])

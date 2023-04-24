@@ -2,6 +2,32 @@
 
 {% block content %}
 <section class="content-section" >
-<h1>Individual Assessment Report</h1>
+<h1>{{ student.username }}'s {{ assessment.name }} Report</h1>
+    {% if assessment_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Average Score</th>
+                    <th>Class Average Score</th>
+                    <th>Total Attempts</th>
+                    <th>Passed Attempts</th>
+                    <!--<th>Average Attempts</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                {% for assessment in assessment_data %}
+                    <tr>
+                        <td>{{ "%.2f" % assessment.avg_score }}%</td>
+                        <td>{{ "%.2f" % assessment.class_avg_score }}%</td>
+                        <td>{{ assessment.total_attempts }}</td>
+                        <td>{{ assessment.total_passed }}</td>
+                        <!--<td>{{ "%.2f" % assessment.avg_attempts }}</td>-->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No assessments found for this student.</p>
+    {% endif %}
 </section>
 {% endblock content %}
