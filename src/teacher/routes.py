@@ -118,7 +118,7 @@ def edit_question(id):
 
     return render_template('teacher/questions/edit.html', form=form)
 
-# create cohort reports
+# create cohort report for each assessment
 @teacher.route('/assessments/<int:id>/report', methods=['GET', 'POST'])
 @login_required
 def cohort_report(id):
@@ -175,6 +175,6 @@ def view_student_assessment_report(student_id, assessment_id):
 
     assessment = Assessment.query.get_or_404(assessment_id)
     questions = Question.query.filter_by(assessment_id=assessment_id).all()
-    attempt = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).all()
+    attempt = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).first()
     answers = Answer.query.filter_by(attempt_id=attempt.id).all()
-    return render_template('teacher/reports/student/report.html', student=student, assessment=assessment, questions=questions, attempt=attempt, answers=answers)
+    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt, answers=answers)
