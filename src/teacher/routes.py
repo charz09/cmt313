@@ -119,13 +119,13 @@ def edit_question(id):
     return render_template('teacher/questions/edit.html', form=form)
 
 # create cohort reports
-@teacher.route('/assessments/<int:assessment_id>/report', methods=['GET', 'POST'])
+@teacher.route('/assessments/<int:id>/report', methods=['GET', 'POST'])
 @login_required
-def cohort_report(assessment_id):
-    assessment = Assessment.query.get_or_404(assessment_id)
-    questions = Question.query.filter_by(assessment_id=assessment_id).all()
-    attempts = Attempt.query.filter_by(assessment_id=assessment_id).all()
-    answers = Answer.query.filter_by(assessment_id=assessment_id).all()
+def cohort_report(id):
+    assessment = Assessment.query.get_or_404(id)
+    questions = Question.query.filter_by(assessment_id=id).all()
+    attempts = Attempt.query.filter_by(assessment_id=id).all()
+    answers = Answer.query.filter_by(attempt_id=id).all()
     return render_template('teacher/reports/cohort/index.html', assessment=assessment, questions=questions, attempts=attempts, answers=answers)
 
 # list of students
@@ -136,15 +136,15 @@ def student_report():
     return render_template('teacher/reports/student/index.html', students = students)
 
 #view student report
-@teacher.route('/reports/<int:student_id>', methods=['GET', 'POST'])
+@teacher.route('/reports/<int:id>', methods=['GET', 'POST'])
 @login_required
-def view_student_report(student_id):
-    student = User.query.filter_by(id=student_id, role_id=1).first()
+def view_student_report(id):
+    student = User.query.filter_by(id=id, role_id=1).first()
     if student is None:
         flash('Invalid student ID', 'error')
         return redirect(url_for('teachers.student_report'))
     
-    attempts = Attempt.query.filter_by(created_by=student_id).all()
+    attempts = Attempt.query.filter_by(created_by=id).all()
     return render_template('teacher/reports/student/show.html', student=student, attempts=attempts)
 
 # view assessments that a student has taken

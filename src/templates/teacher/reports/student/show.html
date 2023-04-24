@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content-section" >
+<h1>Overall Report</h1>
+<form action="{{ url_for('teachers.view_student_assessments', id=student.id) }}" method="get">
+    <button type="submit" class="primary-button">View All Assessments</button>
+</form>
+</section>
+{% endblock content %}

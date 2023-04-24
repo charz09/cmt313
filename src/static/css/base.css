@@ -150,7 +150,7 @@ form {
   background-color: var(--primary-hover);
 }
 
-.assessments-section {
+.content-section {
   width: clamp(20rem, 80%, 90rem);
   margin: auto;
 }
