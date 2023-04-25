@@ -119,24 +119,19 @@ def edit_question(id):
     return render_template('teacher/questions/edit.html', form=form)
 
 # create cohort report for each assessment
-@teacher.route('/assessments/<int:id>/report', methods=['GET', 'POST'])
+@teacher.route('/reports/cohort', methods=['GET', 'POST'])
 @login_required
-def cohort_report(id):
-    assessment = Assessment.query.get_or_404(id)
-    questions = Question.query.filter_by(assessment_id=id).all()
-    attempts = Attempt.query.filter_by(assessment_id=id).all()
-    answers = Answer.query.filter_by(attempt_id=id).all()
-    return render_template('teacher/reports/cohort/index.html', assessment=assessment, questions=questions, attempts=attempts, answers=answers)
+def cohort_report():
+    return render_template('teacher/reports/cohort/index.html')
 
 # list of students
-@teacher.route('/reports/', methods=['GET', 'POST'])
+@teacher.route('/reports/student', methods=['GET', 'POST'])
 @login_required
 def student_report():
     students = User.query.filter_by(role_id=1).all()
     return render_template('teacher/reports/student/index.html', students = students)
 
-#view student report
-@teacher.route('/reports/<int:id>', methods=['GET', 'POST'])
+@teacher.route('/reports/student/<int:id>', methods=['GET', 'POST'])
 @login_required
 def view_student_report(id):
     student = User.query.filter_by(id=id, role_id=1).first()
@@ -162,6 +157,8 @@ def view_student_report(id):
             assessment_attempts[assessment_id].append(attempt)
 
     assessment_data = []
+    total_assessments = len(Assessment.query.all())
+    attempted_assessments = 0
     for assessment_id in assessment_scores.keys():
         total_attempts = len(assessment_attempts[assessment_id])
         total_passed = len(assessment_passed[assessment_id])
@@ -177,11 +174,15 @@ def view_student_report(id):
                 'total_passed': total_passed,
                 'class_avg_score': get_class_avg_score(assessment_id, student),
             })
+            attempted_assessments += 1
+
+    completion_rate = (attempted_assessments / total_assessments) * 100 if total_assessments > 0 else 0
+
     assessment_avg_scores = {}
     for assessment in assessment_data:
         assessment_avg_scores[assessment['name']] = assessment['avg_score']
 
-    return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores)
+    return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate)
 
 
 def get_class_avg_score(assessment_id, student):
@@ -200,7 +201,7 @@ def get_class_avg_score(assessment_id, student):
         return 0
 
 # view a list of assessments that a student has taken
-@teacher.route('/reports/<int:id>/assessments', methods=['GET', 'POST'])
+@teacher.route('/reports/student/<int:id>/assessments', methods=['GET', 'POST'])
 @login_required
 def view_student_assessments(id):
     student = User.query.filter_by(id=id, role_id=1).first()
@@ -216,7 +217,7 @@ def view_student_assessments(id):
 
     return render_template('teacher/reports/student/list.html', student=student, assessments=assessments)
 
-@teacher.route('/reports/<int:student_id>/assessments/<int:assessment_id>', methods=['GET', 'POST'])
+@teacher.route('/reports/student/<int:student_id>/assessments/<int:assessment_id>', methods=['GET', 'POST'])
 @login_required
 def view_student_assessment_report(student_id, assessment_id):
     # Query the student with the given ID and ensure that they have the role ID of 1 (i.e., they are a student)

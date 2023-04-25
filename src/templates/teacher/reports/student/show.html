@@ -9,8 +9,9 @@
                 <tr>
                     <th>Average Score</th>
                     <th>Class Average Score</th>
-                    <th>Total Attempts</th>
-                    <th>Passed Attempts</th>
+                    <th>Total Assessments Taken</th>
+                    <th>Assessments Passed</th>
+                    <th>Completion Rate</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                     <td>{{ "%.2f" % (class_avg_scores | sum / class_avg_scores | length) }}%</td>
                     <td>{{ assessment_data | map(attribute='total_attempts') | sum }}</td>
                     <td>{{ assessment_data | map(attribute='total_passed') | sum }}</td>
+                    <td>{{ completion_rate | round(1) }}%</td>
                 </tr>
             </tbody>
         </table>

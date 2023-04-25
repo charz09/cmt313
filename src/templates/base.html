@@ -19,6 +19,7 @@
                 <li><a href={{ url_for('students.index') }}>Home</a></li>
                 {% else %}
                 <li><a href={{ url_for('teachers.assessments_index') }}>Home</a></li>
+                <li><a href="{{ url_for('teachers.cohort_report') }}">Cohort Report</a></li>
                 <li><a href="{{ url_for('teachers.student_report') }}">Student Progress</a></li>
                 {% endif %}
             {% else %}
