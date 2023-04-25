@@ -60,21 +60,13 @@
               },
               options: {
                 scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: true,
-                      min: 0,
-                      max: 100,
-                      stepSize: 10
-                    },
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'Percentage'
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: 100
                     }
-                  }]
                 }
-              }
-            });            
+            }
+        });
         </script>          
     {% else %}
         <p>No assessments found for this student.</p>
