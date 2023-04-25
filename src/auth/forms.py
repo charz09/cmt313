@@ -1,6 +1,6 @@
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, RadioField
+from wtforms import StringField, SubmitField, PasswordField, RadioField, TextAreaField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from ..models.user import User
 
@@ -26,3 +26,7 @@ class RegisterForm(FlaskForm):
         if user:
             raise ValidationError(
                 'That username is taken. Please choose a different one.')
+        
+class EditProfileForm(FlaskForm):
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    submit = SubmitField('Submit')

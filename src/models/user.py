@@ -1,5 +1,6 @@
-
+from datetime import datetime
 from src import db
+from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_manager
 from .role import Role
@@ -18,6 +19,7 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
     questions = db.relationship('Question', backref='user', lazy='dynamic')
+    about_me = db.Column(db.String(140))
 
     @property
     def password(self):
