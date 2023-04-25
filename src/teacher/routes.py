@@ -119,17 +119,60 @@ def edit_question(id):
     return render_template('teacher/questions/edit.html', form=form)
 
 # create cohort report for each assessment
+
+
 @teacher.route('/reports/cohort', methods=['GET', 'POST'])
 @login_required
 def cohort_report():
-    return render_template('teacher/reports/cohort/index.html')
+    assessments = Assessment.query.all()
+    # get selected assessment_id from form
+    assessment_id = request.form.get('assessment_id')
+    if assessment_id:
+        # get the chosen assessment
+        chosen_assessment = Assessment.query.get(assessment_id)
+        # get the attempts for the chosen assessment
+        attempts = chosen_assessment.attempts
+
+        # calculate the number of times each question was answered correctly and incorrectly for each assessment
+        questions = chosen_assessment.questions
+        question_results = []
+        for question in questions:
+            num_correct = 0
+            num_incorrect = 0
+            for attempt in attempts:
+                answer = Answer.query.filter_by(
+                    attempt_id=attempt.id, question_id=question.id).first()
+                if answer and answer.is_correct:
+                    num_correct += 1
+                elif answer:
+                    num_incorrect += 1
+            question_results.append(
+                {'question': question, 'num_correct': num_correct, 'num_incorrect': num_incorrect})
+
+        # calculate the statistics for the chosen assessment
+        total_num_of_attempts = len(attempts)
+        total_num_of_students_passed = len(
+            [attempt for attempt in attempts if attempt.user_score >= attempt.total_score * 0.5])
+        average_score = sum([attempt.user_score for attempt in attempts]
+                            )/len(attempts) * 10 if attempts else 0
+        average_attempts = len(
+            attempts)/len(set([attempt.id for attempt in attempts])) if attempts else 0
+        return render_template('teacher/reports/cohort/index.html', chosen_assessment=chosen_assessment,
+                               assessments=assessments, average_score=average_score,
+                               average_attempts=average_attempts,
+                               total_num_of_attempts=total_num_of_attempts,
+                               total_num_of_students_passed=total_num_of_students_passed, question_results=question_results)
+    else:
+        return render_template('teacher/reports/cohort/index.html', assessments=assessments)
+
 
 # list of students
 @teacher.route('/reports/student', methods=['GET', 'POST'])
 @login_required
 def student_report():
     students = User.query.filter_by(role_id=1).all()
-    return render_template('teacher/reports/student/index.html', students = students)
+    return render_template('teacher/reports/student/index.html', students=students)
+
 
 @teacher.route('/reports/student/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -150,7 +193,8 @@ def view_student_report(id):
             assessment_attempts[assessment_id] = []
             assessment_passed[assessment_id] = []
         if attempt.total_score is not None:
-            user_score_percentage = (attempt.user_score / attempt.total_score) * 100
+            user_score_percentage = (
+                attempt.user_score / attempt.total_score) * 100
             if user_score_percentage >= 60:
                 assessment_passed[assessment_id].append(attempt)
             assessment_scores[assessment_id].append(user_score_percentage)
@@ -163,9 +207,13 @@ def view_student_report(id):
         total_attempts = len(assessment_attempts[assessment_id])
         total_passed = len(assessment_passed[assessment_id])
         if total_attempts > 0:
-            avg_score = sum([score for score in assessment_scores[assessment_id] if score is not None]) / total_attempts
-            avg_attempts = total_attempts / len(set([attempt.assessment_id for attempt in assessment_attempts[assessment_id]]))
-            scores = [score for score in assessment_scores[assessment_id] if score is not None]
+            avg_score = sum([score for score in assessment_scores[assessment_id]
+                            if score is not None]) / total_attempts
+            avg_attempts = total_attempts / \
+                len(set(
+                    [attempt.assessment_id for attempt in assessment_attempts[assessment_id]]))
+            scores = [
+                score for score in assessment_scores[assessment_id] if score is not None]
             assessment_data.append({
                 'name': Assessment.query.filter_by(id=assessment_id).first().name,
                 'avg_score': avg_score,
@@ -176,7 +224,8 @@ def view_student_report(id):
             })
             attempted_assessments += 1
 
-    completion_rate = (attempted_assessments / total_assessments) * 100 if total_assessments > 0 else 0
+    completion_rate = (attempted_assessments / total_assessments) * \
+        100 if total_assessments > 0 else 0
 
     assessment_avg_scores = {}
     for assessment in assessment_data:
@@ -201,6 +250,8 @@ def get_class_avg_score(assessment_id, student):
         return 0
 
 # view a list of assessments that a student has taken
+
+
 @teacher.route('/reports/student/<int:id>/assessments', methods=['GET', 'POST'])
 @login_required
 def view_student_assessments(id):
@@ -208,7 +259,7 @@ def view_student_assessments(id):
     if student is None:
         flash('Invalid student ID', 'error')
         return redirect(url_for('teachers.student_report'))
-    
+
     assessments = (db.session.query(Assessment)
                    .join(Attempt, Assessment.id == Attempt.assessment_id)
                    .filter(Attempt.created_by == student.id)
@@ -216,6 +267,7 @@ def view_student_assessments(id):
                    .all())
 
     return render_template('teacher/reports/student/list.html', student=student, assessments=assessments)
+
 
 @teacher.route('/reports/student/<int:student_id>/assessments/<int:assessment_id>', methods=['GET', 'POST'])
 @login_required
@@ -236,7 +288,8 @@ def view_student_assessment_report(student_id, assessment_id):
     # answers = Answer.query.filter_by(attempt_id=attempt.id).all()
 
     # Get assessment data for the student
-    attempts = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).all()
+    attempts = Attempt.query.filter_by(
+        created_by=student_id, assessment_id=assessment_id).all()
     assessment_scores = []
     assessment_passed = []
     for attempt in attempts:
@@ -247,25 +300,28 @@ def view_student_assessment_report(student_id, assessment_id):
             assessment_scores.append(attempt.user_score)
 
     # Calculate the average score for this assessment for this student, as well as other relevant data
-    avg_score = (sum(assessment_scores) / len(assessment_scores)) * 10 if len(assessment_scores) > 0 else 0
-    avg_attempts = len(attempts) / len(set([attempt.created_by for attempt in attempts]))
+    avg_score = (sum(assessment_scores) / len(assessment_scores)
+                 ) * 10 if len(assessment_scores) > 0 else 0
+    avg_attempts = len(attempts) / \
+        len(set([attempt.created_by for attempt in attempts]))
     total_attempts = len(attempts)
     total_passed = len(assessment_passed)
     class_avg_score = get_class_avg_score(assessment_id, student)
-    
+
 # Calculate the number of times each question was answered correctly and incorrectly for the selected student's attempts
     question_results = []
     for question in questions:
         num_correct = 0
         num_incorrect = 0
         for attempt in attempts:
-            answer = Answer.query.filter_by(attempt_id=attempt.id, question_id=question.id).first()
+            answer = Answer.query.filter_by(
+                attempt_id=attempt.id, question_id=question.id).first()
             if answer and answer.is_correct:
                 num_correct += 1
             elif answer:
                 num_incorrect += 1
-        question_results.append({'question': question, 'num_correct': num_correct, 'num_incorrect': num_incorrect})
-
+        question_results.append(
+            {'question': question, 'num_correct': num_correct, 'num_incorrect': num_incorrect})
 
     # Create a dictionary of assessment data to be passed to the template
     assessment_data = {
@@ -278,4 +334,4 @@ def view_student_assessment_report(student_id, assessment_id):
     }
 
     # Render the template for the assessment report, passing in the relevant data
-    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt,assessment_data=[assessment_data], question_results=question_results)
+    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt, assessment_data=[assessment_data], question_results=question_results)

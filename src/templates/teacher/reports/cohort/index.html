@@ -2,6 +2,48 @@
 
 {% block content %}
 <section class="content-section" >
-<h1>Cohort Analysis Report</h1>
+    <form method="POST">
+        <label for="assessment_id">Select assessment:</label>
+        <select name="assessment_id" id="assessment_id">
+            {% for assessment in assessments %}
+            <option value="{{ assessment.id }}">{{ assessment.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    {% if chosen_assessment %}
+    <h1>Statistics for {{ chosen_assessment.name }}</h1>
+    <table>
+        <tr>
+            <th>Total number of attempts</th>
+            <th>Total number of students passed</th>
+            <th>Average number of attempts</th>
+            <th>Percentage of students passed</th>
+            <th>Average score</th>
+        </tr>
+        <tr>
+            <td>{{ total_num_of_attempts }}</td>
+            <td>{{ total_num_of_students_passed }}</td>
+            <td>{{ average_attempts }}</td>
+            <td>{{ (total_num_of_students_passed/total_num_of_attempts * 100 if total_num_of_attempts else 0) | round(1) }}%</td>
+            <td>{{ average_score | round(1) }}%</td>
+        </tr>
+    </table>
+    <h1>Question Results for {{ chosen_assessment.name }}</h1>
+    <table>
+        <tr>
+            <th>Question</th>
+            <th>Number of Correct Answers</th>
+            <th>Number of Incorrect Answers</th>
+        </tr>
+        {% for result in question_results %}
+        <tr>
+            <td>{{ result.question.content }}</td>
+            <td>{{ result.num_correct }}</td>
+            <td>{{ result.num_incorrect }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
 </section>
 {% endblock content %}
