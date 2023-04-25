@@ -231,8 +231,8 @@ def view_student_assessment_report(student_id, assessment_id):
     questions = Question.query.filter_by(assessment_id=assessment_id).all()
 
     # Get the attempt for this student on this assessment and all answers associated with it
-    attempt = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).first()
-    answers = Answer.query.filter_by(attempt_id=attempt.id).all()
+    # attempt = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).first()
+    # answers = Answer.query.filter_by(attempt_id=attempt.id).all()
 
     # Get assessment data for the student
     attempts = Attempt.query.filter_by(created_by=student_id, assessment_id=assessment_id).all()
@@ -251,6 +251,20 @@ def view_student_assessment_report(student_id, assessment_id):
     total_attempts = len(attempts)
     total_passed = len(assessment_passed)
     class_avg_score = get_class_avg_score(assessment_id, student)
+    
+# Calculate the number of times each question was answered correctly and incorrectly for the selected student's attempts
+    question_results = []
+    for question in questions:
+        num_correct = 0
+        num_incorrect = 0
+        for attempt in attempts:
+            answer = Answer.query.filter_by(attempt_id=attempt.id, question_id=question.id).first()
+            if answer and answer.is_correct:
+                num_correct += 1
+            elif answer:
+                num_incorrect += 1
+        question_results.append({'question': question, 'num_correct': num_correct, 'num_incorrect': num_incorrect})
+
 
     # Create a dictionary of assessment data to be passed to the template
     assessment_data = {
@@ -259,8 +273,8 @@ def view_student_assessment_report(student_id, assessment_id):
         'avg_attempts': avg_attempts,
         'total_attempts': total_attempts,
         'total_passed': total_passed,
-        'class_avg_score': class_avg_score,
+        'class_avg_score': class_avg_score
     }
 
     # Render the template for the assessment report, passing in the relevant data
-    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt, answers=answers, assessment_data=[assessment_data])
+    return render_template('teacher/reports/student/assessment.html', student=student, assessment=assessment, questions=questions, attempt=attempt,assessment_data=[assessment_data], question_results=question_results)

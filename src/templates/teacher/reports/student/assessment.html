@@ -26,6 +26,24 @@
                 {% endfor %}
             </tbody>
         </table>
+        <table>
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>Correct</th>
+                <th>Incorrect</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for result in question_results %}
+              <tr>
+                <td>{{ result.question.content }}</td>
+                <td>{{ result.num_correct }}</td>
+                <td>{{ result.num_incorrect }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
     {% else %}
         <p>No assessments found for this student.</p>
     {% endif %}
