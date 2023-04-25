@@ -19,7 +19,11 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
     questions = db.relationship('Question', backref='user', lazy='dynamic')
+    firstname = db.Column(db.String(64))
+    lastname = db.Column(db.String(64))
+    email = db.Column(db.String(120))
     about_me = db.Column(db.String(140))
+    
 
     @property
     def password(self):

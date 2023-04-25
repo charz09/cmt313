@@ -4,7 +4,7 @@
     <table>
         <tr valign="top">
             <td>
-                <h3>User: {{ user.username }}</h3>
+                <h3>{{ user.username }}</h3>
                 <h4>Role: {{ user.role.name }}</h4>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user == current_user %}

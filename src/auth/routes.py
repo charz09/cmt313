@@ -5,7 +5,7 @@ from ..models.user import User
 from ..models.role import Role
 from .forms import LoginForm, RegisterForm, EditProfileForm
 from flask import render_template, session, redirect, url_for, flash, request
-from src import db
+from .. import db
 
 
 @auth.route('/', methods=['GET', 'POST'])
@@ -66,16 +66,23 @@ def user(username):
 @auth.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('auth.edit_profile'))
     elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
         form.about_me.data = current_user.about_me
     return render_template('auth/edit_profile.html', title='Edit Profile',
                            form=form)
+
 
 @auth.route('/logout')
 @login_required
