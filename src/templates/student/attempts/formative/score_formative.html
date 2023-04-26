@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+  <div class="score-container" style="text-align:center; font-size: 3rem; color: {% if user_score/total_score >= 0.5 %} green {% else %} red {% endif %}">
+    <h4>Your Score:</h4>
+    <p>{{ user_score }}/{{ total_score }} ({{ percentage_score }})</p>
+    {% set new_num_attempts = num_attempts - 1 %}
+  </div>
+  <div class="button-container">
+    <a href="{{ url_for('students.attempt_again', assessment_id=assessment.id, num_attempts=new_num_attempts) }}" class="btn btn-primary attempt-again">Attempt Again</a>
+    <a href="{{ url_for('students.view_answers', attempt_id=attempt.id) }}" class="btn btn-secondary view-answers">View Answers</a>
+    <a href="{{ url_for('students.index') }}" class="btn btn-danger exit">Exit</a>
+  </div>
+</section>
+{% endblock %}
+
+
+

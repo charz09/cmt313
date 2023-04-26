@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="assessment-containeri">
+  <h1 class="assessment-titlei">{{ assessment.name }}</h1>
+  <h1 class="assessment-modulei">{{ assessment.module }}</h1>
+
+
+  
+  <form method="post" action="{{ url_for('students.attempt_assessment', assessment_id=assessment.id) }}" class="formi">
+
+    <p class="attempts-labeli">Select the number of attempts for this Sitting</p>
+    <select name="attempts" class="attempts-selecti">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+
+    <p class="start-labeli">Click the button below to start the assessment</p>
+    <button type="submit" class="start-buttoni">Attempt Assessment</button>
+
+  </form>
+</div>
+
+{% endblock %}
+
+
+
+

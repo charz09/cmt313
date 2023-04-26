@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+    <div class="results-containerfr">
+        <div class="score-cardfr cardfr" style="text-align:center; color: {% if user_score/total_score >= 0.5 %} green {% else %} red {% endif %}">
+            <h4 style="text-align:center; font-size: 20px">Your Score:</h4>
+            <p style="text-align:center; font-size: 30px">{{ user_score }}/{{ total_score }} ({{ percentage_score }})</p>
+        </div>
+        {% for answer in attempt.answers %}
+        <div class="question-containerfr cardfr{% if answer.is_correct %} green{% else %} red{% endif %}">
+            <h5>{{ answer.question.content }}</h5>
+            <p>Your answer:  {{ answer.content}}</p>
+            <p>Feedback: {{ answer.is_correct}}</p>
+            <p>Correct answer: {{ answer.correct_answer}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
+
+

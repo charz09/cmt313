@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="assessment-sectionn">
+    <div class="assessment-containern">
+        <form method="POST" action="{{ url_for('students.mark_assessment', assessment_id=assessment.id, num_attempts=num_attempts) }}" class="assessment-formn">
+            {{ form.hidden_tag() }}
+        
+            <p class="attempts-labeln">Number of attempts left: {{ num_attempts }}</p>
+        
+            {% for i in range(0,10) %}
+                {% if form["question_" ~ i ~ ""] %}
+                    <h5 class="question-headingn">Question {{ i + 1 }}</h5>
+                    <div class="text-center">{{ form["question_" ~ i ~ ""].label }}</div>
+                    {{ form["question_" ~ i ~ ""](class='input-fieldn') }}
+                {% endif %}
+            {% endfor %}
+        
+            <input type="submit" value="Submit" class="submit-buttonn">
+        </form>
+    </div>
+</section>
+
+{% endblock %}
+
