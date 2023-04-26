@@ -44,6 +44,7 @@ def register():
                     password=form.password.data)
         user.role_id = Role.query.filter_by(
             name=form.role.data).first().id
+        user.email = form.email.data
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -66,11 +67,12 @@ def user(username):
 @auth.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = EditProfileForm(current_user.username)
-    if form.validate_on_submit():
+    form = EditProfileForm(current_user)
+    if request.method == 'POST':
         current_user.username = form.username.data
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
+        current_user.email = form.email.data
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
@@ -79,6 +81,7 @@ def edit_profile():
         form.username.data = current_user.username
         form.firstname.data = current_user.firstname
         form.lastname.data = current_user.lastname
+        form.email.data = current_user.email
         form.about_me.data = current_user.about_me
     return render_template('auth/edit_profile.html', title='Edit Profile',
                            form=form)
