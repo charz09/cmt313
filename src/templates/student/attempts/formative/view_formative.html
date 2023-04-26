@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="assessment-listf">
+
+    {% for assessment in assessments %}
+        <div class="assessment-cardf">
+            <h2 class="assessment-card__titlef">
+                <a href="{{ url_for('students.view_instructions', assessment_id=assessment.id) }}">{{ assessment.name}}</a>
+            </h2>
+            <h5 class="assessment-card__modulef">{{ assessment.module }}</h5>
+            <p class="assessment-card__descriptionf">{{ assessment.description }}</p>
+            <p class="assessment-card__typef">{{assessment.assessment_type}}</p>
+        </div>
+    {% endfor %}
+
+</section>
+
+{% endblock %}
+

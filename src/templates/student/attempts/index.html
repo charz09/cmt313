@@ -1,21 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<section class="assessments-section " >
-    
-    {% for assessment in assessments %}
-        <div class="card">
-            <p>{{assessment.assessment_type}}</p>
-            <h2 class="card-title">
-                <a href={{url_for('students.new_attempt', id=assessment.id)}}>{{ assessment.name}}</a>
-            </h2>
-            <h5>{{ assessment.module }}</h5>
-            <p>{{ assessment.description }}</p>
-    
-        </div>
-    {% endfor %}
-
-</section>
-
+  <div class="button-container">
+    <a href="{{ url_for('students.view_formative') }}">
+      <button class="assessment-button">View Formative Assessment</button>
+    </a>
+    <a href="{{ url_for('students.view_summative') }}">
+      <button class="assessment-button">View Summative Assessment</button>
+    </a>
+  </div>
 {% endblock %}
+
+
+

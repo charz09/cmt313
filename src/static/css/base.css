@@ -154,3 +154,406 @@ form {
   width: clamp(20rem, 80%, 90rem);
   margin: auto;
 }
+
+
+
+/* MO */
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.assessment-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn:hover {
+  background-color: #ccc;
+}
+
+.attempt-again {
+  margin-right: 16px;
+}
+
+.view-answers {
+  margin-right: 16px;
+}
+
+.exit-assessment {
+  margin-right: 0;
+}
+
+
+
+
+
+/* view_formative.html   f */
+
+
+.assessment-listf {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.assessment-cardf {
+  background-color: #8cdbfb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.assessment-card__titlef {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.assessment-card__titlef a {
+  text-decoration: none;
+  color: black;
+}
+
+.assessment-card__modulef {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.assessment-card__descriptionf {
+  margin: 0.5rem 0;
+}
+
+.assessment-card__typef {
+  font-size: 0.8rem;
+  margin: 0;
+  color: rgb(244, 13, 13);
+}
+
+
+
+
+/* instructio   i */
+
+
+
+.assessment-containeri {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+
+.assessment-titlei {
+  font-size: 35px;
+  color: rgb(222, 19, 19);
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+
+.assessment-modulei{
+  text-align: center;
+  font-size: 17px;
+  color: #0e0f10;
+  margin-top: -6px;
+  padding-bottom: 30px;
+  font-weight: bolder;
+}
+
+
+
+
+
+
+
+.assessment-descriptioni {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.attempts-labeli {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.formi{
+  border: 1px solid rgb(53, 5, 243);
+  padding: 40px 40px;
+}
+
+
+
+.attempts-selecti {
+  font-size: 20px;
+  padding: 0.5rem 1rem;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 30%;
+  margin: 0 auto; /* Add this line */
+}
+
+
+.start-labeli {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.start-buttoni {
+  font-size: 1.2rem;
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-buttoni:hover {
+  background-color: #2E8B57;
+}
+
+
+.start-buttoni:hover {
+  background-color: #0e0f10;
+}
+
+
+/* new_formative   n*/
+
+/* CSS */
+
+
+.text-center {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+
+.assessment-sectionn {
+  background-color: #f2f2f2;
+  padding: 2rem 0;
+}
+
+.assessment-containern {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  border-radius: 0.5rem;
+}
+
+.attempts-labeln {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 300;
+}
+
+.question-headingn {
+  font-size: 15px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+
+
+
+
+
+.input-fieldn label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  background-color: #8cdbfb;
+}
+
+.input-fieldn input[type="radio"] {
+  display: none;
+}
+
+.input-fieldn input[type="radio"] + label {
+  display: inline-block;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  background-color: rgb(214, 218, 216);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.input-fieldn input[type="radio"]:checked + label {
+  background-color: rgb(92, 251, 90);
+}
+
+
+.input-fieldn {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border: 1px solid black;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  list-style: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.input-fieldn label:hover {
+  background-color: #ddd;
+}
+
+.submit-buttonn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.submit-buttonn:hover {
+  background-color: #2E8B57;
+}
+
+
+.choice-optionn {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #eee;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  list-style: none; /* added */
+}
+
+
+
+
+/* formative_results */
+
+.results-containerfr {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.score-cardfr {
+  margin-bottom: 1rem;
+  border: 3px solid black;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #f8fad1;
+  width: 35%;
+  margin-left: 30%;
+  font-size: 6px;
+}
+
+.question-containerfr h5 {
+  margin-bottom: 0.5rem;
+}
+
+.question-containerfr p {
+  margin-bottom: 0.25rem;
+}
+
+.question-containerfr {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
+.question-containerfr.green {
+  border: 6px solid green;
+}
+
+.question-containerfr.red {
+  border: 6px solid red;
+}
+
+
+
+
+
+
+
+
