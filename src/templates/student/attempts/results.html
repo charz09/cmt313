@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+    <div class="results-container">
+        {% for answer in attempt.answers %}
+        <div class="question-container card">
+            <h5>{{ answer.question.content }}</h5>
+            <p>Your answer:  {{ answer.content}}</p>
+            <p>Feedback: {{ answer.is_correct}}</p>
+            <p>Correct answer: {{ answer.correct_answer}}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if feedback %}
+    <div class="feedback-container card">
+        <h5>Feedback:</h5>
+        <p>{{ feedback.content }}</p>
+    </div>
+
+    {% else %}
+        <div class="alert alert-info feedback-box" role="alert">
+            <a href="{{ url_for('students.submit_feedback', id=attempt.id) }}">Click here to Leave Feedback for your Assessment. Thank you! :)</a>
+            <button type="button" class="btn btn-primary">Best of Luck!</button>
+        </div>
+    </button>
+    {% endif %}
+    
+    
+
+    
+</section>
+
+{% endblock %}
