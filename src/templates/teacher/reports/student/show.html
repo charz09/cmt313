@@ -46,11 +46,11 @@
               data: {
                 labels: [{% for assessment in assessment_data %}"{{ assessment.name }}"{% if not loop.last %},{% endif %}{% endfor %}],
                 datasets: [{
-                  label: 'Assessment Scores',
+                  label: "{{ student.username }}'s score",
                   data: [{% for assessment in assessment_data %}{{assessment.avg_score}}{% if not loop.last %},{% endif %}{% endfor %}],
                   backgroundColor: 'rgba(0, 0, 0, 0)',
                   borderColor: 'blue',
-                  borderWidth: 1
+                  borderWidth: 2
                 },
                 {
                   label: 'Class Average Score',
@@ -73,8 +73,58 @@
     {% else %}
         <p>No assessments found for this student.</p>
     {% endif %}
-<form action="{{ url_for('teachers.view_student_assessments', id=student.id) }}" method="get">
-    <button type="submit" class="primary-button">View All Assessments</button>
-</form>
+    <form method="POST">
+        <label for="assessment_id">Select assessment:</label>
+        <select name="assessment_id" id="assessment_id">
+            {% for assessment in assessments %}
+            <option value="{{ assessment.id }}">{{ assessment.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+<!--new code block-->
+{% if chosen_assessment %}
+    <h1>Statistics for {{ chosen_assessment.name }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Average Score</th>
+                <th>Class Average Score</th>
+                <th>Total Attempts</th>
+                <th>Passed Attempts</th>
+                <!--<th>Average Attempts</th>-->
+            </tr>
+        </thead>
+        <tbody>
+            {% for assessment in student_assessment_data %}
+                <tr>
+                    <td>{{ "%.2f" % assessment.avg_score }}%</td>
+                    <td>{{ "%.2f" % assessment.class_avg_score }}%</td>
+                    <td>{{ assessment.total_attempts }}</td>
+                    <td>{{ assessment.total_passed }}</td>
+                    <!--<td>{{ "%.2f" % assessment.avg_attempts }}</td>-->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in question_results %}
+          <tr>
+            <td>{{ result.question.content }}</td>
+            <td>{{ result.num_correct }}</td>
+            <td>{{ result.num_incorrect }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
 </section>
 {% endblock content %}
