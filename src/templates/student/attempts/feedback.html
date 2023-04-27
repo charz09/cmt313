@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Feedback</h1>
+    <form action="{{ url_for('students.submit_feedback', id=attempt.id) }}" method="POST">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.content.label }}
+            {{ form.content(class="form-control") }}
+            {% if form.content.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.content.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
