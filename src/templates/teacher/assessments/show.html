@@ -3,23 +3,28 @@
 {% block content %}
 
 <div class="login-form">
-    <div class="assessment-container">
+    <div class="assessments-section">
         <h1>
             {{ assessment.name}}
         </h1>
-        <h4>{{ assessment.module}}</h4>
+        <h4>Module: {{ assessment.module}}</h4>
         <p>{{assessment.description}}</p>
+        <p>Questions: {{assessment.questions|length}}/10</p>
 
+        {% if assessment.questions|length < 10 %}
         <form action={{ url_for('teachers.new_question', id=assessment.id) }} method="get">
             <button type="submit" class="primary-button">Add a Question</button>
         </form>
+        {% endif %}
 
         {% for question in assessment.questions %}
         <div class="question">
-            <p>{{question.content}}</p>
-            {% for c in question.choices %}
-                <p>{{ c.content }}</p>
-            {% endfor %} 
+            <p class="question-content">{{question.content}}</p>
+            <div class="choices">
+                {% for c in question.choices %}
+                    <div><span class="list-label">{{labels[loop.index0]}}</span>. {{ c.content }}</div>
+                {% endfor %} 
+            </div>
         </div>
         {% endfor %}
     </div>

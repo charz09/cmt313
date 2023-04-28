@@ -26,6 +26,7 @@ class Question(db.Model):
             content=content, assessment_id=assessment_id, question_type=question_type)
         db.session.add(new_question)
         db.session.commit()
+        return new_question
 
     def __repr__(self):
         return '<Question %r>' % self.content

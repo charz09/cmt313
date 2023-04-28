@@ -14,6 +14,8 @@ class Assessment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     questions = db.relationship('Question', backref='assessment')
     attempts = db.relationship('Attempt', backref='assessment')
+
+    # time related insance varaiables
     created_at = db.Column(db.DateTime, default=datetime.now())
     available_from = db.Column(db.DateTime, default=datetime.now())
     feedback_from = db.Column(db.DateTime, default=datetime.now())
@@ -37,6 +39,7 @@ class Assessment(db.Model):
                                     user_id=user_id)
         db.session.add(new_assessment)
         db.session.commit()
+        return new_assessment
 
     def __repr__(self):
         return '<Assessment %r>' % self.name

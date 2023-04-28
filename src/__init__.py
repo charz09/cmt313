@@ -28,10 +28,12 @@ def init_app():  # Factory function for creating app instance
     # login_manager.login_message_category = 'unsuccessful'
 
     with app.app_context():
-        # this import allows us to create the table if it does not exist
+        # imports for use in seed file.
         from src.models.user import User
         from src.models.role import Role
         from src.models.assessment import Assessment
+        from src.models.question import Question
+        from src.models.choice import Choice
 
         login_manager.init_app(app)
 
@@ -49,6 +51,6 @@ def init_app():  # Factory function for creating app instance
         app.register_blueprint(student)
 
         # seed the database with fake user data
-        seed(db, Role, User, Assessment)
+        seed(db, Role, User, Assessment, Question, Choice)
 
         return app

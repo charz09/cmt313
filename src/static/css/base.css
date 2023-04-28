@@ -154,3 +154,19 @@ form {
   width: clamp(20rem, 80%, 90rem);
   margin: auto;
 }
+
+.question {
+  border: 1px solid var(--dark-color);
+  padding: var(--sp-5);
+  margin: var(--sp-5) 0;
+  border-radius: var(--sp-3)
+}
+
+.question-content {
+  white-space: pre-line;
+  font-family: monospace;
+}
+
+.list-label {
+  color: var(--primary-color)
+}

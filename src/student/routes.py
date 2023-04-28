@@ -9,6 +9,14 @@ from wtforms import StringField, RadioField
 # from src import db
 # from wtforms.validators import DataRequired
 
+# protects the route against student access
+
+
+@student.before_request
+def check_user_is_teacher():
+    if current_user.role.name == "Teacher":
+        return redirect(url_for('students.index'))
+
 
 # View all assessment attempts
 @student.route('/')

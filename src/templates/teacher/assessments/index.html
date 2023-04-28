@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<section class="assessments-section " >
+<section class="assessments-section" >
+    
     <form action="{{ url_for('teachers.new_assessment') }}" method="get">
         <button type="submit" class="primary-button">+ Create Assessment</button>
     </form>
+
     
     {% for assessment in assessments %}
         <div class="card">

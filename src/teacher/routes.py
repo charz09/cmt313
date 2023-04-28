@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 from src import db
 from ..models.assessment import Assessment
 from ..models.question import Question
@@ -7,13 +7,20 @@ from ..models.choice import Choice
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
 
+# protects the route against student access
+@teacher.before_request
+def check_user_is_teacher():
+    if current_user.role.name == "Student":
+        return redirect(url_for('students.index'))
+
 
 # VIEW ASSESSMENTS
 @teacher.route('/', methods=['GET'])
 @teacher.route('/assessments', methods=['GET'])
 @login_required
 def assessments_index():
-    assessments = Assessment.query.all()
+    # only return a users own assessments
+    assessments = Assessment.query.filter_by(user_id=current_user.id)
     return render_template('teacher/assessments/index.html', assessments=assessments)
 
 
@@ -47,7 +54,7 @@ def show_assessment(id):
         return redirect(url_for('teachers.assessments_index'))
 
     assessment = Assessment.query.filter_by(id=id).first()
-    return render_template('teacher/assessments/show.html', assessment=assessment)
+    return render_template('teacher/assessments/show.html', assessment=assessment, labels=["A", "B", "C", "D"])
 
 
 # EDIT ASSESSMENT
