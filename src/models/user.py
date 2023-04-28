@@ -30,15 +30,18 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str, role_id: str):
         self.username = username
         self.password = password
+        self.role_id = role_id
 
     @staticmethod
-    def create(username):  # create new user
-        new_user = User(username)
+    def create(username, password, role):  # create new user
+        new_user = User(username, password, role)
         db.session.add(new_user)
         db.session.commit()
+        print(f"Created user {new_user}")
+        return new_user
 
     def __repr__(self):
         return '<User %r>' % self.username

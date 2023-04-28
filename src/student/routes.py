@@ -55,6 +55,7 @@ def new_attempt(id):
             # get the users answer dynamically from the form object
             user_choice = getattr(form, f"question_{i}").data
 
+            # create Answer and assigns if it was correct or not.
             if user_choice == correct_choice:
                 Answer.create(
                     user_choice, True, correct_choice, attempt.id, question.id)
@@ -64,6 +65,7 @@ def new_attempt(id):
 
         return redirect(url_for('students.results', id=attempt.id))
 
+    # render the template with the dynamically created form
     return render_template('student/attempts/new.html', form=form)
 
 

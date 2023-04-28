@@ -8,6 +8,7 @@
     <title>{% block title %}{% endblock %} - Assessmint</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {{ moment.include_moment() }}
     {% endblock %}
 </head>
 <body>

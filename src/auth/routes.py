@@ -39,10 +39,8 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         # check if user already exists
-        user = User(username=form.username.data,
-                    password=form.password.data)
-        user.role_id = Role.query.filter_by(
-            name=form.role.data).first().id
+        role_id = Role.query.filter_by(name=form.role.data).first().id
+        user = User.create(form.username.data, form.password.data, role_id)
         db.session.add(user)
         db.session.commit()
         login_user(user)

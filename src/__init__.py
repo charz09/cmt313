@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+from flask_moment import Moment
+from src.seed import seed
 # Create the database
 db = SQLAlchemy()
 
@@ -15,6 +16,9 @@ def init_app():  # Factory function for creating app instance
     app.config.from_object('src.config.Config')
     # print("App Config: ", app.config, "/n #####################################")
 
+    moment = Moment(app)
+    moment.init_app(app)
+
     # initialise the database using the app instance
     db.init_app(app)
 
@@ -26,11 +30,8 @@ def init_app():  # Factory function for creating app instance
     with app.app_context():
         # this import allows us to create the table if it does not exist
         from src.models.user import User
-        db.create_all()
-
-        # from src.models.role import Role
-        # if db
-        # db.drop_all(); db.create_all();student = Role();student.name = "Student";db.session.add(student);teacher = Role();teacher.name = "Teacher";db.session.add(teacher);db.session.commit()
+        from src.models.role import Role
+        from src.models.assessment import Assessment
 
         login_manager.init_app(app)
 
@@ -46,5 +47,8 @@ def init_app():  # Factory function for creating app instance
 
         from .student import student
         app.register_blueprint(student)
+
+        # seed the database with fake user data
+        seed(db, Role, User, Assessment)
 
         return app
