@@ -8,9 +8,14 @@ from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQ
 from . import teacher
 
 # protects the route against student access
+
+
 @teacher.before_request
+@login_required
 def check_user_is_teacher():
-    if current_user.role.name == "Student":
+    if not current_user:
+        return redirect(url_for('auth.login'))
+    elif current_user.role.name == "Student":
         return redirect(url_for('students.index'))
 
 
@@ -110,14 +115,48 @@ def new_question(id):
 def edit_question(id):
     form = EditQuestionForm()
     question = Question.query.filter_by(id=id).first()
+    assessment = question.assessment
+    choices = question.choices
     if form.validate_on_submit():
         question.content = form.content.data
         question.question_type = form.question_type.data
         db.session.add(question)
+
+        correct_choice = [
+            c for c in choices if c.is_correct == True][0]
+        correct_choice.content = form.correct_choice.data
+
+        incorrect_choices = [c for c in choices if c.is_correct == False]
+        incorrect_choices[0].content = form.incorrect_choice_1.data
+        incorrect_choices[1].content = form.incorrect_choice_2.data
+        incorrect_choices[2].content = form.incorrect_choice_3.data
+
+        db.session.add(correct_choice)
+        db.session.add(incorrect_choices[0])
+        db.session.add(incorrect_choices[1])
+        db.session.add(incorrect_choices[2])
         db.session.commit()
-        return redirect(url_for('teachers.questions_index'))
+
+        return redirect(url_for('teachers.show_assessment', id=assessment.id))
 
     form.content.data = question.content
     form.question_type.data = question.question_type
+    choices = question.choices
+    form.correct_choice.data = [
+        c for c in choices if c.is_correct == True][0].content
+    incorrect_choices = [c for c in choices if c.is_correct == False]
+    form.incorrect_choice_1.data = incorrect_choices[0].content
+    form.incorrect_choice_2.data = incorrect_choices[1].content
+    form.incorrect_choice_3.data = incorrect_choices[2].content
 
     return render_template('teacher/questions/edit.html', form=form)
+
+
+# Delete QUESTION
+@teacher.route('/questions/<int:id>/delete', methods=['POST'])
+def delete_question(id):
+    question = Question.query.filter_by(id=id).first()
+    assessment = question.assessment
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('teachers.show_assessment', assessment=assessment, id=assessment.id))

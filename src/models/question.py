@@ -8,7 +8,6 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
-    # TODO change to a question type table
     question_type = db.Column(db.String(30), nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     choices = db.relationship('Choice', backref='question')
