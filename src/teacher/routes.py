@@ -9,6 +9,7 @@ from ..models.choice import Choice
 from ..models.answer import Answer
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
+import numpy as np
 
 
 # VIEW ASSESSMENTS
@@ -130,6 +131,16 @@ def cohort_report():
         chosen_assessment = Assessment.query.get(assessment_id)
         # get the attempts for the chosen assessment
         attempts = chosen_assessment.attempts
+        
+        # calculate the average time taken for all assessments overall
+        total_time_taken = sum([(attempt.end_time - attempt.created_on).total_seconds() for attempt in attempts])
+        average_time_taken_seconds = total_time_taken / len(attempts) if attempts else 0
+        average_time_taken = '{:02d}:{:02d}'.format(int(average_time_taken_seconds // 60), int(average_time_taken_seconds % 60))
+        
+        #calculate completeion rate
+        num_students_attempted = len(set([attempt.created_by for attempt in attempts]))
+        num_students_eligible = len(User.query.filter_by(role_id=1).all())
+        completion_rate = f"{num_students_attempted/num_students_eligible:.0%}"
 
         # calculate the number of times each question was answered correctly and incorrectly for each assessment
         questions = chosen_assessment.questions
@@ -155,11 +166,32 @@ def cohort_report():
                             )/len(attempts) * 10 if attempts else 0
         average_attempts = len(
             attempts)/len(set([attempt.id for attempt in attempts])) if attempts else 0
-        return render_template('teacher/reports/cohort/index.html', chosen_assessment=chosen_assessment,
+        
+        # get data for each student
+        students = User.query.filter_by(role_id=1).all()
+        student_data = []
+        for student in students:
+            student_attempts = Attempt.query.filter_by(created_by=student.id, assessment_id=assessment_id).all()
+            if student_attempts:
+                student_num_of_attempts = len(student_attempts)
+                student_num_of_correct_attempts = len(
+                    [attempt for attempt in student_attempts if attempt.user_score >= attempt.total_score * 0.5])
+                student_average_score = sum(
+                    [attempt.user_score for attempt in student_attempts])/student_num_of_attempts * 10
+                # calculate the average time taken for the chosen assessment
+                student_time_taken = sum([(attempt.end_time - attempt.created_on).total_seconds() for attempt in student_attempts])
+                student_average_time_taken_seconds = student_time_taken / len(student_attempts) if student_attempts else 0
+                student_average_time_taken = '{:02d}:{:02d}'.format(int(student_average_time_taken_seconds // 60), int(student_average_time_taken_seconds % 60))
+                print(student_average_time_taken)
+                student_data.append({'id': student.id, 'name': student.username, 'num_of_attempts': student_num_of_attempts,
+                                     'num_of_correct_attempts': student_num_of_correct_attempts, 'average_score': student_average_score, 'average_time_taken': student_average_time_taken})
+
+        return render_template('teacher/reports/cohort/index.html', students=students, student_data=student_data, chosen_assessment=chosen_assessment,
                                assessments=assessments, average_score=average_score,
                                average_attempts=average_attempts,
                                total_num_of_attempts=total_num_of_attempts,
-                               total_num_of_students_passed=total_num_of_students_passed, question_results=question_results)
+                               total_num_of_students_passed=total_num_of_students_passed, question_results=question_results, average_time_taken=average_time_taken, completion_rate=completion_rate)
+        
     else:
         return render_template('teacher/reports/cohort/index.html', assessments=assessments)
 
@@ -168,7 +200,8 @@ def cohort_report():
 @teacher.route('/reports/student', methods=['GET', 'POST'])
 @login_required
 def student_report():
-    students = User.query.filter_by(role_id=1).all()
+    page = request.args.get('page', 1, type=int)
+    students = User.query.filter_by(role_id=1).paginate(page=page, per_page=5)
     return render_template('teacher/reports/student/index.html', students=students)
 
 

@@ -154,7 +154,7 @@ form {
   width: clamp(20rem, 80%, 90rem);
   margin: auto;
   /*add space top and bottom*/
-  padding: var(--sp-7) 0;
+  padding: var(--sp-6) 0;
 }
 
 table {

@@ -10,7 +10,8 @@ class Attempt(db.Model):
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='attempt')
-    #created_on = db.Column(db.DateTime, server_default=db.func.now())
+    created_on = db.Column(db.DateTime, server_default=db.func.now())
+    end_time = db.Column(db.DateTime)
 
     def __init__(self, assessment_id: int, created_by: int):
         self.assessment_id = assessment_id

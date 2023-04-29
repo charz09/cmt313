@@ -12,29 +12,34 @@
         <button type="submit">Submit</button>
     </form>
     {% if chosen_assessment %}
-    <h1>Statistics for {{ chosen_assessment.name }}</h1>
+    <h1>{{ chosen_assessment.name }} Report</h1>
+    <h2>Overall Results</h2>
     <table>
         <tr>
             <th>Total number of attempts</th>
             <th>Total number of students passed</th>
             <th>Average number of attempts</th>
             <th>Percentage of students passed</th>
+            <th>Average Time Taken</th>
             <th>Average score</th>
+            <th>Completion rate</th>
         </tr>
         <tr>
             <td>{{ total_num_of_attempts }}</td>
             <td>{{ total_num_of_students_passed }}</td>
             <td>{{ average_attempts }}</td>
             <td>{{ (total_num_of_students_passed/total_num_of_attempts * 100 if total_num_of_attempts else 0) | round(1) }}%</td>
+            <td>{{ average_time_taken }}</td>
             <td>{{ average_score | round(1) }}%</td>
+            <td>{{ completion_rate }}
         </tr>
     </table>
-    <h1>Question Results for {{ chosen_assessment.name }}</h1>
+    <h2>Question Results</h2>
     <table>
         <tr>
             <th>Question</th>
-            <th>Number of Correct Answers</th>
-            <th>Number of Incorrect Answers</th>
+            <th>Correct Answers</th>
+            <th>Incorrect Answers</th>
         </tr>
         {% for result in question_results %}
         <tr>
@@ -44,6 +49,31 @@
         </tr>
         {% endfor %}
     </table>
+    <h2>Student data</h2>
+    <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Number of Attempts</th>
+            <th>Correct Attempts</th>
+            <th>Average Score</th>
+            <th>Time Taken</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in student_data %}
+            <tr>
+              <td>{{ data['id'] }}</td>
+              <td>{{ data['name'] }}</td>
+              <td>{{ data['num_of_attempts'] }}</td>
+              <td>{{ data['num_of_correct_attempts'] }}</td>
+              <td>{{ data['average_score'] }}%</td>
+              <td>{{ data['average_time_taken'] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     {% endif %}
 </section>
 {% endblock content %}

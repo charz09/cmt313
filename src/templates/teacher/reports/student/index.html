@@ -1,22 +1,44 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <!-- list of students -->
-  <section class="content-section " >
+{% extends "base.html" %} {% block content %}
+<!-- list of students -->
+<section class="content-section">
   <h1>Students</h1>
-    {% for student in students %}
-    <div class="card">
-        <h2 class="card-title">
-            <a href="#">{{ student.username}}</a>
-        </h2>
-    
-        <div class="buttons-container">
-            <form action="{{ url_for('teachers.view_student_report', id=student.id) }}" method="POST">
-                <button type="submit" class="secondary-button">Report</button>
-            </form>
-        </div>
-    
+  {% for student in students.items %}
+  <div class="card">
+    <h2 class="card-title">
+      <a href="#">{{ student.username}}</a>
+    </h2>
+    <div class="buttons-container">
+      <form
+        action="{{ url_for('teachers.view_student_report', id=student.id) }}"
+        method="POST"
+      >
+        <button type="submit" class="secondary-button">Report</button>
+      </form>
     </div>
-    {% endfor %}
-    </section>
+  </div>
+  {% endfor %} {% if students.has_prev or students.has_next %}
+  <div>
+    {% if students.has_prev %}
+    <a href="{{ url_for('teachers.student_report', page=students.prev_num) }}"
+      >Previous</a
+    >
+    {% else %}
+    <span>Previous</span>
+    {% endif %} {% for page_num in students.iter_pages() %} {% if page_num %} {%
+    if students.page == page_num %}
+    <span>{{ page_num }}</span>
+    {% else %}
+    <a href="{{ url_for('teachers.student_report', page=page_num) }}"
+      >{{ page_num }}</a
+    >
+    {% endif %} {% endif %} {% endfor %} {% if students.has_next %}
+    <a href="{{ url_for('teachers.student_report', page=students.next_num) }}"
+      >Next</a
+    >
+    {% else %}
+    <span>Next</span>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
 {% endblock content %}
