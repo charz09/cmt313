@@ -32,6 +32,7 @@ def init_app():  # Factory function for creating app instance
         from src.models.question import Question
         from src.models.choice import Choice
         from src.models.answer import Answer
+        from src.models.session import UserSession
         db.create_all()
 
         # from src.models.role import Role

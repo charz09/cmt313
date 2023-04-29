@@ -90,9 +90,10 @@
             <tr>
                 <th>Average Score</th>
                 <th>Class Average Score</th>
+                {% if chosen_assessment.assessment_type == 'Formative' %}
                 <th>Total Attempts</th>
                 <th>Passed Attempts</th>
-                <!--<th>Average Attempts</th>-->
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -100,9 +101,10 @@
                 <tr>
                     <td>{{ "%.2f" % assessment.avg_score }}%</td>
                     <td>{{ "%.2f" % assessment.class_avg_score }}%</td>
+                    {% if chosen_assessment.assessment_type == 'Formative' %}
                     <td>{{ assessment.total_attempts }}</td>
                     <td>{{ assessment.total_passed }}</td>
-                    <!--<td>{{ "%.2f" % assessment.avg_attempts }}</td>-->
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

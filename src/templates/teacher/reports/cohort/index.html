@@ -18,7 +18,9 @@
         <tr>
             <th>Total number of attempts</th>
             <th>Total number of students passed</th>
+            {% if chosen_assessment.assessment_type == 'Formative' %}
             <th>Average number of attempts</th>
+            {% endif %}
             <th>Percentage of students passed</th>
             <th>Average Time Taken</th>
             <th>Average score</th>
@@ -27,7 +29,9 @@
         <tr>
             <td>{{ total_num_of_attempts }}</td>
             <td>{{ total_num_of_students_passed }}</td>
+            {% if chosen_assessment.assessment_type == 'Formative' %}
             <td>{{ average_attempts }}</td>
+            {% endif %}
             <td>{{ (total_num_of_students_passed/total_num_of_attempts * 100 if total_num_of_attempts else 0) | round(1) }}%</td>
             <td>{{ average_time_taken }}</td>
             <td>{{ average_score | round(1) }}%</td>
@@ -55,8 +59,10 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
+            {% if chosen_assessment.assessment_type == 'Formative' %}
             <th>Number of Attempts</th>
             <th>Correct Attempts</th>
+            {% endif %}
             <th>Average Score</th>
             <th>Time Taken</th>
           </tr>
@@ -66,8 +72,10 @@
             <tr>
               <td>{{ data['id'] }}</td>
               <td>{{ data['name'] }}</td>
+              {% if chosen_assessment.assessment_type == 'Formative' %}
               <td>{{ data['num_of_attempts'] }}</td>
               <td>{{ data['num_of_correct_attempts'] }}</td>
+              {% endif %}
               <td>{{ data['average_score'] }}%</td>
               <td>{{ data['average_time_taken'] }}</td>
             </tr>
