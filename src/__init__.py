@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_moment import Moment
 from src.seed import seed
+from datetime import datetime
 # Create the database
 db = SQLAlchemy()
 

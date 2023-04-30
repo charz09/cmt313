@@ -6,45 +6,60 @@ from ..models.question import Question
 from ..models.choice import Choice
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
+from datetime import datetime
 
 # protects the route against student access
 
 
 @teacher.before_request
-@login_required
 def check_user_is_teacher():
     if not current_user:
         return redirect(url_for('auth.login'))
     elif current_user.role.name == "Student":
         return redirect(url_for('students.index'))
 
-
 # VIEW ASSESSMENTS
+
+
 @teacher.route('/', methods=['GET'])
 @teacher.route('/assessments', methods=['GET'])
 @login_required
 def assessments_index():
     # only return a users own assessments
     assessments = Assessment.query.filter_by(user_id=current_user.id)
-    return render_template('teacher/assessments/index.html', assessments=assessments)
-
+    return render_template('teacher/assessments/summative/index.html', assessments=assessments)
 
 # NEW ASSESSMENT
+
+
 @teacher.route('/assessments/new', methods=['GET', 'POST'])
 @login_required
 def new_assessment():
     form = NewAssessmentForm()
-    if form.validate_on_submit():
+
+    # pre populate the dates with right now.
+    form.available_from.data = datetime.utcnow()
+    form.available_to.data = datetime.utcnow()
+    form.feedback_from.data = datetime.utcnow()
+
+    if request.method == "POST":
         assessment = Assessment(name=form.name.data,
                                 visible=form.visible.data,
                                 description=form.description.data,
                                 module=form.module.data,
-                                assessment_type=form.assessment_type.data)
+                                assessment_type=form.assessment_type.data,
+                                user_id=current_user.id,
+                                available_from=form.available_from.data,
+                                available_to=form.available_to.data,
+                                feedback_from=form.feedback_from.data
+                                )
         db.session.add(assessment)
         db.session.commit()
+
         flash('Assessment created successfully!')
         return redirect(url_for('teachers.assessments_index'))
-    return render_template('teacher/assessments/new.html', form=form)
+
+    return render_template('teacher/assessments/summative/new.html', form=form)
 
 
 # SHOW + DELETE
@@ -59,7 +74,7 @@ def show_assessment(id):
         return redirect(url_for('teachers.assessments_index'))
 
     assessment = Assessment.query.filter_by(id=id).first()
-    return render_template('teacher/assessments/show.html', assessment=assessment, labels=["A", "B", "C", "D"])
+    return render_template('teacher/assessments/summative/show.html', assessment=assessment, labels=["A", "B", "C", "D"])
 
 
 # EDIT ASSESSMENT
@@ -84,7 +99,7 @@ def edit_assessment(id):
     form.module.data = assessment.module
     form.assessment_type.data = assessment.assessment_type
 
-    return render_template('teacher/assessments/edit.html', form=form)
+    return render_template('teacher/assessments/summative/edit.html', form=form)
 
 
 # NEW QUESTION

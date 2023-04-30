@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+
+<section>
+    <div class="login-form">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+    
+            {{ form.name.label }} 
+            {{ form.name(class='input-field') }}
+    
+            {{ form.module.label }} 
+            {{ form.module(class='input-field') }}
+    
+            {{ form.description.label }} 
+            {{ form.description(class='input-field') }}
+
+            {{ form.assessment_type.label }}
+            {{ form.assessment_type(class="radio-botton") }}
+    
+            {{ form.available_from.label(class="summative-only") }}
+            {{ form.available_from(class="summative-only") }}
+
+            {{ form.available_to.label(class="summative-only") }}
+            {{ form.available_to(class="summative-only") }}
+
+            {{ form.feedback_from.label(class="summative-only") }}
+            {{ form.feedback_from(class="summative-only") }}
+
+            {{ form.visible.label }}
+            {{ form.visible }}
+
+            {{ form.submit(class='signup-button') }}
+        </form>
+    </div>
+</section>
+
+<script>
+    const summativeInputs = document.querySelectorAll('.summative-only');
+    const formativeInputs = document.querySelectorAll('.formative-only');
+    const radioInputs = document.querySelectorAll('.radio-botton');
+
+    radioInputs[0].addEventListener('change', (e)=>{
+        if(e.target.value === "Formative") {
+            [...summativeInputs].forEach(input => {
+                input.style.display = "none"
+            })
+        } else {
+            [...summativeInputs].forEach(input => {
+                input.style.display = "block"
+            })
+        }
+    })
+</script>
+
+{% endblock %}

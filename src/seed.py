@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+
+
 def seed(db, Role, User, Assessment, Question, Choice):
     print("Starting Seed file!!")
     # delete the database
@@ -33,7 +36,11 @@ def seed(db, Role, User, Assessment, Question, Choice):
                                       "Simple javascript quiz on basics.",  # description
                                       "210",  # module
                                       "Formative",  # Assessment Type: Formative or Summative
-                                      matt.id)  # assign a user_id
+                                      matt.id,
+                                      datetime.utcnow() + timedelta(minutes=2),
+                                      datetime.utcnow() + timedelta(minutes=25),
+                                      datetime.utcnow() + timedelta(minutes=60)
+                                      )  # assign a user_id
 
 # Q1
     question = Question.create("Which of the following methods is used to access HTML elements using Javascript?",  # question content
@@ -152,7 +159,11 @@ print(a)""",  # question content
                                           "Harder Pythin quiz on classes.",
                                           "313",
                                           "Summative",
-                                          matt.id)
+                                          matt.id,
+                                          datetime.utcnow() + timedelta(minutes=0),
+                                          datetime.utcnow() + timedelta(minutes=1),
+                                          datetime.utcnow() + timedelta(minutes=2)
+                                          )
 
 # Q1
     question = Question.create("Which of the following functions is a built-in function in python?",  # question content

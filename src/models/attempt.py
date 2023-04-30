@@ -8,20 +8,20 @@ class Attempt(db.Model):
     user_score = db.Column(db.Integer)
     total_score = db.Column(db.Integer)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='attempt')
 
-    def __init__(self, assessment_id: int, created_by: int):
+    def __init__(self, assessment_id: int, user_id: int):
         self.assessment_id = assessment_id
-        self.created_by = created_by
+        self.user_id = user_id
 
     @staticmethod
-    def create(assessment_id, created_by):  # create new user
+    def create(assessment_id, user_id):  # create new user
         new_attempt = Attempt(assessment_id=assessment_id,
-                              created_by=created_by)
+                              user_id=user_id)
         db.session.add(new_attempt)
         db.session.commit()
         return new_attempt
 
     def __repr__(self):
-        return '<Attempt %r>' % self.name
+        return '<Attempt %r>' % self.id

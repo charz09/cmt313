@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="login-form">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label }} 
+        {{ form.name(class='input-field') }}
+
+        {{ form.module.label }} 
+        {{ form.module(class='input-field') }}
+
+        {{ form.description.label }} 
+        {{ form.description(class='input-field') }}
+
+        {{ form.assessment_type.label }}
+        {{ form.assessment_type(class="radio-botton") }}
+
+        {{ form.visible.label }}
+        {{ form.visible }}
+
+        {{ form.available_from.label }}
+        {{ form.available_from }}
+
+        {{ form.available_to.label }}
+        {{ form.available_to }}
+
+        {{ form.feedback_from.label }}
+        {{ form.feedback_from }}
+
+        {{ form.submit(class='signup-button') }}
+    </form>
+</div>
+
+{% endblock %}

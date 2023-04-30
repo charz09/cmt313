@@ -2,13 +2,20 @@
 
 {% block content %}
 
-<div class="login-form">
-    <h1>Student Home Page</h1>
-    <h3>
-    {% if current_user.is_authenticated %}
-        Hi {{ current_user.username }}!
-    {% endif %}
-    </h3>
-</div>
+<section class="assessments-section " >
+    <section class="assessments-section " >
+        <div class="options-container">
+            <a href={{url_for('students.formative_index')}}>
+                <h1>Formative Assessments</h1>
+            </a>
+        
+            <a href={{url_for('students.summative_index')}}>
+                <h1>Summative Assessments</h1>
+            </a>
+        </div>
+    </section>
+</section>
 
 {% endblock %}
+
+

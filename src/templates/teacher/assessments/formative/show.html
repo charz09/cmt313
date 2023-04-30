@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="login-form">
+    <div class="assessments-section">
+        <h1>
+            {{ assessment.name}}
+        </h1>
+        <h4>Module: {{ assessment.module}}</h4>
+        <p>{{assessment.description}}</p>
+        <p>Questions: {{assessment.questions|length}}/10</p>
+        
+        <p>Available from: {{ moment(assessment.available_from).format('H:mm DD/MM/YYYY') }}</p>
+        <p>Available to: {{  moment(assessment.feedback_to).format('H:mm DD/MM/YYYY') }}</p>
+        <p>Feedback from: {{  moment(assessment.feedback_from).format('H:mm DD/MM/YYYY') }}</p>
+
+
+
+        {% if assessment.questions|length < 10 %}
+        <form action={{ url_for('teachers.new_question', id=assessment.id) }} method="get">
+            <button type="submit" class="primary-button">Add a Question</button>
+        </form>
+        {% endif %}
+
+        {% for question in assessment.questions %}
+        <div class="question">
+            <p class="question-content">{{question.content}}</p>
+            <form action={{ url_for('teachers.edit_question', id=question.id) }} method="get">
+                <button type="submit" class="secondary-button">Edit</button>
+            </form>
+            <form action={{ url_for('teachers.delete_question', id=question.id) }} method="POST">
+                <button type="submit" class="secondary-button">Delete</button>
+            </form>
+            <div class="choices">
+                {% for c in question.choices %}
+                    <div><span class="list-label">{{labels[loop.index0]}}</span>. {{ c.content }}</div>
+                {% endfor %} 
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

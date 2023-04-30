@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, IntegerField, RadioField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, IntegerField, RadioField, DateTimeLocalField
+from wtforms.fields import DateTimeLocalField
 from wtforms.validators import DataRequired
 
 
@@ -9,7 +10,15 @@ class NewAssessmentForm(FlaskForm):
     description = TextAreaField('Description')
     module = StringField('Module')
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
-        ('Formative', 'Formative'), ('Summative', 'Summative')])
+        ('Formative', 'Formative'), ('Summative', 'Summative')], default='Summative')
+
+    available_from = DateTimeLocalField(
+        'Available From', format='%Y-%m-%d %H:%M')
+    available_to = DateTimeLocalField(
+        'Assessment Deadline', format='%Y-%m-%d %H:%M')
+    feedback_from = DateTimeLocalField(
+        'Feedback return from', format='%Y-%m-%d %H:%M')
+
     submit = SubmitField('Create Assessment')
 
 
@@ -20,6 +29,14 @@ class EditAssessmentForm(FlaskForm):
     module = StringField('Module')
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')])
+
+    available_from = DateTimeLocalField(
+        'Available From', format='%Y-%m-%d %H:%M')
+    available_to = DateTimeLocalField(
+        'Assessment Deadline', format='%Y-%m-%d %H:%M')
+    feedback_from = DateTimeLocalField(
+        'Feedback return from', format='%Y-%m-%d %H:%M')
+
     submit = SubmitField('Save Changes')
 
 

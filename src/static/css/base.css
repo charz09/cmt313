@@ -136,6 +136,7 @@ form {
 }
 
 .secondary-button {
+  width: 5rem;
   background-color: var(--primary-color);
   color: var(--light-color);
   border: none;
