@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content-section" >
+    <h1>{{ student.username }}'s Overall Report</h1>
+    {% if assessment_data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Average Score</th>
+                    <th>Class Average Score</th>
+                    <th>Total Assessments Taken</th>
+                    <th>Assessments Passed</th>
+                    <th>Completion Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% set avg_scores = [] %}
+                    {% set avg_attempts = [] %}
+                    {% set class_avg_scores = [] %}
+                    {% for assessment in assessment_data %}
+                        {% set _ = avg_scores.append(assessment.avg_score) %}
+                        {% set _ = avg_attempts.append(assessment.avg_attempts) %}
+                        {% set _ = class_avg_scores.append(assessment.class_avg_score) %}
+                    {% endfor %}
+                    <td>{{ "%.2f" % (avg_scores | sum / avg_scores | length) }}%</td>
+                    <td>{{ "%.2f" % (class_avg_scores | sum / class_avg_scores | length) }}%</td>
+                    <td>{{ assessment_data | map(attribute='total_attempts') | sum }}</td>
+                    <td>{{ assessment_data | map(attribute='total_passed') | sum }}</td>
+                    <td>{{ completion_rate | round(1) }}%</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--<h4>Timeline:</h4>
+        <ul>
+        {% for assessment_name, avg_score in assessment_avg_scores.items() %}
+            <li>{{ assessment_name }}: {{ avg_score }}</li>
+        {% endfor %}
+        </ul>-->
+        <canvas id="timeline"></canvas>
+        <script>
+            var ctx = document.getElementById('timeline').getContext('2d');
+            var chart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: [{% for assessment in assessment_data %}"{{ assessment.name }}"{% if not loop.last %},{% endif %}{% endfor %}],
+                datasets: [{
+                  label: "{{ student.username }}'s score",
+                  data: [{% for assessment in assessment_data %}{{assessment.avg_score}}{% if not loop.last %},{% endif %}{% endfor %}],
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  borderColor: 'blue',
+                  borderWidth: 2
+                },
+                {
+                  label: 'Class Average Score',
+                  data: [{% for assessment in assessment_data %}{{assessment.class_avg_score}}{% if not loop.last %},{% endif %}{% endfor %}],
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  borderColor: 'red',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+        </script>          
+    {% else %}
+        <p>No assessments found for this student.</p>
+    {% endif %}
+    <form method="POST">
+        <label for="assessment_id">Select assessment:</label>
+        <select name="assessment_id" id="assessment_id">
+            {% for assessment in assessments %}
+            <option value="{{ assessment.id }}">{{ assessment.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+<!--new code block-->
+{% if chosen_assessment %}
+    <h1>Statistics for {{ chosen_assessment.name }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Average Score</th>
+                <th>Class Average Score</th>
+                {% if chosen_assessment.assessment_type == 'Formative' %}
+                <th>Total Attempts</th>
+                <th>Passed Attempts</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for assessment in student_assessment_data %}
+                <tr>
+                    <td>{{ "%.2f" % assessment.avg_score }}%</td>
+                    <td>{{ "%.2f" % assessment.class_avg_score }}%</td>
+                    {% if chosen_assessment.assessment_type == 'Formative' %}
+                    <td>{{ assessment.total_attempts }}</td>
+                    <td>{{ assessment.total_passed }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in question_results %}
+          <tr>
+            <td>{{ result.question.content }}</td>
+            <td>{{ result.num_correct }}</td>
+            <td>{{ result.num_incorrect }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+</section>
+{% endblock content %}
