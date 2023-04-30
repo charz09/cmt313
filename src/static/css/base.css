@@ -182,6 +182,7 @@ tr:nth-child(even) {
   text-align: left;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
   background-color:#760645;
+  border-radius: var(--sp-2);
   
 
 }
