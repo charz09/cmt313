@@ -3,6 +3,7 @@ from flask_login import logout_user, login_required, login_user, current_user
 from . import auth  # auth is the current blueprint
 from ..models.user import User
 from ..models.role import Role
+from ..models.session import UserSession
 from .forms import LoginForm, RegisterForm, EditProfileForm
 from flask import render_template, session, redirect, url_for, flash, request
 from .. import db
@@ -20,6 +21,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(form.password.data):
+            user_session = UserSession(user_id=user.id, login_count=0)
+            user_session.login_count += 1
+            db.session.add(user_session)
+            db.session.commit()
             login_user(user)
 
         if current_user.is_authenticated:
@@ -96,5 +101,10 @@ def edit_profile():
 @auth.route('/logout')
 @login_required
 def logout():
+    user_session = UserSession.query.filter_by(user_id=current_user.id, end_time=None).first()
+    if user_session is not None:
+        user_session.end_time = datetime.utcnow()
+        db.session.add(user_session)
+        db.session.commit()
     logout_user()
     return redirect(url_for('auth.login'))

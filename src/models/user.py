@@ -23,7 +23,6 @@ class User(UserMixin, db.Model):
     lastname = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
     about_me = db.Column(db.String(280))
-    login_count = db.Column(db.String)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     
 

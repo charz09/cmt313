@@ -1,5 +1,5 @@
 from src import db
-import src.models.user
+from..models.user import User
 import datetime
 
 class UserSession(db.Model):
