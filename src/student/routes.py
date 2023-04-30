@@ -6,6 +6,7 @@ from ..models.answer import Answer
 from flask_login import login_required, current_user
 from .forms import NewAttemptForm
 from wtforms import StringField, RadioField
+import random
 
 @student.route('/')
 @login_required
@@ -98,9 +99,6 @@ def results(id):
 
 
 
-
-
-
 # ####################FORMATIVE ASSESSMENT RELATED CODE, DO NOT MODIFY ##################################
 
 
@@ -117,37 +115,54 @@ def view_instructions(assessment_id):
 
 
 
+# Updated attempt_assessment function
 @student.route('/attempt_assessment/<int:assessment_id>', methods=['GET', 'POST'])
 @login_required
 def attempt_assessment(assessment_id):
     assessment = Assessment.query.get(assessment_id)
-
     attempt = None
     num_attempts = request.args.get('num_attempts')
     if request.method == 'POST':
         attempt = int(request.form.get('attempts'))
-
-    # Build a form dynamically, for whatever questions are in the assessment.
-    for i, question in enumerate(assessment.questions):
+    questions = assessment.questions.copy()  # create a copy of questions list
+    random.shuffle(questions)  # shuffle the questions list
+    form = NewAttemptForm()
+    for i, question in enumerate(questions):
+        choices = [(choice.content, choice.content) for choice in question.choices]
+        random.shuffle(choices)  # shuffle the choices list
         if question.question_type == "Multiple Choice":
-            # Build a tuple of choices for the radio button.
-            choices = []
-            for choice in question.choices:
-                choices.append((choice.content, choice.content))
-            # set the attribute on the form under the value "question_?"
             setattr(NewAttemptForm, f"question_{i}", RadioField(
-                question.content,  choices=choices))
+                question.content, choices=choices))
         else:
-            # set the attribute on the form under the value "question_?"
             setattr(NewAttemptForm, f"question_{i}", StringField(
                 question.content, render_kw={"data-question-id": f"{question.id}"}))
-
-    form = NewAttemptForm()
-
     if num_attempts and int(num_attempts) > 1:
         return render_template('student/attempts/formative/score_formative.html', assessment=assessment, num_attempts=num_attempts)
     else:
         return render_template('student/attempts/formative/new_formative.html', assessment=assessment, form=form, num_attempts=attempt)
+
+
+
+# Updated attempt_again function
+@student.route('/attempt_again/<int:assessment_id>/<int:num_attempts>', methods=['GET', 'POST'])
+@login_required
+def attempt_again(assessment_id, num_attempts):
+    assessment = Assessment.query.get(assessment_id)
+    questions = assessment.questions.copy()  # create a copy of questions list
+    random.shuffle(questions)  # shuffle the questions list
+    form = NewAttemptForm()
+    for i, question in enumerate(questions):
+        choices = [(choice.content, choice.content) for choice in question.choices]
+        random.shuffle(choices)  # shuffle the choices list
+        if question.question_type == "Multiple Choice":
+            setattr(NewAttemptForm, f"question_{i}", RadioField(
+                question.content, choices=choices))
+        else:
+            setattr(NewAttemptForm, f"question_{i}", StringField(
+                question.content, render_kw={"data-question-id": f"{question.id}"}))
+    if request.method == "POST":
+        return redirect(url_for('mark_assessment', assessment_id=assessment_id, num_attempts=num_attempts))
+    return render_template('student/attempts/formative/new_formative.html', assessment=assessment, form=form, num_attempts=num_attempts)
 
 
 
@@ -183,37 +198,6 @@ def mark_assessment(assessment_id, num_attempts):
         return render_template('student/attempts/formative/score_formative.html', attempt=attempt, user_score=user_score, total_score=total_score, percentage_score=percentage_score, num_attempts=new_num_attempts, assessment=assessment)
     else:
         return render_template('student/attempts/formative/formative_result.html', attempt=attempt, user_score=user_score, total_score=total_score, percentage_score=percentage_score)
-
-
-@student.route('/attempt_again/<int:assessment_id>/<int:num_attempts>', methods=['GET', 'POST'])
-@login_required
-def attempt_again(assessment_id, num_attempts):
-
-    assessment = Assessment.query.get(assessment_id)
-
-    # Build a form dynamically, for whatever questions are in the assessment.
-    for i, question in enumerate(assessment.questions):
-        if question.question_type == "Multiple Choice":
-            # Build a tuple of choices for the radio button.
-            choices = []
-            for choice in question.choices:
-                choices.append((choice.content, choice.content))
-            # set the attribute on the form under the value "question_?"
-            setattr(NewAttemptForm, f"question_{i}", RadioField(
-                question.content,  choices=choices))
-        else:
-            # set the attribute on the form under the value "question_?"
-            setattr(NewAttemptForm, f"question_{i}", StringField(
-                question.content, render_kw={"data-question-id": f"{question.id}"}))
-
-    form = NewAttemptForm()
-
-    if request.method == "POST":
-        return redirect(url_for('mark_assessment', assessment_id=assessment_id, num_attempts=num_attempts))
-
-    return render_template('student/attempts/formative/new_formative.html', assessment=assessment, form=form, num_attempts=num_attempts)
-
-
 
 
 

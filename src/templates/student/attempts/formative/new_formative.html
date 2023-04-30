@@ -13,7 +13,7 @@
                 {% if form["question_" ~ i ~ ""] %}
                     <h5 class="question-headingn">Question {{ i + 1 }}</h5>
                     <div class="text-center">{{ form["question_" ~ i ~ ""].label }}</div>
-                    {{ form["question_" ~ i ~ ""](class='input-fieldn') }}
+                    {{ form["question_" ~ i ~ ""](class_='input-fieldn') }}
                 {% endif %}
             {% endfor %}
         
@@ -23,4 +23,6 @@
 </section>
 
 {% endblock %}
+
+
 
