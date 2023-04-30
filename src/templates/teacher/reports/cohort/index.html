@@ -2,6 +2,43 @@
 
 {% block content %}
 <section class="content-section" >
+  <h1>Engagement Statistics</h1>
+  {% if engagement_dict %}
+  <table id="engagement_table">
+    <thead>
+      <tr>
+        <th>Time Period</th>
+        <th>Number of Users</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Daily</td>
+        <td>{{ engagement_dict['daily'] }}</td>
+      </tr>
+      <tr>
+        <td>Weekly</td>
+        <td>{{ engagement_dict['weekly'] }}</td>
+      </tr>
+      <tr>
+        <td>Monthly</td>
+        <td>{{ engagement_dict['monthly'] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Overall Session Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ engagement_dict['overall'] }} minutes </td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
     <form method="POST">
         <label for="assessment_id">Select assessment:</label>
         <select name="assessment_id" id="assessment_id">
@@ -39,12 +76,15 @@
         </tr>
     </table>
     <h2>Question Results</h2>
-    <table>
+    <table id="questions_table">
+      <thead>
         <tr>
             <th>Question</th>
             <th>Correct Answers</th>
             <th>Incorrect Answers</th>
         </tr>
+      </thead>
+      <tbody>
         {% for result in question_results %}
         <tr>
             <td>{{ result.question.content }}</td>
@@ -52,9 +92,10 @@
             <td>{{ result.num_incorrect }}</td>
         </tr>
         {% endfor %}
+      </tbody>
     </table>
     <h2>Student data</h2>
-    <table>
+    <table id="student_table">
         <thead>
           <tr>
             <th>ID</th>
@@ -84,4 +125,13 @@
       </table>
     {% endif %}
 </section>
+<script>
+  $(document).ready(function() {
+    $('#engagement_table').DataTable();
+    {% if chosen_assessment %}
+    $('#questions_table').DataTable();
+    $('#student_table').DataTable();
+    {% endif %}
+  });
+</script>
 {% endblock content %}

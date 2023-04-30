@@ -7,9 +7,12 @@ from ..models.attempt import Attempt
 from ..models.question import Question
 from ..models.choice import Choice
 from ..models.answer import Answer
+from ..models.session import UserSession
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
+from datetime import datetime, timedelta
 import numpy as np
+import calendar
 
 
 # VIEW ASSESSMENTS
@@ -123,6 +126,63 @@ def edit_question(id):
 @teacher.route('/reports/cohort', methods=['GET', 'POST'])
 @login_required
 def cohort_report():
+
+# set default time period
+    time_period = 'daily'
+
+    # calculate start and end time based on time period
+    end_time = datetime.now()
+    if time_period == 'daily':
+        start_time = end_time - timedelta(days=1)
+    elif time_period == 'weekly':
+        start_time = end_time - timedelta(weeks=1)
+    elif time_period == 'monthly':
+        start_time = end_time - timedelta(days=30)
+
+    # query user sessions
+    sessions = UserSession.query.filter(
+        UserSession.start_time >= start_time,
+        UserSession.end_time <= end_time
+    ).all()
+
+    # calculate number of users
+    user_counts = {}
+    total_duration = 0
+    for session in sessions:
+        session_date = session.start_time.date()
+        if session_date not in user_counts:
+            user_counts[session_date] = set()
+        user_counts[session_date].add(session.user_id)
+        user_counts[session_date].add(session.user_id)
+    total_duration += (session.end_time - session.start_time).total_seconds()
+
+    # calculate daily, weekly, and monthly averages
+    if time_period == 'daily':
+        num_days = 1
+    elif time_period == 'weekly':
+        num_days = 7
+    elif time_period == 'monthly':
+        num_days = 30
+
+    num_users = sum(len(user_counts[date]) for date in user_counts)
+    num_periods = len(user_counts)
+    if num_periods > 0:
+        avg_users = int(num_users / num_periods)
+        avg_users_period = int(num_users / num_periods * num_days)
+        avg_duration = int(total_duration / len(sessions))
+    else:
+        avg_users = 0
+        avg_users_period = 0
+        avg_duration = 0
+
+    # create a dictionary of average users for each time period
+    engagement_dict = {
+        'daily': avg_users_period,
+        'weekly': int(num_users / (num_periods / 7)),
+        'monthly': int(num_users / (num_periods / 30)),
+        'overall': avg_users
+    }
+    
     assessments = Assessment.query.all()
     # get selected assessment_id from form
     assessment_id = request.form.get('assessment_id')
@@ -190,10 +250,10 @@ def cohort_report():
                                assessments=assessments, average_score=average_score,
                                average_attempts=average_attempts,
                                total_num_of_attempts=total_num_of_attempts,
-                               total_num_of_students_passed=total_num_of_students_passed, question_results=question_results, average_time_taken=average_time_taken, completion_rate=completion_rate)
+                               total_num_of_students_passed=total_num_of_students_passed, question_results=question_results, average_time_taken=average_time_taken, completion_rate=completion_rate, time_period=time_period, engagement_dict=engagement_dict)
         
     else:
-        return render_template('teacher/reports/cohort/index.html', assessments=assessments)
+        return render_template('teacher/reports/cohort/index.html', assessments=assessments, time_period=time_period, engagement_dict=engagement_dict)
 
 
 # list of students
