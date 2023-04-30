@@ -4,6 +4,7 @@ from src import db
 from ..models.assessment import Assessment
 from ..models.question import Question
 from ..models.choice import Choice
+from ..models.user import User
 from .forms import NewAssessmentForm, NewQuestionForm, EditAssessmentForm, EditQuestionForm
 from . import teacher
 from datetime import datetime
@@ -76,6 +77,18 @@ def show_assessment(id):
     assessment = Assessment.query.filter_by(id=id).first()
     return render_template('teacher/assessments/summative/show.html', assessment=assessment, labels=["A", "B", "C", "D"])
 
+# STATS
+
+
+@teacher.route('/assessments/<int:id>/stats', methods=['GET'])
+@login_required
+def assessment_stats(id):
+    assessment = Assessment.query.get(id)
+    user_data = {}
+    users = User.query.all()
+
+    return render_template('teacher/assessments/summative/stats.html', assessment=assessment, users=users)
+
 
 # EDIT ASSESSMENT
 @teacher.route('/assessments/<int:id>/edit', methods=['GET', 'POST'])
@@ -89,6 +102,7 @@ def edit_assessment(id):
         assessment.description = form.description.data
         assessment.module = form.module.data
         assessment.assessment_type = form.assessment_type.data
+        assessment.number_of_questions += 1
         db.session.add(assessment)
         db.session.commit()
         return redirect(url_for('teachers.assessments_index'))
@@ -172,6 +186,7 @@ def edit_question(id):
 def delete_question(id):
     question = Question.query.filter_by(id=id).first()
     assessment = question.assessment
+    assessment.number_of_questions -= 1
     db.session.delete(question)
     db.session.commit()
     return redirect(url_for('teachers.show_assessment', assessment=assessment, id=assessment.id))

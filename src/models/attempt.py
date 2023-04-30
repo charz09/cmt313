@@ -5,8 +5,8 @@ from .answer import Answer
 class Attempt(db.Model):
     __tablename__ = 'attempts'
     id = db.Column(db.Integer, primary_key=True)
-    user_score = db.Column(db.Integer)
-    total_score = db.Column(db.Integer)
+    user_score = db.Column(db.Integer, default=0)
+    total_score = db.Column(db.Integer, default=0)
     assessment_id = db.Column(db.Integer, db.ForeignKey('assessments.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     answers = db.relationship('Answer', backref='attempt')

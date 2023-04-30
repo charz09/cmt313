@@ -11,6 +11,8 @@ class Assessment(db.Model):
     visible = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text)
     module = db.Column(db.String(64), index=True)
+    number_of_questions = db.Column(db.Integer, default=0)
+    pass_mark = db.Column(db.Integer, default=0)
 
     # automaticall assigned variables
     created_at = db.Column(db.DateTime, default=datetime.now())

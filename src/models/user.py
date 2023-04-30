@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
     questions = db.relationship('Question', backref='user', lazy='dynamic')
     answers = db.relationship('Answer', backref='user', lazy='dynamic')
+    attempts = db.relationship('Attempt', backref='user')
 
     @property
     def password(self):

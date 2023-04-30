@@ -96,11 +96,14 @@ def new_attempt(id):
 
             # get the users answer dynamically from the form object
             user_choice = getattr(form, f"question_{i}").data
+            #
+            attempt.total_score += 1
 
             # create Answer and assigns if it was correct or not.
             if user_choice == correct_choice:
                 Answer.create(
                     user_choice, True, correct_choice, attempt.id, question.id, current_user.id)
+                attempt.user_score += 1
             else:
                 Answer.create(
                     user_choice, False, correct_choice, attempt.id, question.id, current_user.id)

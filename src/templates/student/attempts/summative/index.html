@@ -5,8 +5,6 @@
 <section class="assessments-section " >
     
     {% for assessment in assessments %}
-
-
         <div class="card">
             <p>{{assessment.assessment_type}}</p>
             <h2 class="card-title">
@@ -21,6 +19,7 @@
             
             {% if datetime.utcnow() < assessment.available_from %}
                 <p style="color: red;">Not Yet Available</p>
+                
             {% elif datetime.utcnow() > assessment.available_from and datetime.utcnow() < assessment.available_to %}
                 {% if assessment.id in attempts|map(attribute='assessment_id') %}
                     <a href={{url_for('students.new_attempt', id=assessment.id)}}>Edit Submission</a>
@@ -28,8 +27,7 @@
                 {% else %}
                     <a href={{url_for('students.new_attempt', id=assessment.id)}}>Attempt Assessment</a>
                 {% endif  %}
-
-                <p style="color: green;">Currently Available</p>
+                    <p style="color: green;">Currently Available</p>
 
             {% elif  datetime.utcnow() > assessment.available_to and datetime.utcnow() < assessment.feedback_from%}
                 <a href={{url_for('students.results', id=assessment.id)}}>View Submission</a>
@@ -40,8 +38,6 @@
             {% endif %}
         </div>
     {% endfor %}
-    
-
 </section>
 
 {% endblock %}
