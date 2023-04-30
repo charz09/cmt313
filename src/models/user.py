@@ -22,7 +22,8 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(64))
     lastname = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
-    about_me = db.Column(db.String(140))
+    about_me = db.Column(db.String(280))
+    login_count = db.Column(db.String)
     
 
     @property

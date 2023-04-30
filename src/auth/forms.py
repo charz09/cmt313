@@ -38,7 +38,7 @@ class EditProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[Length(min=0, max=64)])
     lastname = StringField('Last Name', validators=[Length(min=0, max=64)])
     email = StringField('Email', validators=[DataRequired(), Length(max=120)])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=280)])
     submit = SubmitField('Submit')
 
     def __init__(self, original_username, *args, **kwargs):

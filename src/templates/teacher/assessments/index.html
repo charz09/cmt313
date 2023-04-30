@@ -17,10 +17,10 @@
             <p>{{ assessment.description }}</p>
 
             <div class="buttons-container">
-                <form action={{ url_for('teachers.edit_assessment', id=assessment.id) }} method="POST">
+                <form action="{{ url_for('teachers.edit_assessment', id=assessment.id) }}" method="POST">
                     <button type="submit" class="secondary-button">Edit</button>
                 </form>
-                <form action={{ url_for('teachers.show_assessment', id=assessment.id) }} method="POST">
+                <form action="{{ url_for('teachers.show_assessment', id=assessment.id) }}" method="POST">
                     <button type="submit" class="secondary-button">Delete</button>
                 </form>
             </div>

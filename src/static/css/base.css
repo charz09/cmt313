@@ -150,7 +150,64 @@ form {
   background-color: var(--primary-hover);
 }
 
-.assessments-section {
+.content-section {
   width: clamp(20rem, 80%, 90rem);
   margin: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.profile-card {
+  padding-top: 50px;
+  margin: var(--sp-10);
+  text-align: left;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+  background-color:#760645;
+  
+
+}
+
+.profile-content {
+  padding: none;
+  background-color:none;
+  margin-left:none;
+  margin-right:none;
+  padding:30px;
+  background-color:#f1eff5;
+  
+}
+
+.avatar {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.profile-username {
+  text-align:center;
+  font-size:300%;
+  font-weight: bold;
+  
 }

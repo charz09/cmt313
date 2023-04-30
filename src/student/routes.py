@@ -1,5 +1,7 @@
 from flask import render_template, redirect, url_for, request
 from . import student
+from src import db
+import datetime
 from ..models.assessment import Assessment
 from ..models.attempt import Attempt
 from ..models.answer import Answer
@@ -45,6 +47,7 @@ def new_attempt(id):
     if request.method == "POST":
         attempt = Attempt.create(assessment.id,
                                  current_user.id)
+        attempt.end_time = datetime.datetime.now()
 
         # Creates the Answer objects and stores the users answer, the correct answer etc..
         for i, question in enumerate(assessment.questions):

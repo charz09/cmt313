@@ -8,6 +8,7 @@
     <title>{% block title %}{% endblock %} - Assessmint</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {% endblock %}
 </head>
 <body>
@@ -15,28 +16,26 @@
         <ul>
             {% if current_user.is_authenticated %}
                 {% if current_user.role.name == "Student" %}
-                <li><a href={{ url_for('students.index') }}>Home</a></li>
+                <li><a href="{{ url_for('students.index') }}">Home</a></li>
                 {% else %}
-                <li><a href={{ url_for('teachers.assessments_index') }}>Home</a></li>
+                <li><a href="{{ url_for('teachers.assessments_index') }}">Home</a></li>
+                <li><a href="{{ url_for('teachers.cohort_report') }}">Cohort Report</a></li>
+                <li><a href="{{ url_for('teachers.student_report') }}">Student Progress</a></li>
                 {% endif %}
             {% else %}
-                <li><a href={{ url_for('auth.login') }}>Home</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Home</a></li>
             {% endif %}
         </ul>
         <ul>
             {% if current_user.is_authenticated %}
-            <li><a href={{ url_for('auth.user', username=current_user.username) }}>Profile</a></li>
-            <li><a href={{ url_for('auth.logout') }}>Logout</a></li>
+            <li><a href="{{ url_for('auth.user', username=current_user.username) }}">Profile</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
             {% else %}
-            <li><a href={{ url_for('auth.login') }}>Login</a></li>
-            <li><a href={{ url_for('auth.register') }}>Register</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
             {% endif %}
         </ul>
     </nav>
       {% block content %}{% endblock %}
 </body>
 </html>
-
-
-
-

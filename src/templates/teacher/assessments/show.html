@@ -10,7 +10,7 @@
         <h4>{{ assessment.module}}</h4>
         <p>{{assessment.description}}</p>
 
-        <form action={{ url_for('teachers.new_question', id=assessment.id) }} method="get">
+        <form action="{{ url_for('teachers.new_question', id=assessment.id) }}" method="get">
             <button type="submit" class="primary-button">Add a Question</button>
         </form>
 

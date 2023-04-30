@@ -26,6 +26,13 @@ def init_app():  # Factory function for creating app instance
     with app.app_context():
         # this import allows us to create the table if it does not exist
         from src.models.user import User
+        from src.models.role import Role
+        from src.models.assessment import Assessment
+        from src.models.attempt import Attempt
+        from src.models.question import Question
+        from src.models.choice import Choice
+        from src.models.answer import Answer
+        from src.models.session import UserSession
         db.create_all()
 
         # from src.models.role import Role
