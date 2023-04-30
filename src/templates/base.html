@@ -17,6 +17,7 @@
             {% if current_user.is_authenticated %}
                 {% if current_user.role.name == "Student" %}
                 <li><a href="{{ url_for('students.index') }}">Home</a></li>
+                <li><a href="{{ url_for('students.view_report', id=current_user.id) }}">My Progress</a></li>
                 {% else %}
                 <li><a href="{{ url_for('teachers.assessments_index') }}">Home</a></li>
                 <li><a href="{{ url_for('teachers.cohort_report') }}">Cohort Report</a></li>

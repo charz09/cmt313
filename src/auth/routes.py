@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from flask_login import logout_user, login_required, login_user, current_user
 from . import auth  # auth is the current blueprint
 from ..models.user import User
@@ -7,6 +7,12 @@ from .forms import LoginForm, RegisterForm, EditProfileForm
 from flask import render_template, session, redirect, url_for, flash, request
 from .. import db
 
+
+@auth.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 @auth.route('/', methods=['GET', 'POST'])
 def login():

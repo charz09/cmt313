@@ -14,8 +14,11 @@
                 <h3>Name: {{ user.firstname }} {{ user.lastname }}</h3>
                 <h3>Role: {{ user.role.name }}</h3>
                 <h3>Email: {{ user.email }}</h3><br>
+                {% if user.last_seen %} 
+                <p>Last seen on: {{ user.last_seen }}</p>
+                {% endif %} 
                 {% if user.about_me %}
-                <h4>{{ user.about_me }}</h4>
+                <p><h4>About Me: {{ user.about_me }}</h4></p>
                 {% endif %}
             </div>
     </div>  
