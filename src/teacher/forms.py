@@ -27,7 +27,7 @@ class EditAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
-    module_id = StringField('Module')
+    module_id = SelectField('Module', choices=[])
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')])
 

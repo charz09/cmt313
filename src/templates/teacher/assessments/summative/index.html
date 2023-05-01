@@ -10,29 +10,32 @@
 
     
     {% for assessment in assessments %}
-        <div class="card">
-            <p>{{assessment.assessment_type}}</p>
-            <h2 class="card-title">
-                <a href="{{url_for('teachers.show_assessment', id=assessment.id)}}">{{ assessment.name}}</a>
-            </h2>
-            <h5>{{ assessment }}</h5>
-            <p>{{ assessment.description }}</p>
+        {# make sure that a user can only see assessments for modules thay are a apart of #}
+        {% if assessment.module in current_user.modules %}
+            <div class="card">
+                <p>{{assessment.assessment_type}}</p>
+                <h2 class="card-title">
+                    <a href="{{url_for('teachers.show_assessment', id=assessment.id)}}">{{ assessment.name}}</a>
+                </h2>
+                <h5>Module: {{ assessment.module.code }} - {{ assessment.module.name }}</h5>
+                <p>{{ assessment.description }}</p>
 
-            {% if assessment.user_id == current_user.id %}
-            <div class="buttons-container">
-                <form action={{ url_for('teachers.edit_assessment', id=assessment.id) }} method="POST">
-                    <button type="submit" class="secondary-button">Edit</button>
-                </form>
-                <form action={{ url_for('teachers.show_assessment', id=assessment.id) }} method="POST">
-                    <button type="submit" class="secondary-button">Delete</button>
-                </form>
-                <form action={{ url_for('teachers.assessment_stats', id=assessment.id) }} method="GET">
-                    <button type="submit" class="secondary-button">Stats</button>
-                </form>
+                {% if assessment.user_id == current_user.id %}
+                <div class="buttons-container">
+                    <form action={{ url_for('teachers.edit_assessment', id=assessment.id) }} method="GET">
+                        <button type="submit" class="secondary-button">Edit</button>
+                    </form>
+                    <form action={{ url_for('teachers.show_assessment', id=assessment.id) }} method="POST">
+                        <button type="submit" class="secondary-button">Delete</button>
+                    </form>
+                    <form action={{ url_for('teachers.assessment_stats', id=assessment.id) }} method="GET">
+                        <button type="submit" class="secondary-button">Stats</button>
+                    </form>
+                </div>
+
+                {% endif %}
             </div>
-
-            {% endif %}
-        </div>
+        {% endif %}
     {% endfor %}
 
 </section>

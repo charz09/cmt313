@@ -101,13 +101,23 @@ def assessment_stats(id):
 def edit_assessment(id):
     form = EditAssessmentForm()
     assessment = Assessment.query.first_or_404(id)
-    if form.validate_on_submit():
+
+    user_modules = current_user.modules
+    choices = []
+    for module in user_modules:
+        choices.append((module.id, f"{module.code}: {module.name}"))
+    form.module_id.choices = choices
+
+    if request.method == 'POST':
         assessment.name = form.name.data
         assessment.visible = form.visible.data
         assessment.description = form.description.data
-        assessment.module = form.module.data
+        assessment.module_id = form.module_id.data
         assessment.assessment_type = form.assessment_type.data
-        assessment.number_of_questions += 1
+
+        assessment.available_from = form.available_from.data
+        assessment.available_to = form.available_to.data
+        assessment.feedback_from = form.feedback_from.data
         db.session.add(assessment)
         db.session.commit()
         return redirect(url_for('teachers.assessments_index'))
@@ -115,8 +125,11 @@ def edit_assessment(id):
     form.name.data = assessment.name
     form.visible.data = assessment.visible
     form.description.data = assessment.description
-    form.module.data = assessment.module
+    form.module_id.data = assessment.module.id
     form.assessment_type.data = assessment.assessment_type
+    form.available_from.data = assessment.available_from
+    form.available_to.data = assessment.available_to
+    form.feedback_from.data = assessment.feedback_from
 
     return render_template('teacher/assessments/summative/edit.html', form=form)
 

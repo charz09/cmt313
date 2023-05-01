@@ -5,17 +5,18 @@ from datetime import datetime
 
 class Assessment(db.Model):
     __tablename__ = 'assessments'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
-    assessment_type = db.Column(db.String(50), nullable=False)
-    visible = db.Column(db.Boolean, default=True)
-    module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
-
+    assessment_type = db.Column(db.String(50))
     description = db.Column(db.Text)
+    visible = db.Column(db.Boolean, default=True)
+
     number_of_questions = db.Column(db.Integer, default=0)
     pass_mark = db.Column(db.Integer, default=0)
 
     # automaticall assigned variables
+    module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
     created_at = db.Column(db.DateTime, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     questions = db.relationship('Question', backref='assessment')
