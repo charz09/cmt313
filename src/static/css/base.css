@@ -178,9 +178,233 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+.dataTables_filter {
+  margin-bottom: 10px;
+}
+
 .chart-container {
   position: relative;
   margin: auto;
   height: 80vh;
   width: 80vw;
 }
+
+.stat-container {
+  display: flex;
+  justify-content: center;
+}
+
+.engagement-table {
+  background-color: #fff7fe;
+  display: inline-block;
+  width: 82%;
+  margin: 0px 20px;
+  padding: 20px;
+  vertical-align: top;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.engagement-card {
+  width: 192px;
+  background: white;
+  padding: .4em;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.enagement-card-image {
+  background-color: rgb(236, 236, 236);
+  width: 100%;
+  height: 55%;
+  border-radius: 6px 6px 0 0;
+}
+
+.enagement-card-image:hover {
+  transform: scale(0.98);
+}
+
+.category {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(63, 121, 230);
+  padding: 10px 7px 0;
+}
+
+.engagement-card-title {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: rgb(88, 87, 87);
+  padding: 7px;
+}
+
+.results-table {
+  background-color: #fff7fe;
+  margin: 20px 20px;
+  padding: 20px;
+  vertical-align: top;
+  background-color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.select-box {
+  margin: 30px 0px;
+}
+
+.select-box button {
+  width: 15%;
+  border-radius: 4px;
+  border-width: 0;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px,rgba(45, 35, 66, 0.15) 0 7px 13px -3px,#ccc 0 -3px 0 inset;
+  box-sizing: border-box;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 5px 0;
+}
+
+.select-box button:focus {
+  box-shadow: #ccc 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ccc 0 -3px 0 inset;
+ }
+ 
+ .select-box button:hover {
+  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #ccc 0 -3px 0 inset;
+  transform: translateY(-2px);
+ }
+ 
+ .select-box button:active {
+  box-shadow: #ccc 0 3px 7px inset;
+  transform: translateY(2px);
+ }
+
+.select-box select {
+  width: 80%;
+}
+
+.box {
+  height: 30px;
+  border: 1px solid #999;
+  font-size: 18px;
+  color: var(--dark-color);
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 4px 4px #ccc;
+  margin: 10px 0px;
+}
+
+
+.summary-container {
+  display: flex;
+  justify-content: center;
+  height: 600px;
+}
+
+.summary-section {
+  background-color: #fff7fe;
+  width: 100%;
+  height: 100%;
+  margin: 0px 20px;
+  padding: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.summary-card {
+  width: 100%;
+  height: 90%;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 5px;
+  overflow: visible;
+ }
+ 
+ .summary-card .item {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+ }
+ 
+ .item:hover {
+  transform: scale(0.95);
+  transition: all 0.3s;
+ }
+ 
+ .item svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 7px;
+ }
+
+ .item--1 {
+  background: #c7c7ff;
+ }
+ 
+ .item--2 {
+  background: #ffd8be;
+ }
+ 
+ .item--3 {
+  background: #a9ecbf;
+ }
+ 
+ .item--4 {
+  background: #f3bbe1;
+ }
+
+ .item--5 {
+  background: #f5caff;
+ }
+
+  .item--6 {
+    background: #f7b8b3;
+  }
+ 
+ .quantity {
+  font-size: 25px;
+  font-weight: 600;
+ }
+ 
+ .text {
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+ }
+ 
+ .text--1 {
+  color: rgba(149,149,255,1);
+ }
+ 
+ .text--2 {
+  color: rgba(252,161,71,1);
+ }
+ 
+ .text--3 {
+  color: rgba(66,193,110,1);
+ }
+ 
+ .text--4 {
+  color: rgba(220,91,183,1);
+ }
+
+ .text--5 {
+  color: rgb(209, 43, 255);
+ }
+
+  .text--6 {
+    color: rgb(245, 105, 96);
+  }

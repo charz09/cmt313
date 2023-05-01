@@ -197,7 +197,7 @@ def cohort_report():
         average_time_taken_seconds = total_time_taken / len(attempts) if attempts else 0
         average_time_taken = '{:02d}:{:02d}'.format(int(average_time_taken_seconds // 60), int(average_time_taken_seconds % 60))
         
-        #calculate completeion rate
+        #calculate completion rate
         num_students_attempted = len(set([attempt.created_by for attempt in attempts]))
         num_students_eligible = len(User.query.filter_by(role_id=1).all())
         completion_rate = f"{num_students_attempted/num_students_eligible:.0%}"
@@ -334,10 +334,8 @@ def view_student_report(id):
         attempts = chosen_assessment.attempts
         questions = chosen_assessment.questions
         
-        #new code below
         # Get assessment data for the student
-        student_attempts = Attempt.query.filter_by(
-            created_by=id, assessment_id=get_assessment_id).all()
+        student_attempts = Attempt.query.filter_by(created_by=id, assessment_id=get_assessment_id).order_by(Attempt.end_time.desc()).all()
         assessment_scores = []
         assessment_passed = []
         for attempt in student_attempts:
@@ -354,6 +352,11 @@ def view_student_report(id):
             len(set([attempt.created_by for attempt in attempts]))
         student_total_attempts = len(attempts)
         student_total_passed = len(assessment_passed)
+    
+        # calculate the average time taken per assessment
+        total_time_taken = sum([(attempt.end_time - attempt.created_on).total_seconds() for attempt in student_attempts])
+        average_time_taken_seconds = total_time_taken / len(student_attempts) if student_attempts else 0
+        average_time_taken = '{:02d}:{:02d}'.format(int(average_time_taken_seconds // 60), int(average_time_taken_seconds % 60))
 
     # Calculate the number of times each question was answered correctly and incorrectly for the selected student's attempts
         question_results = []
@@ -369,6 +372,22 @@ def view_student_report(id):
                     num_incorrect += 1
             question_results.append(
                 {'question': question, 'num_correct': num_correct, 'num_incorrect': num_incorrect})
+            
+        # Calculate the number of times each question was answered correctly and incorrectly for the last attempt by the selected student
+        last_attempt_question_results = []
+        last_attempt = student_attempts[0] if student_attempts else None
+        if last_attempt:
+            for question in questions:
+                num_correct = 0
+                num_incorrect = 0
+                answer = Answer.query.filter_by(attempt_id=last_attempt.id, question_id=question.id).first()
+                if answer:
+                    if answer.is_correct:
+                        num_correct += 1
+                    else:
+                        num_incorrect += 1
+                last_attempt_question_results.append({'question': question, 'num_correct': num_correct, 'num_incorrect': num_incorrect})
+
 
         # Create a dictionary of assessment data to be passed to the template
         student_assessment_data = {
@@ -380,7 +399,7 @@ def view_student_report(id):
             'class_avg_score': get_class_avg_score(get_assessment_id, student)
         }
 
-        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, student_assessment_data=[student_assessment_data], question_results=question_results, assessments=assessments, chosen_assessment=chosen_assessment, questions=questions)
+        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, student_assessment_data=[student_assessment_data], question_results=question_results, last_attempt_question_results=last_attempt_question_results, assessments=assessments, chosen_assessment=chosen_assessment, questions=questions, average_time_taken=average_time_taken)
     else:
         return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, assessments=assessments)
 
