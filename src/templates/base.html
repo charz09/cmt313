@@ -8,7 +8,9 @@
     <title>{% block title %}{% endblock %} - Assessmint</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="./notify.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./notify.min.js"></script>
     {% endblock %}
 </head>
 <body>
@@ -37,6 +39,15 @@
             {% endif %}
         </ul>
     </nav>
-      {% block content %}{% endblock %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+{% block content %}{% endblock %}
 </body>
 </html>
