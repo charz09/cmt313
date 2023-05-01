@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;400;600;800&display=swap');
 @import './type.css';
 @import './nav.css';
 @import './cards.css';
 @import './forms.css';
+@import './questions.css';
 
 :root {
   /* Colours */
-  --primary-color: #375fae;
-  --primary-shadow-color: #a8bde7;
-  --primary-hover: #1e3970;
+  --primary-color: #4e9ae6;
+  --primary-hover: #3b82c8;
   --secondary-color: #fff7fe;
   --light-color: #f1eff5;
   --light-grey: #ccc;
   --dark-color: #232323;
-  --dark-shadow-color: #a5a5a5;
 
   /* Font Sizes */
   --fs-body: 1rem;
@@ -38,7 +37,7 @@
   --sp-12: 6rem;
   --sp-13: 10rem;
 
-  --line-width: 4px;
+  --line-width: 3px;
 }
 
 .assessments-section {
@@ -73,10 +72,11 @@
   color: var(--light-color);
   border: none;
   padding: var(--sp-2) var(--sp-3);
-  margin: var(--sp-2) var(--sp-2) 0 0;
+  margin: var(--sp-2) var(--sp-3) 0 0;
   font-size: var(--fs-body);
   border-radius: var(--sp-2);
   cursor: pointer;
+  border: var(--line-width) solid var(--dark-color);
 }
 
 .secondary-button:hover {
@@ -118,6 +118,12 @@
   align-items: center;
   flex: 0 1 auto;
   text-decoration: none;
+}
+.option-container h1 {
+  margin: var(--sp-4);
+  text-align: center;
+  color: var(--dark-color);
+  font-weight: 600;
 }
 
 .option-logo {

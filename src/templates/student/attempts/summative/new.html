@@ -14,13 +14,19 @@
             
                 {# This weird syntax is how you do string lterals in jinja #}
                 {% if form["question_" ~ i ~ ""] %}
-                <h5>Question {{ i + 1 }}</h5>
-                        {{ form["question_" ~ i ~ ""].label }} 
-                        {{ form["question_" ~ i ~ ""](class='input-field') }}
-                    {% endif %}
-                {% endfor %}
+                <div class="question-container">
+                    <p>Q. {{ i + 1 }}</p>
+                    <h6>{{ form["question_" ~ i ~ ""].label(class="question-content") }}</h6>
+                     
 
-            {{ form.submit(class='signup-button') }}
+                    <div class="choices-container">
+                        {{ form["question_" ~ i ~ ""](class='radio-button') }}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            {{ form.submit(class='primary-button') }}
         </form>
     </div>
 </section>

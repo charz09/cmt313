@@ -13,11 +13,13 @@
         {# make sure that a user can only see assessments for modules thay are a apart of #}
         {% if assessment.module in current_user.modules %}
             <div class="card">
-                <p>{{assessment.assessment_type}}</p>
+                <div class="info-section">
+                    <h5>{{ assessment.module.code }} - {{ assessment.module.name }}</h5>
+                    <h5>{{assessment.assessment_type}}</h5>
+                </div>
                 <h2 class="card-title">
                     <a href="{{url_for('teachers.show_assessment', id=assessment.id)}}">{{ assessment.name}}</a>
                 </h2>
-                <h5>Module: {{ assessment.module.code }} - {{ assessment.module.name }}</h5>
                 <p>{{ assessment.description }}</p>
 
                 {% if assessment.user_id == current_user.id %}

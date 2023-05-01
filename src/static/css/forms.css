@@ -13,7 +13,7 @@ form {
   
   .assessment-form {
     width: 25rem;
-    margin: 0 auto;
+    margin: 2rem auto;
   }
 
   .input-field {
@@ -37,7 +37,7 @@ form {
     border-color: var(--primary-color);
   }
   
-  .radio-botton {
+  .radio-button {
     list-style-type: none;
     display: flex;
   }
@@ -52,7 +52,8 @@ form {
     border: var(--line-width) solid var(--dark-color); */
   }
   
-  .radio-inputs li {
+  .radio-button li {
+    width: 100%;
     margin-right: 4rem;
     background-color: #fff;
     list-style-type: none;
@@ -63,7 +64,7 @@ form {
     border: var(--line-width) solid var(--dark-color);
   }
   
-  .radio-inputs li label {
+  .radio-button li label {
   
     margin: 0rem 0.4rem 0rem 0.4rem;
   

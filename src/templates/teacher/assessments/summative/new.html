@@ -7,7 +7,7 @@
 {% endif %}
 
 <section class="assessments-section">
-    <div class="login-form">
+    <div class="assessment-form">
         <form method="POST">
             {{ form.hidden_tag() }}
     
@@ -21,7 +21,7 @@
             {{ form.description(class='input-field') }}
 
             {{ form.assessment_type.label }}
-            {{ form.assessment_type(class="radio-botton input-field") }}
+            {{ form.assessment_type(class="radio-button") }}
     
             {{ form.available_from.label(class="summative-only") }}
             {{ form.available_from(class="summative-only input-field") }}

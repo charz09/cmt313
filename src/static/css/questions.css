@@ -1,0 +1,22 @@
+.question-container {
+    padding: var(--sp-5);
+    margin: var(--sp-5) 0;
+    border-radius: var(--sp-3);
+    border: var(--line-width) solid var(--dark-color);
+}
+
+.choices-container ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.question-container h6 {
+    margin: 2rem 0;
+}
+.question-container h5 {
+    margin: 1rem 0;
+}
+
+.question-container p {
+    margin: 0.75rem 0;
+}

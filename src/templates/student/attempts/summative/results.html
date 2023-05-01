@@ -5,12 +5,17 @@
 <section class="assessments-section">
     <div class="results-container">
         {% for answer in attempt.answers %}
-        <div class="question-container card">
+        <div class="question-container">
+            <p>Q{{loop.index}}</p>
             <h5>{{ answer.question.content }}</h5>
             <p>Your answer:  {{ answer.content}}</p>
             {% if feedback == True %}
-            <p>Feedback: {{ answer.is_correct}}</p>
-            <p>Correct answer: {{ answer.correct_answer}}</p>
+                {% if answer.is_correct == False %}
+                    <p style="color: red;">Incorrect</p>
+                    <p>Correct answer: {{ answer.correct_answer}}</p>
+                {% else %}
+                    <p style="color: green;">Correct</p>
+                {% endif %}
             {% endif %}
         </div>
         {% endfor %}
