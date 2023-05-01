@@ -87,7 +87,7 @@ def view_report(id):
     student = User.query.filter_by(id=id, role_id=1).first()
     if student is None:
         flash('Invalid student ID', 'error')
-        return redirect(url_for('teachers.student_report'))
+        return redirect(url_for('student.home'))
 
     attempts = Attempt.query.filter_by(created_by=id).all()
     overall_assessment_scores = {}
@@ -168,7 +168,7 @@ def view_report(id):
                     ) * 10 if len(assessment_scores) > 0 else 0
         student_avg_attempts = len(attempts) / \
             len(set([attempt.created_by for attempt in attempts]))
-        student_total_attempts = len(attempts)
+        student_total_attempts = len(set([attempt.created_by for attempt in attempts]))
         student_total_passed = len(assessment_passed)
 
     # Calculate the number of times each question was answered correctly and incorrectly for the selected student's attempts

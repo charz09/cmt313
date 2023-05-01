@@ -2,11 +2,8 @@
 
 {% block content %}
 <section class="content-section" >
-    {% if current_user.id == student.id %} 
+    {% if current_user.username == student.username %} 
     <h1> My Progress Report</h1>
-    {% else %} 
-    <h1>{{ student.username }}'s Overall Report</h1>
-    {% endif %}
     {% if assessment_data %}
         <table>
             <thead>
@@ -85,7 +82,7 @@
             {% endfor %}
         </select>
         <button type="submit">Submit</button>
-    </form>
+    </form><br>
 <!--new code block-->
 {% if chosen_assessment %}
     <h1>Statistics for {{ chosen_assessment.name }}</h1>
@@ -131,6 +128,10 @@
           {% endfor %}
         </tbody>
       </table>
+    {% endif %}
+    {% else %} 
+    <h1>{{ student.username }}'s Overall Report</h1>
+    <p>You are not authorised to view this report</p>
     {% endif %}
 </section>
 {% endblock content %}
