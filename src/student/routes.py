@@ -196,9 +196,9 @@ def view_report(id):
             'class_avg_score': get_class_avg_score(get_assessment_id, student)
         }
 
-        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, student_assessment_data=[student_assessment_data], question_results=question_results, assessments=assessments, chosen_assessment=chosen_assessment, questions=questions)
+        return render_template('student/progress/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, student_assessment_data=[student_assessment_data], question_results=question_results, assessments=assessments, chosen_assessment=chosen_assessment, questions=questions)
     else:
-        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, assessments=assessments)
+        return render_template('student/progress/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, assessments=assessments)
 
 
 def get_class_avg_score(assessment_id, student):

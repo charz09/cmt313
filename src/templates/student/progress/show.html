@@ -2,7 +2,11 @@
 
 {% block content %}
 <section class="content-section" >
+    {% if current_user.id == student.id %} 
+    <h1> My Progress Report</h1>
+    {% else %} 
     <h1>{{ student.username }}'s Overall Report</h1>
+    {% endif %}
     {% if assessment_data %}
         <table>
             <thead>
