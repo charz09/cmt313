@@ -15,7 +15,7 @@
             <h2 class="card-title">
                 <a href="{{url_for('teachers.show_assessment', id=assessment.id)}}">{{ assessment.name}}</a>
             </h2>
-            <h5>{{ assessment.module }}</h5>
+            <h5>{{ assessment }}</h5>
             <p>{{ assessment.description }}</p>
 
             {% if assessment.user_id == current_user.id %}

@@ -9,8 +9,9 @@ class Assessment(db.Model):
     name = db.Column(db.String(64), unique=True, index=True)
     assessment_type = db.Column(db.String(50), nullable=False)
     visible = db.Column(db.Boolean, default=True)
+    module_id = db.Column(db.Integer, db.ForeignKey('modules.id'))
+
     description = db.Column(db.Text)
-    module = db.Column(db.String(64), index=True)
     number_of_questions = db.Column(db.Integer, default=0)
     pass_mark = db.Column(db.Integer, default=0)
 
@@ -29,7 +30,7 @@ class Assessment(db.Model):
                  name: str,
                  visible: bool,
                  description: str,
-                 module: str,
+                 module_id: int,
                  assessment_type: str,
                  user_id: int,
                  available_from: datetime,
@@ -39,7 +40,7 @@ class Assessment(db.Model):
         self.assessment_type = assessment_type
         self.visible = visible
         self.description = description
-        self.module = module
+        self.module_id = module_id
         self.user_id = user_id
         self.available_from = available_from
         self.available_to = available_to
@@ -49,7 +50,7 @@ class Assessment(db.Model):
     def create(name,
                visible,
                description,
-               module,
+               module_id,
                assessment_type,
                user_id,
                available_from,
@@ -58,7 +59,7 @@ class Assessment(db.Model):
         new_assessment = Assessment(name=name,
                                     visible=visible,
                                     description=description,
-                                    module=module,
+                                    module_id=module_id,
                                     assessment_type=assessment_type,
                                     user_id=user_id,
                                     available_from=available_from,

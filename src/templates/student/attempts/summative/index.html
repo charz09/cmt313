@@ -10,30 +10,35 @@
             <h2 class="card-title">
                 {{ assessment.name}}
             </h2>
-            <h5>{{ assessment.module }}</h5>
-            <p>{{ assessment.description }}</p>
             
-            <p>Available {{moment(assessment.available_from).fromNow(refresh=0.1)}} at {{ moment(assessment.available_from).format('H:mm DD/MM/YYYY') }}</p>
-            <p>Deadline {{  moment(assessment.available_to).fromNow(refresh=True) }} at {{ moment(assessment.available_to).format('H:mm DD/MM/YYYY') }}</p>
-            <p>Feedback {{  moment(assessment.feedback_from).fromNow(refresh=True) }} at {{  moment(assessment.feedback_from).format('H:mm DD/MM/YYYY') }}</p>
+            <h5>Module: {{ assessment.module.code }} - {{ assessment.module.name }}</h5>
+            <p>Description: {{ assessment.description }}</p>
+            
+            <p>Available From: {{moment(assessment.available_from).fromNow(refresh=0.1)}} at {{ moment(assessment.available_from).format('H:mm DD/MM/YYYY') }}</p>
+            <p>Deadline: {{  moment(assessment.available_to).fromNow(refresh=True) }} at {{ moment(assessment.available_to).format('H:mm DD/MM/YYYY') }}</p>
+            <p>Feedback Available From: {{  moment(assessment.feedback_from).fromNow(refresh=True) }} at {{  moment(assessment.feedback_from).format('H:mm DD/MM/YYYY') }}</p>
             
             {% if datetime.utcnow() < assessment.available_from %}
                 <p style="color: red;">Not Yet Available</p>
                 
             {% elif datetime.utcnow() > assessment.available_from and datetime.utcnow() < assessment.available_to %}
                 {% if assessment.id in attempts|map(attribute='assessment_id') %}
-                    <a href={{url_for('students.new_attempt', id=assessment.id)}}>Edit Submission</a>
-                    <a href={{url_for('students.results', id=assessment.id)}}>View Submission</a>
-                {% else %}
-                    <a href={{url_for('students.new_attempt', id=assessment.id)}}>Attempt Assessment</a>
-                {% endif  %}
-                    <p style="color: green;">Currently Available</p>
-
-            {% elif  datetime.utcnow() > assessment.available_to and datetime.utcnow() < assessment.feedback_from%}
+                <a href={{url_for('students.new_attempt', id=assessment.id)}}>Edit Submission</a>
                 <a href={{url_for('students.results', id=assessment.id)}}>View Submission</a>
+                {% else %}
+                <a href={{url_for('students.new_attempt', id=assessment.id)}}>Attempt Assessment</a>
+                {% endif  %}
+                <p style="color: green;">Currently Available</p>
+                
+            {% elif  datetime.utcnow() > assessment.available_to and datetime.utcnow() < assessment.feedback_from%}
+                {% if assessment.id in attempts|map(attribute='assessment_id') %}
+                <a href={{url_for('students.results', id=assessment.id)}}>View Submission</a>
+                {% endif  %}
                 <p style="color: red;">Deadline Passed</p>
             {% elif  datetime.utcnow() > assessment.feedback_from %}
+                {% if assessment.id in attempts|map(attribute='assessment_id') %}
                 <a href={{url_for('students.results', id=assessment.id)}}>View Submission</a>
+                {% endif  %}
                 <p style="color: green;">Feedback Available</p>
             {% endif %}
         </div>

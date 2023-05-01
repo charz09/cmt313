@@ -35,6 +35,9 @@ def init_app():  # Factory function for creating app instance
         from src.models.assessment import Assessment
         from src.models.question import Question
         from src.models.choice import Choice
+        from src.models.attempt import Attempt
+        from src.models.answer import Answer
+        from src.models.module import Module
 
         login_manager.init_app(app)
 
@@ -52,6 +55,7 @@ def init_app():  # Factory function for creating app instance
         app.register_blueprint(student)
 
         # seed the database with fake user data
-        seed(db, Role, User, Assessment, Question, Choice)
+        seed(db, Role, User, Assessment, Question,
+             Choice, Attempt, Answer, Module)
 
         return app

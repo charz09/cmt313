@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
+import random
 
 
-def seed(db, Role, User, Assessment, Question, Choice):
-    print("Starting Seed file!!")
+def seed(db, Role, User, Assessment, Question, Choice, Attempt, Answer, Module):
+
     # delete the database
     db.drop_all()
 
@@ -24,23 +25,32 @@ def seed(db, Role, User, Assessment, Question, Choice):
     # commit changes to the database
     db.session.commit()
 
-    # craete users
+    # create the modules
+    module1 = Module.create("Web Development", "313")
+    module2 = Module.create("Fundermentals of Programming", "224")
+    module3 = Module.create("Data Structures & Algorithms", "120")
+
+    # craete students
     jess = User.create('Jess', "password", student.id)
     adam = User.create('Adam', "password", student.id)
+
+    # create teachers
     matt = User.create('Matt', "password", teacher.id)
     sara = User.create('Sara', "password", teacher.id)
+
 
 # A1
     js_assessment = Assessment.create("Javascript Quiz",  # quiz name
                                       True,  # visible
                                       "Simple javascript quiz on basics.",  # description
-                                      "210",  # module
-                                      "Formative",  # Assessment Type: Formative or Summative
-                                      matt.id,
-                                      datetime.utcnow() + timedelta(minutes=2),
-                                      datetime.utcnow() + timedelta(minutes=25),
-                                      datetime.utcnow() + timedelta(minutes=60)
-                                      )  # assign a user_id
+                                      module1.id,  # module code
+                                      "Summative",  # Assessment Type: Formative or Summative
+                                      matt.id,  # assign a user_id
+                                      datetime.utcnow() + timedelta(minutes=1),  # time assessment available from
+                                      datetime.utcnow() + timedelta(minutes=3),  # time assessment available to
+                                      datetime.utcnow() + timedelta(minutes=5)  # time feedback available from
+                                      )
+    print(js_assessment.module_id)
 
 # Q1
     question = Question.create("Which of the following methods is used to access HTML elements using Javascript?",  # question content
@@ -156,13 +166,13 @@ print(a)""",  # question content
 # A2
     python_assessment = Assessment.create("Python Quiz",
                                           True,
-                                          "Harder Pythin quiz on classes.",
-                                          "313",
+                                          "Harder Python quiz on classes.",
+                                          module2.id,
                                           "Summative",
                                           matt.id,
                                           datetime.utcnow() + timedelta(minutes=0),
-                                          datetime.utcnow() + timedelta(minutes=1),
-                                          datetime.utcnow() + timedelta(minutes=2)
+                                          datetime.utcnow() + timedelta(minutes=0.5),
+                                          datetime.utcnow() + timedelta(minutes=1)
                                           )
 
 # Q1
@@ -234,3 +244,74 @@ for i in [1, 2, 3, 4][::-1]:
     Choice.create("224", True, question.id)
     Choice.create("None", False, question.id)
     Choice.create("Error", False, question.id)
+
+# Q6
+    question = Question.create("Which one of the following is the use of function in python?",  # question content
+                               python_assessment.id,  # assessment_id
+                               'Multiple Choice')  # question type
+
+    Choice.create(
+        "Functions don’t provide better modularity for your application", False, question.id)
+    Choice.create("you can’t also create your own functions",
+                  False, question.id)
+    Choice.create("Functions are reusable pieces of programs",
+                  True, question.id)
+    Choice.create("All of the mentioned", False, question.id)
+
+# Q7
+    question = Question.create("""Which of the following Python statements will result in the output: 6?
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]""",  # question content
+                               python_assessment.id,  # assessment_id
+                               'Multiple Choice')  # question type
+
+    Choice.create("A[2][1]", False, question.id)
+    Choice.create("A[1][2]", True, question.id)
+    Choice.create("A[3][2]", False, question.id)
+    Choice.create("A[2][3]", False, question.id)
+
+# Q8
+    question = Question.create("Which of the following is a Python tuple?",  # question content
+                               python_assessment.id,  # assessment_id
+                               'Multiple Choice')  # question type
+
+    Choice.create("{1, 2, 3}", False, question.id)
+    Choice.create("{}", False, question.id)
+    Choice.create("(1, 2, 3)", True, question.id)
+    Choice.create("[1, 2, 3]", False, question.id)
+
+# Q9
+    question = Question.create("""What will be the output of the following Python code?
+print("abc. DEF".capitalize())
+""",  # question content
+                               python_assessment.id,  # assessment_id
+                               'Multiple Choice')  # question type
+
+    Choice.create("Abc. def", True, question.id)
+    Choice.create("abc. def", False, question.id)
+    Choice.create("Abc. Def", False, question.id)
+    Choice.create("ABC. DEF", False, question.id)
+
+# Q10
+    question = Question.create("What are the two main types of functions in Python?",  # question content
+                               python_assessment.id,  # assessment_id
+                               'Multiple Choice')  # question type
+
+    Choice.create("System function", False, question.id)
+    Choice.create("Custom function", False, question.id)
+    Choice.create("Built-in function & User defined function",
+                  True, question.id)
+    Choice.create("User function", False, question.id)
+
+# # AT1
+#     attempt = Attempt.create(python_assessment.id, jess.id)
+
+#     for question in attempt.assessment.questions:
+#         print(question)
+#         choices = question.choices
+#         correct_choice = [
+#             c.content for c in choices if c.is_correct == True][0]
+#         choice = random.choice(choices)
+#         answer = Answer.create(
+#             choice.content, choice.is_correct, correct_choice, attempt.assessment.id, question.id, jess.id)

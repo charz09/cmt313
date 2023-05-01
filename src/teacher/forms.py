@@ -8,7 +8,8 @@ class NewAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
-    module = StringField('Module')
+    module_code = StringField('Module Code')
+    module_name = StringField('Module Name')
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')], default='Summative')
 
@@ -26,7 +27,8 @@ class EditAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
-    module = StringField('Module')
+    module_code = StringField('Module Code')
+    module_name = StringField('Module Name')
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')])
 

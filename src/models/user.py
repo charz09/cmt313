@@ -4,11 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_manager
 from .role import Role
 
-# Included in the other project but no idea what it does yet
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(int(user_id))
-
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -16,7 +11,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
+    # assessments = db.relationship('Assessment', backref='user', lazy='dynamic')
     questions = db.relationship('Question', backref='user', lazy='dynamic')
     answers = db.relationship('Answer', backref='user', lazy='dynamic')
     attempts = db.relationship('Attempt', backref='user')
@@ -42,7 +37,6 @@ class User(UserMixin, db.Model):
         new_user = User(username, password, role)
         db.session.add(new_user)
         db.session.commit()
-        print(f"Created user {new_user}")
         return new_user
 
     def __repr__(self):
