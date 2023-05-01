@@ -5,7 +5,8 @@
   {% for student in students.items %}
   <div class="card">
     <h2 class="card-title">
-      <a href="#">{{ student.username}}</a>
+      <a href="{{ url_for('auth.user', username=student.username) }}">{{ student.username}}
+      </a>
     </h2>
     <div class="buttons-container">
       <form

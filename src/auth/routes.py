@@ -12,7 +12,7 @@ from .. import db
 @auth.before_request
 def before_request():
     if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
+        current_user.last_seen = datetime.now()
         db.session.commit()
 
 @auth.route('/', methods=['GET', 'POST'])
@@ -103,7 +103,7 @@ def edit_profile():
 def logout():
     user_session = UserSession.query.filter_by(user_id=current_user.id, end_time=None).first()
     if user_session is not None:
-        user_session.end_time = datetime.utcnow()
+        user_session.end_time = datetime.now()
         db.session.add(user_session)
         db.session.commit()
     logout_user()
