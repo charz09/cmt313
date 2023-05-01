@@ -194,6 +194,28 @@ tr:nth-child(even) {
   justify-content: center;
 }
 
+.student-stats-position {
+  display: flex;
+  justify-content: center;
+  margin: 0px 20px;
+  padding: 20px;
+}
+
+.engagement-container {
+  display: flex;
+  justify-content: center;
+  display: inline-block;
+}
+
+.engagement-section {
+  background-color: #fff7fe;
+  height: 100%;
+  margin: 0px 20px;
+  padding: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
 .engagement-table {
   background-color: #fff7fe;
   display: inline-block;
@@ -213,6 +235,7 @@ tr:nth-child(even) {
   background-color: #fff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
+  margin: 0px 20px 20px 0px;
 }
 
 .enagement-card-image {
@@ -241,6 +264,31 @@ tr:nth-child(even) {
   padding: 7px;
 }
 
+.card-container {
+  width: 100%;
+  max-width: 300px;
+  margin: 2em auto;
+  background-color: #fff;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  padding: 2rem;
+}
+
+.card-container p {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: rgb(88, 87, 87);
+  padding: 7px;
+}
+
+.card-container h3 {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(63, 121, 230);
+  padding: 10px 7px 0;
+}
+
 .results-table {
   background-color: #fff7fe;
   margin: 20px 20px;
@@ -259,9 +307,9 @@ tr:nth-child(even) {
   width: 15%;
   border-radius: 4px;
   border-width: 0;
-  border: 1px solid #ccc;
-  background-color: #eee;
-  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px,rgba(45, 35, 66, 0.15) 0 7px 13px -3px,#ccc 0 -3px 0 inset;
+  border: 1px solid #eee;
+  background-color: #fff7fe;
+  box-shadow: rgba(45, 35, 66, 0.2) 0 2px 4px,rgba(45, 35, 66, 0.15) 0 7px 13px -3px,#eee 0 -3px 0 inset;
   box-sizing: border-box;
   height: 40px;
   justify-content: center;
@@ -272,16 +320,16 @@ tr:nth-child(even) {
 }
 
 .select-box button:focus {
-  box-shadow: #ccc 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ccc 0 -3px 0 inset;
+  box-shadow: #eee 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #eee 0 -3px 0 inset;
  }
  
  .select-box button:hover {
-  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #ccc 0 -3px 0 inset;
+  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px, rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #eee 0 -3px 0 inset;
   transform: translateY(-2px);
  }
  
  .select-box button:active {
-  box-shadow: #ccc 0 3px 7px inset;
+  box-shadow: #eee 0 3px 7px inset;
   transform: translateY(2px);
  }
 
@@ -294,9 +342,9 @@ tr:nth-child(even) {
   border: 1px solid #999;
   font-size: 18px;
   color: var(--dark-color);
-  background-color: #eee;
+  background-color: #fff7fe;
   border-radius: 5px;
-  box-shadow: 4px 4px #ccc;
+  box-shadow: 4px 4px #eee;
   margin: 10px 0px;
 }
 
@@ -305,6 +353,7 @@ tr:nth-child(even) {
   display: flex;
   justify-content: center;
   height: 600px;
+  width: 500px;
 }
 
 .summary-section {
@@ -317,12 +366,40 @@ tr:nth-child(even) {
   border-radius: 10px;
 }
 
-.summary-card {
+.overall-summary-container {
+  display: flex;
+  justify-content: center;
+  height: 600px;
+}
+
+.overall-summary-card {
   width: 100%;
   height: 90%;
   color: white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 5px;
+  overflow: visible;
+ }
+
+ .overall-summary-card .item {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+ }
+
+.summary-card {
+  width: 100%;
+  height: 90%;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 5px;
   overflow: visible;
@@ -338,6 +415,16 @@ tr:nth-child(even) {
   justify-content: center;
   margin: 0px 5px;
  }
+
+ .timeline-section {
+  background-color: #fff7fe;
+  width: 100%;
+  height: 100%;
+  margin: 0px 20px;
+  padding: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
  
  .item:hover {
   transform: scale(0.95);
@@ -407,4 +494,45 @@ tr:nth-child(even) {
 
   .text--6 {
     color: rgb(245, 105, 96);
+  }
+
+  .stati{
+    background: #fff;
+    height: 6em;
+    width: 20em;
+    padding:1em;
+    margin:3em 0; 
+      -webkit-transition: margin 0.5s ease,box-shadow 0.5s ease; /* Safari */
+      transition: margin 0.5s ease,box-shadow 0.5s ease; 
+    -moz-box-shadow:0px 0.2em 0.4em rgb(0, 0, 0,0.8);
+  -webkit-box-shadow:0px 0.2em 0.4em rgb(0, 0, 0,0.8);
+  box-shadow:0px 0.2em 0.4em rgb(0, 0, 0,0.8);
+  }
+  .stati:hover{ 
+    -moz-box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8); 
+  -webkit-box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8); 
+  box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8); 
+  }
+  .stati i{
+    font-size:3.5em; 
+  } 
+  .stati div{
+    width: calc(100% - 3.5em);
+    display: block;
+    float:right;
+    text-align:right;
+  }
+  .stati div b {
+    font-size:2.2em;
+    width: 100%;
+    padding-top:0px;
+    margin-top:-0.2em;
+    margin-bottom:-0.2em;
+    display: block;
+  }
+  .stati div span {
+    font-size:1em;
+    width: 100%;
+    color: rgb(0, 0, 0,0.8) !important;
+    display: block;
   }
