@@ -3,17 +3,17 @@
 {% block content %}
 
 <section class="assessments-section " >
-    <section class="assessments-section " >
-        <div class="options-container">
-            <a href={{url_for('students.formative_index')}}>
-                <h1>Formative Assessments</h1>
-            </a>
-        
-            <a href={{url_for('students.summative_index')}}>
-                <h1>Summative Assessments</h1>
-            </a>
-        </div>
-    </section>
+    <div class="options-container">
+        <a href={{url_for('students.formative_index')}} class="option-container card">
+            <img class="option-logo" src={{url_for('static', filename='/images/formative.png')}} alt="logo for formative assessments" >
+            <h1>Formative Assessments</h1>
+        </a>
+
+        <a href={{url_for('students.summative_index')}} class="option-container card">
+            <img class="option-logo" src={{url_for('static', filename='/images/summative.png')}} alt="logo for summative assessments">
+            <h1>Summative Assessments</h1>
+        </a>
+    </div>
 </section>
 
 {% endblock %}

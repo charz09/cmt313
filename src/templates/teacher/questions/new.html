@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<section>
+<section class="assessments-section">
     <div class="login-form">
         <form method="POST">
             {{ form.hidden_tag() }}
@@ -11,7 +11,7 @@
             {{ form.content(class='input-field') }}
 
             {{ form.question_type.label }} 
-            {{ form.question_type(class='input-field radio-inputs') }}
+            {{ form.question_type(class='radio-inputs') }}
 
             {{ form.correct_choice.label }} 
             {{ form.correct_choice(class='input-field') }}
@@ -25,7 +25,7 @@
             {{ form.incorrect_choice_3.label(class='incorrect-input') }} 
             {{ form.incorrect_choice_3(class='input-field incorrect-input') }}
     
-            {{ form.submit(class='signup-button') }}
+            {{ form.submit(class='primary-button') }}
         </form>
     </div>
 </section>

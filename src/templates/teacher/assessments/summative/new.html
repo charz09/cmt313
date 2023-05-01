@@ -6,7 +6,7 @@
 {{ form.errors }}
 {% endif %}
 
-<section>
+<section class="assessments-section">
     <div class="login-form">
         <form method="POST">
             {{ form.hidden_tag() }}
@@ -21,21 +21,18 @@
             {{ form.description(class='input-field') }}
 
             {{ form.assessment_type.label }}
-            {{ form.assessment_type(class="radio-botton") }}
+            {{ form.assessment_type(class="radio-botton input-field") }}
     
             {{ form.available_from.label(class="summative-only") }}
-            {{ form.available_from(class="summative-only") }}
+            {{ form.available_from(class="summative-only input-field") }}
 
             {{ form.available_to.label(class="summative-only") }}
-            {{ form.available_to(class="summative-only") }}
+            {{ form.available_to(class="summative-only input-field") }}
 
             {{ form.feedback_from.label(class="summative-only") }}
-            {{ form.feedback_from(class="summative-only") }}
+            {{ form.feedback_from(class="summative-only input-field") }}
 
-            {{ form.visible.label }}
-            {{ form.visible }}
-
-            {{ form.submit(class='signup-button') }}
+            {{ form.submit(class='primary-button') }}
         </form>
     </div>
 </section>

@@ -50,9 +50,8 @@ def new_assessment():
 
     if request.method == "POST":
         assessment = Assessment(name=form.name.data,
-                                visible=form.visible.data,
                                 description=form.description.data,
-                                module_id=form.module.data,
+                                module_id=form.module_id.data,
                                 assessment_type=form.assessment_type.data,
                                 user_id=current_user.id,
                                 available_from=form.available_from.data,
@@ -110,7 +109,6 @@ def edit_assessment(id):
 
     if request.method == 'POST':
         assessment.name = form.name.data
-        assessment.visible = form.visible.data
         assessment.description = form.description.data
         assessment.module_id = form.module_id.data
         assessment.assessment_type = form.assessment_type.data
@@ -123,7 +121,6 @@ def edit_assessment(id):
         return redirect(url_for('teachers.assessments_index'))
 
     form.name.data = assessment.name
-    form.visible.data = assessment.visible
     form.description.data = assessment.description
     form.module_id.data = assessment.module.id
     form.assessment_type.data = assessment.assessment_type

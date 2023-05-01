@@ -7,7 +7,6 @@ from src.models.module import Module
 
 class NewAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    visible = BooleanField('Visible')
     description = TextAreaField('Description')
     module_id = SelectField('Module', choices=[])
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
@@ -25,7 +24,6 @@ class NewAssessmentForm(FlaskForm):
 
 class EditAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    visible = BooleanField('Visible')
     description = TextAreaField('Description')
     module_id = SelectField('Module', choices=[])
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[

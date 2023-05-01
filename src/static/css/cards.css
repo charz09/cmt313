@@ -1,0 +1,31 @@
+.card {
+    border: 1px solid var(--dark-color);
+    padding: var(--sp-5);
+    margin: var(--sp-5) 0;
+    border-radius: var(--sp-3);
+  
+    position: relative;
+    transform-style: preserve-3d;
+    background: var(--light-color);
+    border: var(--line-width) solid var(--dark-color);
+    margin-bottom: 5rem;
+  }
+  
+  .card::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border: var(--line-width) solid var(--dark-color);
+    background-color: var(--primary-color);
+    bottom: -18px;
+    right: -18px;
+    border-radius:var(--sp-3);
+    transform: translateZ(-1px);
+    box-sizing: content-box; /* Only if you have some reset that makes everything border-box */
+  }
+  
+  .card-title a {
+    color: var(--dark-color);
+    text-decoration: none;
+  }

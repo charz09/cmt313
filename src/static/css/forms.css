@@ -1,0 +1,70 @@
+form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .form-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .assessment-form {
+    width: 25rem;
+    margin: 0 auto;
+  }
+
+  .input-field {
+    padding: 0.4rem;
+    margin: 0.4rem 0;
+    border: 1px solid var(--light-grey);
+    border-radius: var(--sp-2);
+    border: var(--line-width) solid var(--dark-color);
+  }
+  
+  input {
+    accent-color: var(--primary-color);
+  }
+  
+  select {
+    background-color: #fff;
+  }
+  
+  *:focus { 
+    outline: none !important;
+    border-color: var(--primary-color);
+  }
+  
+  .radio-botton {
+    list-style-type: none;
+    display: flex;
+  }
+  
+  .radio-inputs {
+    /* background-color: #fff;
+    list-style-type: none; */
+    display: flex;
+    /* padding: 0.4rem;
+    margin: 0.4rem 0;
+    border-radius: var(--sp-2);
+    border: var(--line-width) solid var(--dark-color); */
+  }
+  
+  .radio-inputs li {
+    margin-right: 4rem;
+    background-color: #fff;
+    list-style-type: none;
+    display: flex;
+    padding: 0.4rem;
+    margin: 0.4rem 0.4rem 0.4rem 0rem;
+    border-radius: var(--sp-2);
+    border: var(--line-width) solid var(--dark-color);
+  }
+  
+  .radio-inputs li label {
+  
+    margin: 0rem 0.4rem 0rem 0.4rem;
+  
+  }

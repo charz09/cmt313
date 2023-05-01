@@ -47,7 +47,6 @@ def seed(db, Role, User, Assessment, Question, Choice, Attempt, Answer, Module):
 
 # A1
     js_assessment = Assessment.create("Javascript Quiz",  # quiz name
-                                      True,  # visible
                                       "Simple javascript quiz on basics.",  # description
                                       module1.id,  # module code
                                       "Summative",  # Assessment Type: Formative or Summative
@@ -171,7 +170,6 @@ print(a)""",  # question content
 
 # A2
     python_assessment = Assessment.create("Python Quiz",
-                                          True,
                                           "Harder Python quiz on classes.",
                                           module2.id,
                                           "Summative",
@@ -202,7 +200,7 @@ print(a)""",  # question content
     Choice.create("2", False, question.id)
     Choice.create("False", False, question.id)
 
-# Q2
+# Q3
     question = Question.create("Which of the following is not a core data type in Python programming?",  # question content
                                python_assessment.id,  # assessment_id
                                'Multiple Choice')  # question type
@@ -212,7 +210,7 @@ print(a)""",  # question content
     Choice.create("Class", True, question.id)
     Choice.create("Dictionary", False, question.id)
 
-# Q3
+# Q4
     question = Question.create("""What will be the output of the following Python code snippet?
 for i in [1, 2, 3, 4][::-1]:
     print (i)""",  # question content
@@ -224,7 +222,7 @@ for i in [1, 2, 3, 4][::-1]:
     Choice.create("1 2 3 4", False, question.id)
     Choice.create("none of the mentioned", False, question.id)
 
-# Q4
+# Q5
     question = Question.create("Which one of the following is not a keyword in Python language?",  # question content
                                python_assessment.id,  # assessment_id
                                'Multiple Choice')  # question type
@@ -234,7 +232,7 @@ for i in [1, 2, 3, 4][::-1]:
     Choice.create("assert", False, question.id)
     Choice.create("nonlocal", False, question.id)
 
-# Q5
+# Q6
     question = Question.create("""What will be the output of the following Python code?
     class tester:
         def __init__(self, id):
@@ -251,18 +249,6 @@ for i in [1, 2, 3, 4][::-1]:
     Choice.create("None", False, question.id)
     Choice.create("Error", False, question.id)
 
-# Q6
-    question = Question.create("Which one of the following is the use of function in python?",  # question content
-                               python_assessment.id,  # assessment_id
-                               'Multiple Choice')  # question type
-
-    Choice.create(
-        "Functions don’t provide better modularity for your application", False, question.id)
-    Choice.create("you can’t also create your own functions",
-                  False, question.id)
-    Choice.create("Functions are reusable pieces of programs",
-                  True, question.id)
-    Choice.create("All of the mentioned", False, question.id)
 
 # Q7
     question = Question.create("""Which of the following Python statements will result in the output: 6?
@@ -298,6 +284,7 @@ print("abc. DEF".capitalize())
     Choice.create("abc. def", False, question.id)
     Choice.create("Abc. Def", False, question.id)
     Choice.create("ABC. DEF", False, question.id)
+
 
 # Q10
     question = Question.create("What are the two main types of functions in Python?",  # question content

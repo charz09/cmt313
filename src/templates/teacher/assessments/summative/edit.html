@@ -1,37 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section class="assessments-section">
+    <div class="assessment-form">
+        <form method="POST" >
+            {{ form.hidden_tag() }}
+    
+            {{ form.name.label }} 
+            {{ form.name(class='input-field') }}
+    
+            {{ form.module_id.label }} 
+            {{ form.module_id(class='input-field') }}
 
-<div class="login-form">
-    <form method="POST">
-        {{ form.hidden_tag() }}
-
-        {{ form.name.label }} 
-        {{ form.name(class='input-field') }}
-
-        {{ form.module_id.label }} 
-        {{ form.module_id(class='input-field') }}
-
-        {{ form.description.label }} 
-        {{ form.description(class='input-field') }}
-
-        {{ form.assessment_type.label }}
-        {{ form.assessment_type(class="radio-botton") }}
-
-        {{ form.visible.label }}
-        {{ form.visible }}
-
-        {{ form.available_from.label }}
-        {{ form.available_from }}
-
-        {{ form.available_to.label }}
-        {{ form.available_to }}
-
-        {{ form.feedback_from.label }}
-        {{ form.feedback_from }}
-
-        {{ form.submit(class='signup-button') }}
-    </form>
-</div>
+            {{ form.description.label }} 
+            {{ form.description(class='input-field') }}
+    
+            {{ form.assessment_type.label}}
+            {{ form.assessment_type(class="radio-inputs")}}
+    
+            {{ form.available_from.label }}
+            {{ form.available_from(class='input-field') }}
+    
+            {{ form.available_to.label }}
+            {{ form.available_to(class='input-field') }}
+    
+            {{ form.feedback_from.label }}
+            {{ form.feedback_from(class='input-field') }}
+    
+            {{ form.submit(class='primary-button') }}
+        </form>
+    </div>
+</section>
 
 {% endblock %}

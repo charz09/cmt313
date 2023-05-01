@@ -4,18 +4,16 @@
 
 <div class="login-form">
     <div class="assessments-section">
-        <h1>
-            {{ assessment.name}}
-        </h1>
-        <h4>Module: {{ assessment.module}}</h4>
-        <p>{{assessment.description}}</p>
-        <p>Questions: {{assessment.questions|length}}/10</p>
-        <!-- <p>Available from: {{ assessment.available_from }}</p> -->
-        <p>Available from: {{ moment(assessment.available_from).format('hh:mm DD/MM/YYYY') }}</p>
-        <!-- <p>Available to: {{ assessment.available_to }}</p> -->
-        <p>Available to: {{ moment(assessment.available_to).format('hh:mm DD/MM/YYYY')}}</p>
-        <!-- <p>Feedback from: {{assessment.feedback_from }}</p> -->
-        <p>Feedback from: {{  moment(assessment.feedback_from).format('hh:mm DD/MM/YYYY') }}</p>
+        <div class="assessment-information">
+            <h1>{{ assessment.name}}</h1>
+            <h4>Module :{{ assessment.module.code }} - {{ assessment.module.name}}</h4>
+            <p>{{assessment.description}}</p>
+            <p>{{assessment.assessment_type}}</p>
+            <p>Questions: {{assessment.questions|length}} out of 10</p>
+            <p>Available from: {{ moment(assessment.available_from).format('hh:mm DD/MM/YYYY') }}</p>
+            <p>Available to: {{ moment(assessment.available_to).format('hh:mm DD/MM/YYYY')}}</p>
+            <p>Feedback from: {{  moment(assessment.feedback_from).format('hh:mm DD/MM/YYYY') }}</p>
+        </div>
 
 
         {% if assessment.questions|length < 10 %}
@@ -25,7 +23,7 @@
         {% endif %}
 
         {% for question in assessment.questions %}
-        <div class="question">
+        <div class="card">
             <p class="question-content">{{question.content}}</p>
             <form action={{ url_for('teachers.edit_question', id=question.id) }} method="get">
                 <button type="submit" class="secondary-button">Edit</button>
