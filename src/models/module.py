@@ -17,7 +17,6 @@ class Module(db.Model):
     def create(name, code):  # create new module
         new_module = Module(name=name, code=code)
         db.session.add(new_module)
-        print(new_module)
         db.session.commit()
         return new_module
 

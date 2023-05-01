@@ -30,13 +30,18 @@ def assessments_index():
     assessments = Assessment.query.filter_by(user_id=current_user.id)
     return render_template('teacher/assessments/summative/index.html', assessments=assessments)
 
+
 # NEW ASSESSMENT
-
-
 @teacher.route('/assessments/new', methods=['GET', 'POST'])
 @login_required
 def new_assessment():
     form = NewAssessmentForm()
+
+    user_modules = current_user.modules
+    choices = []
+    for module in user_modules:
+        choices.append((module.id, f"{module.code}: {module.name}"))
+    form.module_id.choices = choices
 
     # pre populate the dates with right now.
     form.available_from.data = datetime.utcnow()
@@ -47,7 +52,7 @@ def new_assessment():
         assessment = Assessment(name=form.name.data,
                                 visible=form.visible.data,
                                 description=form.description.data,
-                                module=form.module.data,
+                                module_id=form.module.data,
                                 assessment_type=form.assessment_type.data,
                                 user_id=current_user.id,
                                 available_from=form.available_from.data,
@@ -121,6 +126,7 @@ def edit_assessment(id):
 @login_required
 def new_question(id):
     form = NewQuestionForm()
+
     if form.validate_on_submit():
         question = Question(
             content=form.content.data,

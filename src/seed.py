@@ -34,9 +34,15 @@ def seed(db, Role, User, Assessment, Question, Choice, Attempt, Answer, Module):
     jess = User.create('Jess', "password", student.id)
     adam = User.create('Adam', "password", student.id)
 
+    jess.modules.append(module1)
+    jess.modules.append(module2)
+
     # create teachers
     matt = User.create('Matt', "password", teacher.id)
     sara = User.create('Sara', "password", teacher.id)
+
+    matt.modules.append(module2)
+    matt.modules.append(module3)
 
 
 # A1

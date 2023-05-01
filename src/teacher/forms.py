@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, IntegerField, RadioField, DateTimeLocalField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, IntegerField, RadioField, DateTimeLocalField, SelectField
 from wtforms.fields import DateTimeLocalField
 from wtforms.validators import DataRequired
+from src.models.module import Module
 
 
 class NewAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
-    module_code = StringField('Module Code')
-    module_name = StringField('Module Name')
+    module_id = SelectField('Module', choices=[])
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')], default='Summative')
 
@@ -27,8 +27,7 @@ class EditAssessmentForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     visible = BooleanField('Visible')
     description = TextAreaField('Description')
-    module_code = StringField('Module Code')
-    module_name = StringField('Module Name')
+    module_id = StringField('Module')
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
         ('Formative', 'Formative'), ('Summative', 'Summative')])
 

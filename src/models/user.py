@@ -3,6 +3,14 @@ from src import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_manager
 from .role import Role
+from .module import Module
+
+user_module = db.Table('user_module',
+                       db.Column('user_id', db.Integer,
+                                 db.ForeignKey('users.id')),
+                       db.Column('module_id', db.Integer,
+                                 db.ForeignKey('modules.id'))
+                       )
 
 
 class User(UserMixin, db.Model):
@@ -15,6 +23,7 @@ class User(UserMixin, db.Model):
     questions = db.relationship('Question', backref='user', lazy='dynamic')
     answers = db.relationship('Answer', backref='user', lazy='dynamic')
     attempts = db.relationship('Attempt', backref='user')
+    modules = db.relationship('Module', secondary='user_module')
 
     @property
     def password(self):
