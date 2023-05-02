@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@sgratzl/chartjs-chart-boxplot": "^4.1.2",
-    "chart.js": "^4.2.1"
-  }
-}
