@@ -184,18 +184,16 @@ tr:nth-child(even) {
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
   background-color:#760645;
   border-radius: var(--sp-2);
-  
-
 }
 
 .profile-content {
-  padding: none;
   background-color:none;
   margin-left:none;
   margin-right:none;
   padding:30px;
   background-color:#f1eff5;
-  
+  border-bottom-left-radius: var(--sp-2);
+  border-bottom-right-radius: var(--sp-2);
 }
 
 .avatar {
@@ -211,5 +209,18 @@ tr:nth-child(even) {
   text-align:center;
   font-size:300%;
   font-weight: bold;
-  
+}
+
+.flash-container {
+  padding:none;
+  border:none;
+  width:auto;
+  color:white;
+  background-color: #b91070;
+  vertical-align: middle;
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.25);
+  border-radius: var(--sp-2);
 }

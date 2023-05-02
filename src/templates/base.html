@@ -38,7 +38,9 @@
             {% endif %}
         </ul>
     </nav>
-        {% with messages = get_flashed_messages(with_categories=true) %}
+</body>
+<div class = 'flash-container'>
+{% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <ul class=flashes>
           {% for category, message in messages %}
@@ -47,6 +49,6 @@
           </ul>
         {% endif %}
       {% endwith %}
+</div>
 {% block content %}{% endblock %}
-</body>
 </html>

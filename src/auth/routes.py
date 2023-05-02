@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from flask_login import logout_user, login_required, login_user, current_user
 from . import auth  # auth is the current blueprint
 from ..models.user import User
@@ -12,7 +12,7 @@ from .. import db
 @auth.before_request
 def before_request():
     if current_user.is_authenticated:
-        current_user.last_seen = datetime.now()
+        current_user.last_seen = datetime.datetime.now()
         db.session.commit()
 
 @auth.route('/', methods=['GET', 'POST'])
@@ -69,11 +69,13 @@ def register():
     return render_template('auth/register.html', form=form)
 
 
-@auth.route('/user/<username>')
+@auth.route('/user/<username>', methods = ['GET'])
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
+
     return render_template('auth/user.html', user=user)
+
 
 @auth.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -103,7 +105,7 @@ def edit_profile():
 def logout():
     user_session = UserSession.query.filter_by(user_id=current_user.id, end_time=None).first()
     if user_session is not None:
-        user_session.end_time = datetime.now()
+        user_session.end_time = datetime.datetime.now()
         db.session.add(user_session)
         db.session.commit()
     logout_user()

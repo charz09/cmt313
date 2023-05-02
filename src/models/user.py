@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from src import db
 from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     lastname = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
     about_me = db.Column(db.String(280))
-    last_seen = db.Column(db.DateTime, default=datetime.now)
+    last_seen = db.Column(db.DateTime, default=datetime.datetime.now())
     
 
     @property
