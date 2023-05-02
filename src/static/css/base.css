@@ -150,7 +150,6 @@ form {
   background-color: var(--primary-hover);
 }
 
-<!--Ryan CSS
 .content-section {
   width: clamp(20rem, 80%, 90rem);
   margin: auto;
@@ -420,7 +419,7 @@ tr:nth-child(even) {
  .timeline-section {
   background-color: #fff7fe;
   width: 100%;
-  height: 100%;
+  height: 50%;
   margin: 20px 20px;
   padding: 20px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -537,4 +536,3 @@ tr:nth-child(even) {
     color: rgb(0, 0, 0,0.8) !important;
     display: block;
   }
-  -->
