@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <section>
-  <div class="results-container">
-    {% for answer in attempt.answers %}
-    <div class="question-container card">
-      <h5>{{ answer.question.content }}</h5>
-      <p>Your answer: {{ answer.content }}</p>
-      <p>Feedback: {{ "Correct" if answer.is_correct else "Incorrect" }}</p>
-      <p>Correct answer: {{ answer.correct_answer }}</p>
-    </div>
-    {% endfor %}
+  <div class="results-containerfr">
+      {% for answer in attempt.answers %}
+      <div class="question-containerfr cardfr{% if answer.is_correct %} green{% else %} red{% endif %}">
+          <h5>{{ answer.question.content }}</h5>
+          <p>Your answer:  {{ answer.content}}</p>
+          <p>Feedback: {{ answer.is_correct}}</p>
+          <p>Correct answer: {{ answer.correct_answer}}</p>
+      </div>
+      {% endfor %}
   </div>
 </section>
+
+
+
 {% endblock %}
