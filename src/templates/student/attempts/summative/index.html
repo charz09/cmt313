@@ -3,7 +3,7 @@
 {% block content %}
 
 <section class="assessments-section " >
-    
+    <h1 class="page-title">Summative Assessments</h1>
     {% for assessment in assessments %}
     {% if assessment.module in current_user.modules %}
         <div class="card card-shadow">
@@ -21,15 +21,15 @@
             <div class="time-info">
                 <div class="time-row">
                     <div class="left">Available: <span class="highlight">{{moment(assessment.available_from).fromNow(refresh=0.1)}}</span> </div>
-                    <div class="right"><span class="semibold">{{ moment(assessment.available_from).format('hh:mm') }}</span> on <span class="semibold">{{ moment(assessment.available_from).format('DD/MM/YYYY') }}</span></div>
+                    <div class="right"><span class="semibold">{{ moment(assessment.available_from).format('hh:mm a') }}</span> on <span class="semibold">{{ moment(assessment.available_from).format('DD/MM/YYYY') }}</span></div>
                 </div>
                 <div class="time-row">
                     <div class="left">Deadline: <span class="highlight">{{  moment(assessment.available_to).fromNow(refresh=True) }} </span></div>
-                    <div class="right"><span class="semibold">{{ moment(assessment.available_to).format('hh:mm')}}</span> on <span class="semibold">{{ moment(assessment.available_to).format('DD/MM/YYYY')}}</span></div>
+                    <div class="right"><span class="semibold">{{ moment(assessment.available_to).format('hh:mm a')}}</span> on <span class="semibold">{{ moment(assessment.available_to).format('DD/MM/YYYY')}}</span></div>
                 </div>
                 <div class="time-row">
                     <div class="left">Feedback: <span class="highlight">{{  moment(assessment.feedback_from).fromNow(refresh=True) }}</span></div>
-                    <div class="right"><span class="semibold">{{  moment(assessment.feedback_from).format('hh:mm')}}</span> on <span class="semibold">{{  moment(assessment.feedback_from).format('DD/MM/YYYY')}}</span></div>
+                    <div class="right"><span class="semibold">{{  moment(assessment.feedback_from).format('hh:mm a')}}</span> on <span class="semibold">{{  moment(assessment.feedback_from).format('DD/MM/YYYY')}}</span></div>
                 </div>
             </div>
             
@@ -37,24 +37,30 @@
                 <p style="color: red;">Not Yet Available</p>
                 
             {% elif datetime.utcnow() > assessment.available_from and datetime.utcnow() < assessment.available_to %}
-                {% if assessment.id in attempts|map(attribute='assessment_id') %}
-                <a href={{url_for('students.new_attempt', id=assessment.id)}}>Edit Submission</a>
-                <a href={{url_for('students.results', id=assessment.id)}}>View Submission</a>
-                {% else %}
-                <a href={{url_for('students.new_attempt', id=assessment.id)}} class="third-button">Attempt Assessment</a>
-                {% endif  %}
-                <h4 style="color: green;">Currently Available</h4>
+            <div class="dynamic-options-container">
+                    <h4 style="color: green;">Currently Available</h4>
+
+                    {% if assessment.id in attempts|map(attribute='assessment_id') %}
+                    <a class="forth-button" href={{url_for('students.new_attempt', id=assessment.id)}}>Edit Submission</a>
+                    {% else %}
+                    <a class="forth-button" href={{url_for('students.new_attempt', id=assessment.id)}} class="third-button">Attempt</a>
+                    {% endif  %}
+                </div>
                 
             {% elif  datetime.utcnow() > assessment.available_to and datetime.utcnow() < assessment.feedback_from%}
-                {% if assessment.id in attempts|map(attribute='assessment_id') %}
-                <a href={{url_for('students.results', id=assessment.id)}} class="third-button" >View Submission</a>
-                {% endif  %}
-                <h4  style="color: red;">Deadline Passed</h4>
+            <div class="dynamic-options-container">
+                    <h4  style="color: red;">Deadline Passed</h4>
+                    {% if assessment.id in attempts|map(attribute='assessment_id') %}
+                    <a class="forth-button" href={{url_for('students.results', id=assessment.id)}} class="third-button" >View Submission</a>
+                    {% endif  %}
+                </div>
             {% elif  datetime.utcnow() > assessment.feedback_from %}
+            <div class="dynamic-options-container">
                 {% if assessment.id in attempts|map(attribute='assessment_id') %}
-                <a href={{url_for('students.results', id=assessment.id)}} class="third-button">View Submission</a>
-                <h4  style="color: green;">Feedback Available</h4>
+                    <h4  style="color: green;">Feedback Available</h4>
+                    <a class="forth-button" href={{url_for('students.results', id=assessment.id)}} class="third-button">View Submission</a>
                 {% endif  %}
+                </div>
             {% endif %}
         </div>
     {% endif %}

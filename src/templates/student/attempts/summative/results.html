@@ -3,19 +3,19 @@
 {% block content %}
 
 <section class="assessments-section">
-    <h1 class="page-title">Results</h1>
+    <h1 class="page-title">Your Results</h1>
     <div class="results-container">
         {% for answer in attempt.answers %}
         <div class="question-container">
-            <p>Q{{loop.index}}</p>
+            <p class="light">Q{{loop.index}}</p>
             <h5>{{ answer.question.content }}</h5>
-            <p>Your answer:  {{ answer.content}}</p>
+            <p><span class="light">Your answer: </span> {{ answer.content}}</p>
             {% if feedback == True %}
                 {% if answer.is_correct == False %}
-                    <p style="color: red;">Incorrect</p>
-                    <p>Correct answer: {{ answer.correct_answer}}</p>
+                    <h4 style="color: red;">Incorrect</h4>
+                    <p><span class="light">Correct answer: </span> {{ answer.correct_answer}}</p>
                 {% else %}
-                    <p style="color: green;">Correct</p>
+                    <h4 style="color: green;">Correct</h4>
                 {% endif %}
             {% endif %}
         </div>

@@ -35,11 +35,13 @@
     </nav>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
+    <div class="flash-messages">
         <ul class="flash">
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
+        {% for message in messages %}
+          <li class="semibold">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    </div>
     {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}

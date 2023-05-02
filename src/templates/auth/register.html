@@ -6,12 +6,16 @@
     <div class="assessment-form">
         <form method="POST" class="login-form">
             {{ form.hidden_tag() }}
+
             {{ form.username.label }} 
             {{ form.username(class='input-field') }}
+
             {{ form.password.label }} 
             {{ form.password(class='input-field') }}
+
             {{ form.confirm_password.label }} 
             {{ form.confirm_password(class='input-field') }}
+
             {{ form.role.label }}
             {{ form.role(class="radio-button") }}
             {{ form.submit(class='primary-button') }}

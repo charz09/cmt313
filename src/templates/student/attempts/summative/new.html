@@ -3,10 +3,10 @@
 {% block content %}
 
 <section class="assessments-section">
-    <h1 class="page-title">New Attempt</h1>
+    <h1 class="page-title">Your Submission</h1>
     <div class="login-form">
-        <h2 class="assessment-details" style="color: red;">
-            Submission Deadline {{  moment(assessment.available_to).fromNow(refresh=True) }}
+        <h2 class="assessment-details" style="color: var(--primary-color);">
+            Deadline {{  moment(assessment.available_to).fromNow(refresh=True) }}
         </h2>
         <form method="POST">
             {{ form.hidden_tag() }}
@@ -16,7 +16,7 @@
                 {# This weird syntax is how you do string lterals in jinja #}
                 {% if form["question_" ~ i ~ ""] %}
                 <div class="question-container">
-                    <p>Q. {{ i + 1 }}</p>
+                    <h5 class="light">Q. {{ i + 1 }}</h5>
                     <h6>{{ form["question_" ~ i ~ ""].label(class="question-content") }}</h6>
                      
 

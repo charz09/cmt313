@@ -40,16 +40,11 @@ form {
   .radio-button {
     list-style-type: none;
     display: flex;
+    gap: 0.8rem;
   }
   
   .radio-inputs {
-    /* background-color: #fff;
-    list-style-type: none; */
     display: flex;
-    /* padding: 0.4rem;
-    margin: 0.4rem 0;
-    border-radius: var(--sp-2);
-    border: var(--line-width) solid var(--dark-color); */
   }
   
   .radio-button li {
@@ -58,14 +53,12 @@ form {
     background-color: #fff;
     list-style-type: none;
     display: flex;
-    padding: 0.4rem;
-    margin: 0.4rem 0.4rem 0.4rem 0rem;
+    padding: 0.4rem 0.6rem;
+    margin: 0.4rem 0rem 0.4rem 0rem;
     border-radius: var(--sp-2);
     border: var(--line-width) solid var(--dark-color);
   }
   
   .radio-button li label {
-  
     margin: 0rem 0.4rem 0rem 0.4rem;
-  
   }

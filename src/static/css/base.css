@@ -38,6 +38,7 @@
   --sp-13: 10rem;
 
   --line-width: 3px;
+  --max-width: 40rem;
 }
 
 .assessments-section {
@@ -45,17 +46,21 @@
   margin: auto;
   height: 100%;
 }
-
+.assessment-details {
+  text-align: center;
+}
 .primary-button {
   background-color: var(--primary-color);
   color: var(--light-color);
   border: none;
   padding: 0.5rem 1rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
   font-size: var(--fs-h4);
   border-radius: var(--sp-3);
   cursor: pointer;
   border: var(--line-width) solid var(--dark-color);
+  width: 100%;
+  max-width: var(--max-width);
 }
 
 .primary-button:hover {
@@ -72,7 +77,7 @@
   color: var(--light-color);
   border: none;
   padding: var(--sp-2) var(--sp-3);
-  margin: var(--sp-2) var(--sp-3) 0 0;
+  margin: var(--sp-3) var(--sp-3) 0 0;
   font-size: var(--fs-body);
   border-radius: var(--sp-2);
   cursor: pointer;
@@ -80,6 +85,22 @@
 }
 
 .secondary-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.forth-button {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  padding: var(--sp-2) var(--sp-3);
+  margin: var(--sp-3) 0 0 var(--sp-3);
+  font-size: var(--fs-body);
+  border-radius: var(--sp-2);
+  cursor: pointer;
+  border: var(--line-width) solid var(--dark-color);
+  text-decoration: none;
+}
+
+.forth-button:hover {
   background-color: var(--primary-hover);
 }
 
@@ -128,4 +149,16 @@
 
 .option-logo {
   width: 10rem;
+}
+
+.flash-messages {
+  color: var(--primary-color);
+  border-bottom: var(--line-width) solid var(--primary-color);
+  font-size: var(--fs-h3);
+  text-align: center;
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 1rem;
 }

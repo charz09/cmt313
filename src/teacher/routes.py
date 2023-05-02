@@ -61,7 +61,7 @@ def new_assessment():
         db.session.add(assessment)
         db.session.commit()
 
-        flash('Assessment created successfully!')
+        flash('Assessment Created Successfully!')
         return redirect(url_for('teachers.assessments_index'))
 
     return render_template('teacher/assessments/summative/new.html', form=form)
@@ -75,7 +75,7 @@ def show_assessment(id):
         assessment = Assessment.query.filter_by(id=id).first()
         db.session.delete(assessment)
         db.session.commit()
-        flash('Assessment deleted successfully!')
+        flash('Assessment Deleted!')
         return redirect(url_for('teachers.assessments_index'))
 
     assessment = Assessment.query.filter_by(id=id).first()
@@ -118,6 +118,7 @@ def edit_assessment(id):
         assessment.feedback_from = form.feedback_from.data
         db.session.add(assessment)
         db.session.commit()
+        flash('Assessment Updated Successfully!')
         return redirect(url_for('teachers.assessments_index'))
 
     form.name.data = assessment.name
@@ -150,7 +151,6 @@ def new_question(id):
             Choice.create(form.incorrect_choice_2.data, False, question.id)
             Choice.create(form.incorrect_choice_3.data, False, question.id)
 
-        flash('Question created successfully!')
         return redirect(url_for('teachers.show_assessment', id=id))
     return render_template('teacher/questions/new.html', form=form)
 
