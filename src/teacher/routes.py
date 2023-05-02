@@ -141,12 +141,13 @@ def cohort_report():
 
     # query user sessions
     sessions = UserSession.query.filter(
-        UserSession.start_time >= start_time,
-        UserSession.end_time <= end_time
+        UserSession.start_time.isnot(None),
+        UserSession.end_time.isnot(None)
     ).all()
 
     # calculate number of users
     user_counts = {}
+    valid_sessions = 0
     total_duration = 0
     for session in sessions:
         session_date = session.start_time.date()
@@ -154,7 +155,10 @@ def cohort_report():
             user_counts[session_date] = set()
         user_counts[session_date].add(session.user_id)
         user_counts[session_date].add(session.user_id)
-    total_duration += (session.end_time - session.start_time).total_seconds()
+        if session.start_time < session.end_time:  # check for valid start and end times
+            session_duration = (session.end_time - session.start_time).total_seconds()
+            total_duration += session_duration
+            valid_sessions += 1
 
     # calculate daily, weekly, and monthly averages
     if time_period == 'daily':
@@ -166,21 +170,28 @@ def cohort_report():
 
     num_users = sum(len(user_counts[date]) for date in user_counts)
     num_periods = len(user_counts)
+    print(total_duration)
+    
+    if valid_sessions > 0:
+        avg_duration_seconds = int(total_duration / valid_sessions)
+        avg_duration_minutes = int(avg_duration_seconds // 60)
+        avg_duration_seconds %= 60
+        avg_duration = f"{avg_duration_minutes:02d}:{avg_duration_seconds:02d}"
     if num_periods > 0:
         avg_users = int(num_users / num_periods)
         avg_users_period = int(num_users / num_periods * num_days)
-        avg_duration = int(total_duration / len(sessions))
     else:
         avg_users = 0
         avg_users_period = 0
-        avg_duration = 0
 
     # create a dictionary of average users for each time period
     engagement_dict = {
         'daily': avg_users_period,
         'weekly': int(num_users / (num_periods / 7)),
         'monthly': int(num_users / (num_periods / 30)),
-        'overall': avg_users
+        'overall': avg_users,
+        'duration_minutes': avg_duration_minutes,
+        'duration_seconds': avg_duration_seconds,
     }
     
     assessments = Assessment.query.all()
@@ -291,6 +302,71 @@ def view_student_report(id):
             overall_assessment_scores[assessment_id].append(user_score_percentage)
             overall_assessment_attempts[assessment_id].append(attempt)
 
+    # set default time period
+    time_period = 'daily'
+
+    # calculate start and end time based on time period
+    end_time = datetime.now()
+    if time_period == 'daily':
+        start_time = end_time - timedelta(days=1)
+    elif time_period == 'weekly':
+        start_time = end_time - timedelta(weeks=1)
+    elif time_period == 'monthly':
+        start_time = end_time - timedelta(days=30)
+        
+        # query user sessions
+    sessions = UserSession.query.filter(UserSession.user_id==id,
+        UserSession.start_time.isnot(None),
+        UserSession.end_time.isnot(None)
+    ).all()
+    
+     # calculate number of users
+    num_logins = {}
+    valid_sessions = 0
+    total_duration = 0
+    for session in sessions:
+        session_date = session.start_time.date()
+        if session_date not in num_logins:
+            num_logins[session_date] = 0
+            num_logins[session_date] += 1
+        if session.start_time < session.end_time:  # check for valid start and end times
+            session_duration = (session.end_time - session.start_time).total_seconds()
+            total_duration += session_duration
+            valid_sessions += 1
+
+    # calculate daily, weekly, and monthly averages
+    if time_period == 'daily':
+        num_days = 1
+    elif time_period == 'weekly':
+        num_days = 7
+    elif time_period == 'monthly':
+        num_days = 30
+
+    num_periods = len(num_logins)
+    print(num_logins)
+    avg_logins = 0
+    avg_duration = '00:00'
+    if valid_sessions > 0:
+        avg_duration_seconds = int(total_duration / valid_sessions)
+        avg_duration_minutes = int(avg_duration_seconds // 60)
+        avg_duration_seconds %= 60
+        avg_duration = f"{avg_duration_minutes:02d}:{avg_duration_seconds:02d}"
+    if num_periods > 0:
+        total_logins = sum(num_logins.values())
+        avg_logins = total_logins / num_periods
+        avg_logins_period = avg_logins * num_days
+    else:
+         avg_logins_period = 0
+
+    # create a dictionary of average users for each time period
+    engagement_dict = {
+        'daily': avg_logins_period,
+        'weekly': int(total_logins / (num_periods / 7)),
+        'monthly': int(total_logins / (num_periods / 30)),
+        'overall': avg_logins,
+        'duration': avg_duration
+    }
+    
     assessment_data = []
     total_assessments = len(Assessment.query.all())
     attempted_assessments = 0
@@ -399,9 +475,9 @@ def view_student_report(id):
             'class_avg_score': get_class_avg_score(get_assessment_id, student)
         }
 
-        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, student_assessment_data=[student_assessment_data], question_results=question_results, last_attempt_question_results=last_attempt_question_results, assessments=assessments, chosen_assessment=chosen_assessment, questions=questions, average_time_taken=average_time_taken)
+        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, student_assessment_data=[student_assessment_data], question_results=question_results, last_attempt_question_results=last_attempt_question_results, assessments=assessments, chosen_assessment=chosen_assessment, questions=questions, average_time_taken=average_time_taken, engagement_dict=engagement_dict)
     else:
-        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, assessments=assessments)
+        return render_template('teacher/reports/student/show.html', student=student, assessment_data=assessment_data, assessment_avg_scores=assessment_avg_scores, completion_rate=completion_rate, assessments=assessments, engagement_dict=engagement_dict)
 
 
 def get_class_avg_score(assessment_id, student):

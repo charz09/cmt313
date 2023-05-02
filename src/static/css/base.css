@@ -220,7 +220,7 @@ tr:nth-child(even) {
   background-color: #fff7fe;
   display: inline-block;
   width: 82%;
-  margin: 0px 20px;
+  margin: 20px 20px;
   padding: 20px;
   vertical-align: top;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -235,7 +235,7 @@ tr:nth-child(even) {
   background-color: #fff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
-  margin: 0px 20px 20px 0px;
+  margin: 20px 20px;
 }
 
 .enagement-card-image {
@@ -291,7 +291,7 @@ tr:nth-child(even) {
 
 .results-table {
   background-color: #fff7fe;
-  margin: 20px 20px;
+  margin: 40px 20px;
   padding: 20px;
   vertical-align: top;
   background-color: #fff;
@@ -334,7 +334,7 @@ tr:nth-child(even) {
  }
 
 .select-box select {
-  width: 80%;
+  width: 100%;
 }
 
 .box {
@@ -353,7 +353,7 @@ tr:nth-child(even) {
   display: flex;
   justify-content: center;
   height: 600px;
-  width: 500px;
+  width: 600px;
 }
 
 .summary-section {
@@ -366,34 +366,6 @@ tr:nth-child(even) {
   border-radius: 10px;
 }
 
-.overall-summary-container {
-  display: flex;
-  justify-content: center;
-  height: 600px;
-}
-
-.overall-summary-card {
-  width: 100%;
-  height: 90%;
-  color: white;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 5px;
-  overflow: visible;
- }
-
- .overall-summary-card .item {
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
- }
-
 .summary-card {
   width: 100%;
   height: 90%;
@@ -401,7 +373,7 @@ tr:nth-child(even) {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 5px;
+  gap: 15px;
   overflow: visible;
  }
  
@@ -416,11 +388,39 @@ tr:nth-child(even) {
   margin: 0px 5px;
  }
 
+.overall-summary-container {
+  display: flex;
+  justify-content: center;
+  height: 600px;
+}
+
+.overall-summary-card {
+  width: 100%;
+  height: 90%;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 15px;
+  overflow: visible;
+ }
+
+ .overall-summary-card .item {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 5px;
+ }
+
  .timeline-section {
   background-color: #fff7fe;
   width: 100%;
   height: 100%;
-  margin: 0px 20px;
+  margin: 20px 20px;
   padding: 20px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -513,8 +513,8 @@ tr:nth-child(even) {
   -webkit-box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8); 
   box-shadow:0px 0.4em 0.5em rgb(0, 0, 0,0.8); 
   }
-  .stati i{
-    font-size:3.5em; 
+  .icon{
+    font-size:2em; 
   } 
   .stati div{
     width: calc(100% - 3.5em);
