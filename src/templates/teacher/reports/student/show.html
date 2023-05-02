@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <section class="content-section">
   <h1>{{ student.username }}'s Overall Report</h1>
+  <p>Below you can view {{ student.username }}'s' engagement and summary assessment statistics.</p>
   <div class="student-stats-position">
   <div class="engagement-container">
     <div class="engagement-section">
@@ -105,6 +106,7 @@
   {% else %}
   <p>No assessments found for this student.</p>
   {% endif %}
+  <p>Choose one of the options below to view statistics for a specific assessment.</p>
   <form method="POST" class="select-box">
     <label for="assessment_id">Select assessment:</label>
     <select class ="box" name="assessment_id" id="assessment_id">
@@ -117,6 +119,7 @@
   <!--new code block-->
   {% if chosen_assessment %}
   <h1>{{ chosen_assessment.name }} Statistics</h1>
+  <p>Below you can view {{ student.username }}'s' assessment statistics for {{ chosen_assessment.name }}.</p>
   <div class="results-table">
   <table>
     <thead>
