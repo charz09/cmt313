@@ -343,7 +343,6 @@ def view_student_report(id):
         num_days = 30
 
     num_periods = len(num_logins)
-    print(num_logins)
     avg_logins = 0
     avg_duration = '00:00'
     if valid_sessions > 0:
