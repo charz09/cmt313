@@ -12,22 +12,22 @@
     
             {{ form.module_id.label }} 
             {{ form.module_id(class='input-field') }}
-
+    
             {{ form.description.label }} 
             {{ form.description(class='input-field') }}
+
+            {{ form.assessment_type.label }}
+            {{ form.assessment_type(class="radio-button") }}
     
-            {{ form.assessment_type.label}}
-            {{ form.assessment_type(class="radio-button")}}
-    
-            {{ form.available_from.label }}
-            {{ form.available_from(class='input-field') }}
-    
-            {{ form.available_to.label }}
-            {{ form.available_to(class='input-field') }}
-    
-            {{ form.feedback_from.label }}
-            {{ form.feedback_from(class='input-field') }}
-    
+            {{ form.available_from.label(class="summative-only", style="display: none;") }}
+            {{ form.available_from(class="summative-only", style="display: none;") }}
+
+            {{ form.available_to.label(class="summative-only", style="display: none;") }}
+            {{ form.available_to(class="summative-only", style="display: none;") }}
+
+            {{ form.feedback_from.label(class="summative-only", style="display: none;") }}
+            {{ form.feedback_from(class="summative-only", style="display: none;") }}
+
             {{ form.submit(class='primary-button') }}
         </form>
     </div>

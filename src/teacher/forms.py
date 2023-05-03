@@ -10,7 +10,7 @@ class NewAssessmentForm(FlaskForm):
     description = TextAreaField('Description')
     module_id = SelectField('Module', choices=[])
     assessment_type = RadioField('Assessment Type', validators=[DataRequired()], choices=[
-        ('Formative', 'Formative'), ('Summative', 'Summative')], default='Summative')
+        ('Formative', 'Formative'), ('Summative', 'Summative')], default='Formative')
 
     available_from = DateTimeLocalField(
         'Available From', format='%Y-%m-%d %H:%M')
