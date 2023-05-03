@@ -99,7 +99,8 @@ def assessment_stats(id):
 @login_required
 def edit_assessment(id):
     form = EditAssessmentForm()
-    assessment = Assessment.query.first_or_404(id)
+    print("ID:", id)
+    assessment = Assessment.query.get(id)
 
     user_modules = current_user.modules
     choices = []

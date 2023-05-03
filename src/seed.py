@@ -55,7 +55,7 @@ def seed(db, Role, User, Assessment, Question, Choice, Attempt, Answer, Module):
                                       datetime.utcnow() + timedelta(minutes=3),  # time assessment available to
                                       datetime.utcnow() + timedelta(minutes=5)  # time feedback available from
                                       )
-    print(js_assessment.module_id)
+    print(js_assessment.name, js_assessment.id)
 
 # Q1
     question = Question.create("Which of the following methods is used to access HTML elements using Javascript?",  # question content

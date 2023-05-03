@@ -12,7 +12,7 @@
             {{ form.content(class='input-field') }}
 
             {{ form.question_type.label }} 
-            {{ form.question_type(class='radio-inputs') }}
+            {{ form.question_type(class='radio-button') }}
 
             {{ form.correct_choice.label }} 
             {{ form.correct_choice(class='input-field') }}
@@ -26,13 +26,13 @@
             {{ form.incorrect_choice_3.label(class='incorrect-input') }} 
             {{ form.incorrect_choice_3(class='input-field incorrect-input') }}
     
-            {{ form.submit(class='signup-button') }}
+            {{ form.submit(class='primary-button') }}
         </form>
     </div>
 </section>
 
 <script>
-    const radioInputs = document.querySelectorAll('.radio-inputs');
+    const radioInputs = document.querySelectorAll('.radio-button');
     const incorrectInputs = document.querySelectorAll('.incorrect-input');
     radioInputs[0].addEventListener('change', (e)=>{
         if(e.target.value === "Multiple Choice") {

@@ -26,16 +26,20 @@
         {% for question in assessment.questions %}
         <div class="card">
             <p class="question-content">{{question.content}}</p>
-            <form action={{ url_for('teachers.edit_question', id=question.id) }} method="get">
-                <button type="submit" class="secondary-button">Edit</button>
-            </form>
-            <form action={{ url_for('teachers.delete_question', id=question.id) }} method="POST">
-                <button type="submit" class="secondary-button">Delete</button>
-            </form>
+            
             <div class="choices">
                 {% for c in question.choices %}
-                    <div><span class="list-label">{{labels[loop.index0]}}</span>. {{ c.content }}</div>
+                <div><span class="list-label">{{labels[loop.index0]}}</span>. {{ c.content }}</div>
                 {% endfor %} 
+            </div>
+            
+            <div class="buttons-container">
+                <form action={{ url_for('teachers.edit_question', id=question.id) }} method="get">
+                    <button type="submit" class="secondary-button">Edit</button>
+                </form>
+                <form action={{ url_for('teachers.delete_question', id=question.id) }} method="POST">
+                    <button type="submit" class="secondary-button">Delete</button>
+                </form>
             </div>
         </div>
         {% endfor %}

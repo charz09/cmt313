@@ -33,4 +33,29 @@
     </div>
 </section>
 
+<script>
+    const summativeInputs = document.querySelectorAll('.summative-only');
+    const formativeInputs = document.querySelectorAll('.formative-only');
+    const radioInputs = document.querySelectorAll('.radio-button');
+
+    console.log(radioInputs[0].children[1].children[0].checked === true)
+    if(radioInputs[0].children[1].children[0].checked === true) {
+        summativeInputs.forEach(input => {
+            input.style.display = "block"
+        })
+    }
+
+    radioInputs[0].addEventListener('change', (e)=>{
+        if(e.target.value === "Formative") {
+            [...summativeInputs].forEach(input => {
+                input.style.display = "none"
+            })
+        } else {
+            [...summativeInputs].forEach(input => {
+                input.style.display = "block"
+            })
+        }
+    })
+</script>
+
 {% endblock %}
