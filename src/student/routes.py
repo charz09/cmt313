@@ -87,7 +87,7 @@ def view_report(id):
     student = User.query.filter_by(id=id, role_id=1).first()
     if student is None:
         flash('Invalid student ID', 'error')
-        return redirect(url_for('student.home'))
+        return redirect(url_for('students.index'))
 
     attempts = Attempt.query.filter_by(created_by=id).all()
     overall_assessment_scores = {}
